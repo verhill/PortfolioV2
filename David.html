@@ -1,0 +1,2511 @@
+<!DOCTYPE html>
+<html lang="sv" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>David Hillver | Fullstack Developer</title>
+  <meta name="description" content="David Hillver — Fullstack developer specializing in C# .NET, backend systems and database architecture. B.Sc Systemvetenskap at Örebro University, graduating 2026.">
+  <meta name="author" content="David Hillver">
+  <meta name="theme-color" content="#0f172a">
+  <meta property="og:type"         content="website">
+  <meta property="og:url"          content="">
+  <meta property="og:title"        content="David Hillver | Fullstack Developer">
+  <meta property="og:description"  content="Backend developer — C# · .NET · PostgreSQL · AI integration. B.Sc Örebro University 2026.">
+  <meta property="og:image"        content="NyCvBild.png">
+  <meta name="twitter:card"        content="summary_large_image">
+  <meta name="twitter:title"       content="David Hillver | Fullstack Developer">
+  <meta name="twitter:description" content="Backend developer — C# · .NET · PostgreSQL · AI integration.">
+  <link rel="icon" href="DHLogo.png" type="image/png">
+  <link rel="icon" href="DHLogo.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="DHLogo.png" sizes="16x16" type="image/png">
+  <link rel="apple-touch-icon" href="DHLogo.png">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* ─── Debug console (unchanged) ─────────────────────────────── */
+    .debug-console {
+      position: fixed; bottom: 20px; right: 20px; width: 300px;
+      background: rgba(0,0,0,.8); color: #00ff00; font-family: monospace;
+      border-radius: 4px; overflow: hidden; box-shadow: 0 0 20px rgba(0,255,0,.2);
+      z-index: 100; display: none;
+    }
+    @media (min-width: 1024px) { .debug-console { display: block; } }
+    .console-header { background: rgba(0,0,0,.9); padding: 8px 12px; border-bottom: 1px solid #00ff0033; }
+    .console-body { padding: 12px; font-size: 14px; line-height: 1.5; }
+    .load-status { color: #fff; }
+
+    /* ─── Scroll progress bar ────────────────────────────────────── */
+    #scroll-progress {
+      position: fixed; top: 0; left: 0; height: 3px;
+      background: #1e40af; z-index: 9999; width: 0;
+      transition: width .08s linear;
+    }
+
+    /* ─── Scroll reveal ──────────────────────────────────────────── */
+    .reveal-item {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity .6s cubic-bezier(.4,0,.2,1),
+                  transform .6s cubic-bezier(.4,0,.2,1);
+    }
+    .reveal-item.visible { opacity: 1; transform: translateY(0); }
+    .stagger-1 { transition-delay: .1s; }
+    .stagger-2 { transition-delay: .18s; }
+    .stagger-3 { transition-delay: .26s; }
+    .stagger-4 { transition-delay: .34s; }
+    .stagger-5 { transition-delay: .42s; }
+
+    /* ─── Section overline ───────────────────────────────────────── */
+    .overline {
+      font-size: .7rem; font-weight: 700; letter-spacing: .2em;
+      text-transform: uppercase; color: #1e40af;
+      display: inline-flex; align-items: center; gap: 10px;
+      margin-bottom: 16px;
+    }
+    .overline::before {
+      content: ''; width: 24px; height: 2px;
+      background: #1e40af; flex-shrink: 0;
+    }
+
+    /* ─── Premium button styles ──────────────────────────────────── */
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: #0f172a; color: #fff; font-weight: 600;
+      font-size: .9rem; padding: 14px 28px; border-radius: 8px;
+      text-decoration: none; font-family: 'Inter', sans-serif;
+      transition: background .2s, transform .2s, box-shadow .2s;
+      box-shadow: 0 1px 3px rgba(15,23,42,.2);
+    }
+    .btn-primary:hover {
+      background: #1e3a5f; transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(30,64,175,.25);
+    }
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: transparent; color: #0f172a; font-weight: 600;
+      font-size: .9rem; padding: 13px 27px; border-radius: 8px;
+      text-decoration: none; font-family: 'Inter', sans-serif;
+      border: 1.5px solid #cbd5e1;
+      transition: border-color .2s, color .2s, transform .2s;
+    }
+    .btn-ghost:hover {
+      border-color: #1e40af; color: #1e40af;
+      transform: translateY(-2px);
+    }
+
+    /* ─── Floating badge ─────────────────────────────────────────── */
+    .float-badge {
+      background: #fff; border: 1px solid #e2e8f0;
+      border-radius: 10px; padding: 8px 14px;
+      font-size: .78rem; font-weight: 600; color: #0f172a;
+      box-shadow: 0 4px 16px rgba(15,23,42,.08);
+      white-space: nowrap; pointer-events: none;
+    }
+
+    /* ─── Hero ───────────────────────────────────────────────────── */
+    .hero-blob {
+      background: radial-gradient(circle, rgba(30,64,175,.13) 0%, transparent 70%);
+      border-radius: 50%; filter: blur(60px); pointer-events: none;
+    }
+
+    .hero-name {
+      font-size: clamp(4.5rem, 10vw, 8.5rem);
+      font-weight: 900;
+      letter-spacing: -.05em;
+      line-height: .95;
+      color: #0f172a;
+    }
+
+    /* Decorative big watermark letter */
+    .hero-watermark {
+      font-size: clamp(14rem, 30vw, 28rem);
+      font-weight: 900; letter-spacing: -.06em; line-height: 1;
+      color: #0f172a; opacity: .035; -webkit-user-select: none; user-select: none;
+      position: absolute; top: 50%; left: -2%;
+      transform: translateY(-50%); pointer-events: none;
+    }
+
+    /* ─── Availability badge ─────────────────────────────────────── */
+    .avail-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: #fff; border: 1px solid #e2e8f0;
+      border-radius: 999px; padding: 6px 16px 6px 10px;
+      box-shadow: 0 2px 8px rgba(15,23,42,.06);
+      font-size: .82rem; font-weight: 500; color: #334155;
+    }
+
+    /* ─── Stat blocks ────────────────────────────────────────────── */
+    .stat-divider { width: 1px; height: 32px; background: #e2e8f0; }
+
+    /* ─── Premium card ───────────────────────────────────────────── */
+    .card-premium {
+      position: relative; overflow: hidden;
+      transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+      border: 1px solid #e2e8f0; background: #fff; border-radius: 16px;
+    }
+    .card-premium::after {
+      content: ''; position: absolute; inset: 0 0 auto 0;
+      height: 2px; background: #1e40af;
+      transform: scaleX(0); transform-origin: left;
+      transition: transform .3s ease;
+    }
+    .card-premium:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 48px rgba(15,23,42,.1),
+                  0 0 0 1px rgba(30,64,175,.12);
+      border-color: rgba(30,64,175,.2);
+    }
+    .card-premium:hover::after { transform: scaleX(1); }
+
+    /* ─── Skill pill ─────────────────────────────────────────────── */
+    .skill-pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: #f8fafc; border: 1px solid #e2e8f0;
+      color: #334155; font-size: .78rem; font-weight: 500;
+      padding: 5px 12px; border-radius: 6px;
+      transition: background .15s, border-color .15s, color .15s, transform .15s;
+    }
+    .skill-pill:hover {
+      background: #eff6ff; border-color: #bfdbfe; color: #1e40af;
+      transform: scale(1.05);
+    }
+
+    /* ─── Nav underline slide-in from left ───────────────────────── */
+    .nav-link:hover .nav-underline,
+    .nav-link-item.active .nav-underline { width: 100%; }
+
+    /* ─── CV PDF icon micro-nudge ────────────────────────────────── */
+    .btn-ghost .fa-file-pdf { transition: transform .2s ease; }
+    .btn-ghost:hover .fa-file-pdf { transform: translateY(2px); }
+
+    /* ─── Timeline dot ───────────────────────────────────────────── */
+    .tl-dot {
+      width: 16px; height: 16px; border-radius: 50%;
+      background: #1e40af; border: 3px solid #fff;
+      box-shadow: 0 0 0 3px #dbeafe;
+    }
+
+    /* ─── Nav ────────────────────────────────────────────────────── */
+    header { font-family: 'Inter', sans-serif; }
+
+    /* Active nav link */
+    .nav-link-item.active { color: #1e40af !important; }
+    .nav-link-item.active::after { width: 100%; }
+
+    /* ─── Section number badge ───────────────────────────────────── */
+    .sec-num {
+      font-size: .65rem; font-weight: 700; letter-spacing: .15em;
+      color: #94a3b8; font-variant-numeric: tabular-nums;
+    }
+
+
+    /* ─── Footer top border ──────────────────────────────────────── */
+    .footer-top-line {
+      height: 3px;
+      background: linear-gradient(90deg, #1e40af 0%, #3b82f6 50%, transparent 100%);
+    }
+
+    /* ─── Utility classes (extracted from inline styles) ────────── */
+    .header-blur {
+      -webkit-backdrop-filter: blur(16px);
+      backdrop-filter: blur(16px);
+    }
+    .float-badge-3 { animation-delay: .8s; }
+    .icon-xs { font-size: .7rem; }
+    .cursor-none-interactive { cursor: default; }
+
+    /* ─── Terminal window (Windows Terminal style) ───────────────── */
+    .tc-wrap { position: relative; }
+    .terminal-window {
+      background: #0c0c0c; border-radius: 6px; overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,.65),
+                  0 0 0 1px rgba(255,255,255,.08);
+      font-family: 'Cascadia Code','Consolas','Fira Code','Courier New',monospace;
+      -webkit-font-smoothing: antialiased;
+    }
+    /* Tab bar */
+    .tc-tabbar {
+      background: #1c1c1c;
+      display: flex; align-items: stretch;
+      height: 38px;
+      border-bottom: 1px solid #2a2a2a;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+    .tc-tab {
+      display: flex; align-items: center; gap: 7px;
+      padding: 0 16px;
+      background: #0c0c0c;
+      border-right: 1px solid #2a2a2a;
+      font-size: .72rem; color: #cccccc;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      letter-spacing: .01em;
+    }
+    .tc-tab-icon {
+      width: 16px; height: 16px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .tc-tab-icon img { width: 16px; height: 16px; object-fit: contain; }
+    .tc-tab-close {
+      margin-left: 6px; color: #666; font-size: .65rem;
+      line-height: 1;
+    }
+    .tc-new-tab {
+      display: flex; align-items: center; padding: 0 10px;
+      color: #555; font-size: 1rem; cursor: pointer;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+    }
+    /* Window controls (right side, Windows style) */
+    .tc-winbtns {
+      margin-left: auto;
+      display: flex; align-items: stretch;
+    }
+    .tc-wb {
+      display: flex; align-items: center; justify-content: center;
+      width: 46px;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      font-size: .7rem; color: #888;
+      transition: background .1s;
+      cursor: default;
+    }
+    .tc-wb:hover { background: rgba(255,255,255,.08); color: #ccc; }
+    .tc-wb-close:hover { background: #c42b1c; color: #fff; }
+    /* Body */
+    .tc-body {
+      padding: 10px 16px 20px; min-height: 260px;
+      font-size: .82rem; line-height: 1.75; color: #cccccc;
+    }
+    .tc-prompt-row, .tc-idle-row {
+      display: flex; align-items: baseline; flex-wrap: wrap;
+    }
+    .tc-ps1-kw { color: #f1fa8c; }   /* PS yellow */
+    .tc-ps1-path { color: #8be9fd; } /* path cyan */
+    .tc-ps1-gt  { color: #cccccc; margin-right: 6px; }
+    .tc-cmd     { color: #cccccc; }
+    /* JSON syntax — VS Code Dark+ */
+    .tc-brace  { color: #ffd700; }
+    .tc-jkey   { color: #9cdcfe; }
+    .tc-jstr   { color: #ce9178; }
+    .tc-jnum   { color: #b5cea8; }
+    .tc-jpunct { color: #808080; }
+    /* Cursor: Windows Terminal underline */
+    .tc-cursor {
+      display: inline-block; width: 8px; height: 2px;
+      background: #cccccc; vertical-align: baseline;
+      position: relative; top: .15em;
+      animation: tcblink .9s step-end infinite; margin-left: 1px;
+    }
+    @keyframes tcblink { 0%,100%{opacity:1} 50%{opacity:0} }
+    .tc-idle-hidden { display: none; }
+
+    /* ─── Project modal ──────────────────────────────────────────── */
+    .modal-overlay {
+      position: fixed; inset: 0; z-index: 1000;
+      background: rgba(15,23,42,.78);
+      -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+      display: flex; align-items: center; justify-content: center; padding: 1rem;
+    }
+    .modal-overlay[hidden] { display: none; }
+    .modal-card {
+      background: #fff; border-radius: 20px;
+      box-shadow: 0 32px 80px rgba(15,23,42,.3);
+      max-width: 600px; width: 100%; max-height: 90vh; overflow-y: auto;
+      position: relative;
+      animation: modalSlideUp .25s cubic-bezier(.34,1.56,.64,1);
+    }
+    @keyframes modalSlideUp { from{transform:translateY(22px);opacity:0} to{transform:translateY(0);opacity:1} }
+    .modal-close-btn {
+      position: absolute; top: 16px; right: 16px;
+      width: 36px; height: 36px; border-radius: 8px;
+      background: #f1f5f9; border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      color: #64748b; transition: background .15s, color .15s;
+    }
+    .modal-close-btn:hover { background: #e2e8f0; color: #0f172a; }
+    .modal-body { padding: 32px; }
+    .modal-tag {
+      display: inline-block; font-size: .68rem; font-weight: 700;
+      letter-spacing: .14em; text-transform: uppercase; color: #1e40af;
+      background: #eff6ff; padding: 4px 12px; border-radius: 999px; margin-bottom: 14px;
+    }
+    .modal-title {
+      font-size: 1.55rem; font-weight: 800; color: #0f172a;
+      letter-spacing: -.03em; line-height: 1.2; margin-bottom: 14px;
+    }
+    .modal-desc { font-size: .93rem; color: #475569; line-height: 1.75; margin-bottom: 22px; }
+    .modal-section-label {
+      font-size: .68rem; font-weight: 700; color: #94a3b8;
+      text-transform: uppercase; letter-spacing: .14em; margin-bottom: 10px;
+    }
+    .modal-stack { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+    .modal-tech-tag {
+      background: #f8fafc; border: 1px solid #e2e8f0;
+      color: #334155; font-size: .78rem; font-weight: 500;
+      padding: 5px 12px; border-radius: 6px;
+    }
+    .modal-role { font-size: .9rem; color: #475569; line-height: 1.75; margin-bottom: 22px; }
+    .modal-links { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 4px; }
+    .modal-link-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 20px; border-radius: 8px; font-size: .85rem; font-weight: 600;
+      text-decoration: none; transition: all .2s;
+    }
+    .modal-link-primary {
+      background: #0f172a; color: #fff;
+    }
+    .modal-link-primary:hover { background: #1e3a8a; }
+    .modal-link-secondary {
+      background: #f8fafc; color: #0f172a; border: 1.5px solid #e2e8f0;
+    }
+    .modal-link-secondary:hover { border-color: #1e40af; color: #1e40af; }
+    .modal-note {
+      font-size: .8rem; color: #94a3b8; font-style: italic; margin-top: 10px;
+      display: flex; align-items: center; gap: 6px;
+    }
+
+    /* ─── Section dividers ──────────────────────────────────────── */
+    .section-divider {
+      position: relative;
+      height: 1px;
+      background: #e2e8f0;
+      margin: 0;
+      overflow: visible;
+    }
+    .section-divider::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #1e40af 0%, #3b82f6 40%, #93c5fd 70%, transparent 100%);
+      margin-top: -3px;
+    }
+    .section-divider::after {
+      content: attr(data-label);
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      background: #ffffff;
+      color: #94a3b8;
+      font-size: .65rem;
+      font-weight: 700;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      padding: 4px 16px;
+      border: 1px solid #e2e8f0;
+      border-radius: 999px;
+      white-space: nowrap;
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* ─── Responsive ─────────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      .hero-watermark { display: none; }
+    }
+  </style>
+</head>
+
+<body class="font-['Inter'] antialiased">
+<div id="cursor-ring"></div>
+
+  <!-- Scroll progress bar -->
+  <div id="scroll-progress"></div>
+
+  <!-- ═══════════════════════════════════════════════
+       NAVIGATION
+  ═══════════════════════════════════════════════════ -->
+  <header class="bg-white/90 border-b border-[#e2e8f0] sticky top-0 z-50 transition-all duration-300 header-blur">
+    <div class="w-full px-6 py-3">
+      <div class="flex items-center w-full">
+        <!-- Logo -->
+        <a href="#" class="flex items-center group">
+          <img src="updateProfile.png" alt="David Hillver"
+               class="h-14 transition-transform duration-300 group-hover:scale-105">
+        </a>
+
+        <!-- Desktop nav -->
+        <div class="ml-auto">
+          <nav class="hidden md:flex items-center space-x-8">
+            <a href="#about"
+               class="text-[#64748b] hover:text-[#1e40af] transition-colors font-medium text-sm relative pb-1 nav-link-item nav-link">
+              <span data-i18n="about">Om mig</span>
+              <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-[#1e40af] transition-all duration-300 group-hover:w-full nav-underline"></span>
+            </a>
+            <a href="#projects"
+               class="text-[#64748b] hover:text-[#1e40af] transition-colors font-medium text-sm relative pb-1 nav-link-item nav-link">
+              <span data-i18n="projects">Projekt</span>
+              <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-[#1e40af] transition-all duration-300 nav-underline"></span>
+            </a>
+            <a href="#contact"
+               class="text-[#64748b] hover:text-[#1e40af] transition-colors font-medium text-sm relative pb-1 nav-link-item">
+              <span data-i18n="contact">Kontakt</span>
+            </a>
+            <!-- Language flags -->
+            <div class="flex items-center gap-2 ml-2 pl-6 border-l border-[#e2e8f0]">
+              <button type="button" id="lang-sv" class="opacity-70 hover:opacity-100 transition-opacity">
+                <img src="svensk.png" alt="Svenska" class="w-6 h-6">
+              </button>
+              <button type="button" id="lang-en" class="opacity-70 hover:opacity-100 transition-opacity">
+                <img src="uk.png" alt="English" class="w-6 h-6">
+              </button>
+              <!-- Theme toggle -->
+              <button type="button" id="theme-toggle" class="theme-toggle-btn ml-1" title="Växla tema" aria-label="Växla mörkt/ljust läge">
+                <i class="fas fa-sun"></i>
+              </button>
+            </div>
+          </nav>
+
+          <!-- Mobile hamburger -->
+          <button type="button" class="md:hidden text-[#475569] hover:text-[#1e40af] transition-colors" id="mobile-menu-button">
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile menu overlay -->
+    <div id="mobile-menu"
+         class="hidden fixed inset-0 z-40 p-8 md:hidden transition-all duration-300 transform translate-x-full mobile-menu-overlay">
+      <div class="flex justify-end mb-10">
+        <button type="button" id="mobile-menu-close" class="text-[#475569] hover:text-[#1e40af]">
+          <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+      <nav class="flex flex-col space-y-8">
+        <a href="#about"  class="text-3xl font-bold text-[#0f172a] hover:text-[#1e40af] transition-colors tracking-tight" data-i18n="about">Om mig</a>
+        <a href="#timeline" class="text-3xl font-bold text-[#0f172a] hover:text-[#1e40af] transition-colors tracking-tight" data-i18n="timeline">Erfarenhet</a>
+        <a href="#projects" class="text-3xl font-bold text-[#0f172a] hover:text-[#1e40af] transition-colors tracking-tight" data-i18n="projects">Projekt</a>
+        <a href="#contact"  class="text-3xl font-bold text-[#0f172a] hover:text-[#1e40af] transition-colors tracking-tight" data-i18n="contact">Kontakt</a>
+      </nav>
+      <div class="flex gap-4 mt-12 items-center">
+        <button type="button" id="lang-sv-mobile"><img src="svensk.png" alt="Svenska" class="w-9 h-9"></button>
+        <button type="button" id="lang-en-mobile"><img src="uk.png" alt="English" class="w-9 h-9"></button>
+        <button type="button" id="theme-toggle-mobile" class="theme-toggle-btn w-10 h-10" aria-label="Växla tema">
+          <i class="fas fa-sun"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════════════════════════
+       HERO
+  ═══════════════════════════════════════════════════ -->
+  <section class="hero-section relative overflow-hidden min-h-screen flex items-center">
+    <!-- Animated gradient mesh background -->
+    <div class="gradient-mesh absolute inset-0" aria-hidden="true"></div>
+    <!-- Dot grid background -->
+    <div class="hero-dot-grid absolute inset-0 pointer-events-none"></div>
+    <!-- Radial glow top-right -->
+    <div class="hero-blob absolute -top-32 -right-32 w-[700px] h-[700px] pointer-events-none"></div>
+
+    <div class="container mx-auto px-6 py-28 lg:py-36 relative z-10">
+      <div class="grid lg:grid-cols-[1fr_420px] gap-16 xl:gap-24 items-center">
+
+        <!-- LEFT — Text content -->
+        <div>
+          <!-- Availability badge -->
+          <div class="avail-badge mb-8 reveal-item">
+            <span class="relative flex h-2.5 w-2.5">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500 avail-dot-pulse"></span>
+            </span>
+            <span data-i18n="availability">Tillgänglig för arbete</span>
+          </div>
+
+          <!-- Big name -->
+          <h1 class="hero-name mb-5 reveal-item stagger-1" data-i18n="hero_title">
+            David<br>Hillver
+          </h1>
+
+          <!-- Role line with dash -->
+          <div class="flex items-center gap-4 mb-6 reveal-item stagger-2">
+            <div class="w-8 h-0.5 bg-[#1e40af]"></div>
+            <p class="text-base font-semibold text-[#1e40af] uppercase tracking-[.15em]"
+               data-i18n="hero_subtitle">Fullstack Developer</p>
+          </div>
+
+          <!-- Tagline -->
+          <p class="text-lg text-[#475569] mb-10 max-w-lg leading-relaxed reveal-item stagger-3"
+             data-i18n="hero_description">
+            Jag bygger backend-system och databasarkitekturer — rena, skalbara och produktionsklara. Avslutar min kandidatexamen vid Örebro Universitet (2026).
+          </p>
+
+          <!-- CTAs -->
+          <div class="flex flex-wrap gap-4 mb-12 reveal-item stagger-4">
+            <a href="#projects" class="btn-primary" data-magnetic data-i18n="view_projects">
+              Visa Projekt
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </a>
+            <a href="#contact" class="btn-ghost" data-magnetic data-i18n="contact_me">Kontakta Mig</a>
+            <a href="CV_DavidHillver.pdf" download="CV_DavidHillver.pdf"
+               class="btn-ghost inline-flex items-center gap-2" data-magnetic>
+              <i class="fas fa-file-pdf text-[#1e40af]"></i>
+              <span data-i18n="download_cv">Ladda ner CV</span>
+            </a>
+          </div>
+
+          <!-- Stats row -->
+          <div class="flex items-center gap-8 reveal-item stagger-5">
+            <div>
+              <div class="text-2xl font-black text-[#0f172a] tracking-tight">3+</div>
+              <div class="text-xs font-medium text-[#94a3b8] uppercase tracking-wider mt-0.5" data-i18n="stat_projects">Projekt</div>
+            </div>
+            <div class="stat-divider"></div>
+            <div>
+              <div class="text-2xl font-black text-[#0f172a] tracking-tight">Örebro</div>
+              <div class="text-xs font-medium text-[#94a3b8] uppercase tracking-wider mt-0.5" data-i18n="stat_university">Universitet</div>
+            </div>
+            <div class="stat-divider"></div>
+            <div>
+              <div class="text-2xl font-black text-[#0f172a] tracking-tight">2026</div>
+              <div class="text-xs font-medium text-[#94a3b8] uppercase tracking-wider mt-0.5" data-i18n="stat_graduation">Examen</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT — Terminal block -->
+        <div class="hidden lg:block reveal-item stagger-2 tc-wrap">
+          <div class="terminal-window">
+            <!-- Windows Terminal tab bar -->
+            <div class="tc-tabbar">
+              <div class="tc-tab">
+                <span>Terminal</span>
+                <span class="tc-tab-close">✕</span>
+              </div>
+              <div class="tc-new-tab">+</div>
+              <!-- Window controls -->
+              <div class="tc-winbtns">
+                <div class="tc-wb">︴</div>
+                <div class="tc-wb">□</div>
+                <div class="tc-wb tc-wb-close">✕</div>
+              </div>
+            </div>
+            <div class="tc-body">
+              <div class="tc-prompt-row">
+                <span class="tc-ps1-path">C:\portfolio</span><span class="tc-ps1-gt">&gt;</span><span id="tc-cmd" class="tc-cmd"></span>
+              </div>
+              <div id="tc-output"></div>
+              <div class="tc-idle-row tc-idle-hidden" id="tc-idle">
+                <span class="tc-ps1-path">C:\portfolio</span><span class="tc-ps1-gt">&gt;</span><span class="tc-cursor"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Bottom edge fade -->
+    <div class="hero-bottom-fade absolute bottom-0 left-0 right-0 h-20 pointer-events-none"></div>
+  </section>
+
+  <div class="section-divider" data-label="01 — Om mig"></div>
+
+  <!-- ═══════════════════════════════════════════════
+       ABOUT
+  ═══════════════════════════════════════════════════ -->
+  <section id="about" class="py-24 bg-white">
+    <div class="container mx-auto px-6">
+
+      <div class="max-w-6xl mx-auto">
+        <!-- Section label -->
+        <div class="overline reveal-item">
+          <span class="sec-num">01</span> <span data-i18n="about">Om mig</span>
+        </div>
+        <h2 class="text-4xl md:text-5xl font-extrabold text-[#0f172a] tracking-tight leading-tight mb-16 reveal-left stagger-1" data-i18n="about_heading">
+          Systemvetare med<br>passion för backend.
+        </h2>
+
+        <div class="flex flex-col lg:flex-row gap-12 items-start">
+
+          <!-- LEFT: Profile card (slimmer, more refined) -->
+          <div class="lg:w-[340px] w-full flex-shrink-0 space-y-6">
+
+            <!-- Profile card -->
+            <div class="card-premium p-0 reveal-item stagger-1">
+              <div class="relative pt-8 px-6 pb-6">
+                <!-- Availability -->
+                <div class="absolute top-5 right-5 flex items-center gap-2">
+                  <span class="relative flex h-2 w-2">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                  </span>
+                  <span class="text-xs text-[#64748b]" data-i18n="availability">Tillgänglig</span>
+                </div>
+                <!-- Photo -->
+                <div class="w-28 h-28 mx-auto rounded-full overflow-hidden border-2 border-[#e2e8f0] shadow-md mb-5">
+                  <img src="NyCvBild.png" alt="David Hillver" class="w-full h-full object-cover object-top" loading="lazy">
+                </div>
+                <!-- Quick info rows -->
+                <div class="space-y-3 text-sm">
+                  <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 bg-[#f1f5f9] rounded-lg flex items-center justify-center flex-shrink-0">
+                      <i class="fas fa-map-marker-alt text-[#1e40af] text-xs"></i>
+                    </div>
+                    <div>
+                      <div class="text-xs text-[#94a3b8] font-medium uppercase tracking-wider" data-i18n="location_label">Plats</div>
+                      <div class="font-semibold text-[#0f172a]" data-i18n="location">Örebro, Sverige</div>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 bg-[#f1f5f9] rounded-lg flex items-center justify-center flex-shrink-0">
+                      <i class="fas fa-university text-[#1e40af] text-xs"></i>
+                    </div>
+                    <div>
+                      <div class="text-xs text-[#94a3b8] font-medium uppercase tracking-wider" data-i18n="education_label">Utbildning</div>
+                      <div class="font-semibold text-[#0f172a]" data-i18n="education">Örebro Universitet</div>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 bg-[#f1f5f9] rounded-lg flex items-center justify-center flex-shrink-0">
+                      <i class="fas fa-code text-[#1e40af] text-xs"></i>
+                    </div>
+                    <div>
+                      <div class="text-xs text-[#94a3b8] font-medium uppercase tracking-wider" data-i18n="specialization_label">Specialisering</div>
+                      <div class="font-semibold text-[#0f172a]" data-i18n="specialization">Backend & Databaser</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Divider -->
+              <div class="border-t border-[#f1f5f9] mx-6"></div>
+
+              <!-- Tech pills -->
+              <div class="px-6 pt-4 pb-5">
+                <div class="text-xs font-bold text-[#94a3b8] uppercase tracking-wider mb-3" data-i18n="tech_competence">Teknisk Kompetens</div>
+                <div class="flex flex-wrap gap-2">
+                  <span class="skill-pill"><img src="upCs.png" class="w-3.5 h-3.5" alt="C#"><span data-i18n="csharp_tag">C#</span></span>
+                  <span class="skill-pill"><img src="netlogo.png" class="w-3.5 h-3.5" alt=".NET"><span data-i18n="dotnet_tag">.NET</span></span>
+                  <span class="skill-pill"><img src="upJava.webp" class="w-3.5 h-3.5" alt="Java"><span data-i18n="java_tag">Java</span></span>
+                  <span class="skill-pill"><img src="Python.svg.png" class="w-3.5 h-3.5" alt="Python"><span data-i18n="python_tag">Python</span></span>
+                  <span class="skill-pill"><i class="fas fa-database text-[#1e40af] icon-xs"></i><span data-i18n="sql_tag">SQL</span></span>
+                </div>
+              </div>
+
+              <!-- Divider -->
+              <div class="border-t border-[#f1f5f9] mx-6"></div>
+
+              <!-- Interests -->
+              <div class="px-6 pt-4 pb-6">
+                <div class="text-xs font-bold text-[#94a3b8] uppercase tracking-wider mb-3" data-i18n="interests">Intressen</div>
+                <div class="flex flex-wrap gap-2">
+                  <span class="skill-pill"><i class="fas fa-code text-[#1e40af] icon-xs"></i><span data-i18n="coding">Programmering</span></span>
+                  <span class="skill-pill"><i class="fas fa-dumbbell text-[#1e40af] icon-xs"></i><span data-i18n="training">Träning</span></span>
+                  <span class="skill-pill"><i class="fas fa-futbol text-[#1e40af] icon-xs"></i><span data-i18n="football">Fotboll</span></span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Core competencies card -->
+            <div class="card-premium p-6 reveal-item stagger-2">
+              <div class="text-xs font-bold text-[#94a3b8] uppercase tracking-wider mb-4" data-i18n="core_competencies_title">Kärnkompetenser</div>
+              <div class="space-y-4">
+                <div class="flex items-start gap-3">
+                  <div class="w-8 h-8 bg-[#eff6ff] rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <i class="fas fa-server text-[#1e40af] text-xs"></i>
+                  </div>
+                  <div>
+                    <div class="text-sm font-semibold text-[#0f172a]" data-i18n="backend_development_title">Backend-utveckling</div>
+                    <div class="text-xs text-[#64748b] mt-0.5" data-i18n="backend_development_description">Skalbara serverlösningar med C# och .NET</div>
+                  </div>
+                </div>
+                <div class="flex items-start gap-3">
+                  <div class="w-8 h-8 bg-[#eff6ff] rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <i class="fas fa-database text-[#1e40af] text-xs"></i>
+                  </div>
+                  <div>
+                    <div class="text-sm font-semibold text-[#0f172a]" data-i18n="database_design_title">Databasdesign</div>
+                    <div class="text-xs text-[#64748b] mt-0.5" data-i18n="database_design_description">SQL Server och databasoptimering</div>
+                  </div>
+                </div>
+                <div class="flex items-start gap-3">
+                  <div class="w-8 h-8 bg-[#eff6ff] rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <i class="fas fa-project-diagram text-[#1e40af] text-xs"></i>
+                  </div>
+                  <div>
+                    <div class="text-sm font-semibold text-[#0f172a]" data-i18n="system_architecture_title">Systemarkitektur</div>
+                    <div class="text-xs text-[#64748b] mt-0.5" data-i18n="system_architecture_description">Design av API:er och systemintegration</div>
+                  </div>
+                </div>
+                <div class="flex items-start gap-3">
+                  <div class="w-8 h-8 bg-[#eff6ff] rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <i class="fas fa-users text-[#1e40af] text-xs"></i>
+                  </div>
+                  <div>
+                    <div class="text-sm font-semibold text-[#0f172a]" data-i18n="agile_collaboration_title">Agilt samarbete</div>
+                    <div class="text-xs text-[#64748b] mt-0.5" data-i18n="agile_collaboration_description">Erfaren av Scrum och Git-arbetsflöden</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- GitHub Activity Feed -->
+              <div class="card-premium p-6 reveal-item stagger-3" id="gh-activity-card">
+                <div class="flex items-center gap-3 mb-5">
+                  <div class="w-1 h-6 bg-[#1e40af] rounded-full flex-shrink-0"></div>
+                  <i class="fas fa-clock text-sm flex-shrink-0" style="color:var(--c-accent)"></i>
+                  <h3 class="text-sm font-bold" style="color:var(--c-text-primary)" data-i18n="gh_activity_title">Senaste aktivitet</h3>
+                </div>
+                <div id="gh-activity-skeleton" class="space-y-2">
+                  <div class="gh-skel-line"></div>
+                  <div class="gh-skel-line"></div>
+                  <div class="gh-skel-line"></div>
+                  <div class="gh-skel-line"></div>
+                </div>
+                <div class="gh-event-list" id="gh-event-list" style="display:none"></div>
+              </div>
+          </div>
+
+          <!-- RIGHT: Bio + Courses -->
+          <div class="flex-1 space-y-6">
+
+            <!-- Professional profile -->
+            <div class="card-premium p-8 reveal-item stagger-1">
+              <div class="flex items-center gap-3 mb-6">
+                <div class="w-1 h-6 bg-[#1e40af] rounded-full flex-shrink-0"></div>
+                <h3 class="text-xl font-bold text-[#0f172a]" data-i18n="professional_profile">Professionell Profil</h3>
+              </div>
+              <div class="space-y-4 text-[#475569] text-base leading-[1.65]">
+                <p data-i18n="aboutDescription">
+                  Systemvetenskapsstudent vid Örebro Universitet med fokus på backend-arkitektur och databasdesign.
+                  Jag bygger produktionsklara lösningar i C# och .NET — rena, skalbara och väldokumenterade.
+                </p>
+                <p data-i18n="aboutDescription2">
+                  Parallellt med studierna driver jag egna projekt inom AI-integration och fullstack-webbutveckling.
+                  Avslutar min kandidatexamen 2026 och söker min första heltidsroll inom backend eller systemutveckling.
+                </p>
+              </div>
+            </div>
+
+            <!-- Course list card -->
+            <div class="card-premium p-8 reveal-item stagger-2">
+              <div class="flex items-center gap-3 mb-6">
+                <div class="w-1 h-6 bg-[#1e40af] rounded-full flex-shrink-0"></div>
+                <h3 class="text-xl font-bold text-[#0f172a]" data-i18n="education_title">Utbildning vid Örebro Universitet</h3>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Systemvetenskap -->
+                <div>
+                  <div class="text-sm font-bold text-[#0f172a] mb-1 flex items-center justify-between">
+                    <span data-i18n="program_systemscience">Systemvetenskapliga programmet — SSV1K</span>
+                  </div>
+                  <div class="text-xs text-[#1e40af] font-semibold mb-4" data-i18n="credits_180hp">180 hp</div>
+                  <ul class="space-y-2.5">
+                    <li class="flex items-start gap-2 text-[.83rem] text-[#475569]">
+                      <i class="fas fa-check text-green-500 mt-0.5 flex-shrink-0 text-xs"></i>
+                      <span data-i18n="course_interaction">Interaktionsdesign - IK208G</span>
+                    </li>
+                    <li class="flex items-start gap-2 text-[.83rem] text-[#475569]">
+                      <i class="fas fa-check text-green-500 mt-0.5 flex-shrink-0 text-xs"></i>
+                      <span data-i18n="course_scrum">Systemutvecklingsprojekt med Scrum och XP - IK207G</span>
+                    </li>
+                    <li class="flex items-start gap-2 text-[.83rem] text-[#475569]">
+                      <i class="fas fa-check text-green-500 mt-0.5 flex-shrink-0 text-xs"></i>
+                      <span data-i18n="course_softwarearch">Mjukvaruarkitektur - IK210G</span>
+                    </li>
+                    <li class="flex items-start gap-2 text-[.83rem] text-[#475569]">
+                      <i class="fas fa-check text-green-500 mt-0.5 flex-shrink-0 text-xs"></i>
+                      <span data-i18n="course_reqmgt">Kravhantering - IK205G</span>
+                    </li>
+                    <li class="flex items-start gap-2 text-[.83rem] text-[#475569]">
+                      <i class="fas fa-check text-green-500 mt-0.5 flex-shrink-0 text-xs"></i>
+                      <span data-i18n="course_websystems">Webbsystem med .NET - IK204G</span>
+                    </li>
+                    <li class="flex items-start gap-2 text-[.83rem] text-[#475569]">
+                      <i class="fas fa-check text-green-500 mt-0.5 flex-shrink-0 text-xs"></i>
+                      <span data-i18n="course_database">Databashantering med SQL Server - IK203G</span>
+                    </li>
+                    <li class="flex items-start gap-2 text-[.83rem] text-[#475569]">
+                      <i class="fas fa-check text-green-500 mt-0.5 flex-shrink-0 text-xs"></i>
+                      <span data-i18n="course_oop">OOP med C# - IK202G</span>
+                    </li>
+                    <li class="flex items-start gap-2 text-[.83rem] text-[#475569]">
+                      <i class="fas fa-check text-green-500 mt-0.5 flex-shrink-0 text-xs"></i>
+                      <span data-i18n="course_clientprog">Klientprogrammering - IK201G</span>
+                    </li>
+                    <li class="flex items-start gap-2 text-[.83rem] text-[#475569]">
+                      <i class="fas fa-check text-green-500 mt-0.5 flex-shrink-0 text-xs"></i>
+                      <span data-i18n="course_business">Företagsekonomi - FE108G</span>
+                    </li>
+                    <li class="flex items-start gap-2 text-[.83rem] text-[#475569]">
+                      <i class="fas fa-check text-green-500 mt-0.5 flex-shrink-0 text-xs"></i>
+                      <span data-i18n="course_informatics">Informatik - IK100G</span>
+                    </li>
+                  </ul>
+                </div>
+                <!-- Civilingenjör -->
+                <div>
+                  <div class="text-sm font-bold text-[#0f172a] mb-1">
+                    <span data-i18n="program_engineering">Civilingenjör, Datateknik — TDT2Y</span>
+                  </div>
+                  <div class="text-xs text-[#1e40af] font-semibold mb-4" data-i18n="credits_300hp">300 hp</div>
+                  <ul class="space-y-2.5">
+                    <li class="flex items-start gap-2 text-[.83rem] text-[#475569]">
+                      <i class="fas fa-check text-green-500 mt-0.5 flex-shrink-0 text-xs"></i>
+                      <span data-i18n="course_dbtech">Databasteknik - DT504G</span>
+                    </li>
+                    <li class="flex items-start gap-2 text-[.83rem] text-[#475569]">
+                      <i class="fas fa-check text-green-500 mt-0.5 flex-shrink-0 text-xs"></i>
+                      <span data-i18n="course_mathdiscrete">Diskret matematik - MA501G</span>
+                    </li>
+                    <li class="flex items-start gap-2 text-[.83rem] text-[#475569]">
+                      <i class="fas fa-check text-green-500 mt-0.5 flex-shrink-0 text-xs"></i>
+                      <span data-i18n="course_mathfunctions">Funktioner och derivator - MA502G</span>
+                    </li>
+                    <li class="flex items-start gap-2 text-[.83rem] text-[#475569]">
+                      <i class="fas fa-check text-green-500 mt-0.5 flex-shrink-0 text-xs"></i>
+                      <span data-i18n="course_engintro">Introduktion datateknik - DT502G</span>
+                    </li>
+                    <li class="flex items-start gap-2 text-[.83rem] text-[#475569]">
+                      <i class="fas fa-check text-green-500 mt-0.5 flex-shrink-0 text-xs"></i>
+                      <span data-i18n="course_mathintro">Introduktionskurs matematik - MA001G</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <!-- GitHub Contribution Graph -->
+            <div class="card-premium p-6 reveal-item stagger-3" id="gh-contrib-card">
+              <div class="flex items-center gap-3 mb-5">
+                <div class="w-1 h-6 bg-[#1e40af] rounded-full flex-shrink-0"></div>
+                <svg class="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 16 16" style="color:var(--c-text-primary)">
+                  <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+                </svg>
+                <h3 class="text-sm font-bold" style="color:var(--c-text-primary)" data-i18n="gh_contrib_title">GitHub Bidrag</h3>
+              </div>
+              <div id="gh-contrib-skeleton" class="gh-skel-block"></div>
+              <img id="gh-contrib-img" class="gh-contrib-img" style="display:none" alt="GitHub contribution graph">
+              <div class="gh-stat-row" id="gh-stat-row" style="display:none">
+                <span class="gh-stat-pill">📦 <span id="gh-stat-repos">—</span> <span data-i18n="gh_stat_repos">repos</span></span>
+                <span class="gh-stat-pill">👥 <span id="gh-stat-followers">—</span> <span data-i18n="gh_stat_followers">följare</span></span>
+                <span class="gh-stat-pill">🔗 <span id="gh-stat-following">—</span> <span data-i18n="gh_stat_following">följer</span></span>
+              </div>
+            </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider" data-label="02 — Projekt"></div>
+
+  <!-- ═══════════════════════════════════════════════
+       PROJECTS
+  ═══════════════════════════════════════════════════ -->
+  <section id="projects" class="py-24 bg-[#eef2f7]">
+    <div class="container mx-auto px-6">
+      <div class="max-w-6xl mx-auto">
+
+        <!-- Heading -->
+        <div class="overline reveal-item"><span class="sec-num">02</span> <span data-i18n="projects_label">Projekt &amp; Portfolio</span></div>
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
+          <h2 class="text-4xl md:text-5xl font-extrabold text-[#0f172a] tracking-tight leading-tight reveal-left stagger-1" data-i18n="projects_heading">
+            Vad jag<br>har byggt.
+          </h2>
+          <p class="text-[#64748b] max-w-sm leading-relaxed reveal-item stagger-2" data-i18n="projects_subtext">
+            Verkliga system med fokus på arkitekturell kvalitet, skalbarhet och AI-integration.
+          </p>
+        </div>
+
+        <!-- ── School projects ─────────────────────── -->
+        <div class="mb-20">
+          <div class="flex items-center justify-between mb-8">
+            <div class="flex items-center gap-3 reveal-item">
+              <div class="w-7 h-7 bg-[#eff6ff] rounded-lg flex items-center justify-center">
+                <i class="fas fa-graduation-cap text-[#1e40af] text-xs"></i>
+              </div>
+              <h3 class="font-bold text-[#0f172a]" data-i18n="school_projects_title">Skolprojekt</h3>
+            </div>
+            <button type="button" id="timeline-btn"
+                    class="flex items-center gap-2 text-sm font-semibold text-[#1e40af] hover:text-[#1e3a8a] transition-colors reveal-item">
+              <i class="fas fa-history"></i>
+              <span data-i18n="view_timeline">Visa tidslinje</span>
+            </button>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Hat Makers -->
+            <div class="card-premium reveal-item stagger-1">
+              <div class="relative overflow-hidden h-44">
+                <img src="nyhatt (1).png" alt="Hat Makers"
+                     class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
+                <div class="absolute inset-0 bg-gradient-to-t from-[#0f172a]/80 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-end p-5">
+                  <div class="flex flex-wrap gap-2">
+                    <span class="text-[.7rem] bg-white/20 text-white px-2 py-1 rounded-full backdrop-blur-sm">C#</span>
+                    <span class="text-[.7rem] bg-white/20 text-white px-2 py-1 rounded-full backdrop-blur-sm">ASP.NET</span>
+                    <span class="text-[.7rem] bg-white/20 text-white px-2 py-1 rounded-full backdrop-blur-sm">SQL</span>
+                  </div>
+                </div>
+              </div>
+              <div class="p-6">
+                <div class="flex items-center justify-between mb-3">
+                  <span class="skill-pill text-[.7rem]" data-i18n="school_project_tag">Skolprojekt</span>
+                  <span class="text-xs text-[#94a3b8]">2024</span>
+                </div>
+                <h4 class="font-bold text-[#0f172a] mb-2" data-i18n="project_2_name">Hatmakarna</h4>
+                <p class="text-sm text-[#64748b] leading-relaxed mb-5" data-i18n="project_2_description">
+                  En e-handelsplattform för ett hattföretag, utvecklad med ASP.NET och Scrum-metodik.
+                </p>
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-4">
+                    <a href="https://github.com/verhill/HatMakers"
+                       class="text-sm font-semibold text-[#1e40af] hover:text-[#1e3a8a] transition-colors flex items-center gap-2">
+                      <i class="fas fa-external-link-alt text-xs"></i>
+                      <span data-i18n="view_project">Visa projekt</span>
+                    </a>
+                    <button type="button" onclick="navigateToProject('hatmakers')"
+                            class="text-sm font-medium text-[#94a3b8] hover:text-[#1e40af] transition-colors">
+                      <span data-i18n="details_btn">Detaljer →</span>
+                    </button>
+                  </div>
+                  <div class="flex gap-2">
+                    <img src="csharp.jpg" alt="C#" class="w-5 h-5">
+                    <img src="netlogo.png" alt=".NET" class="w-5 h-5">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Podcast Library -->
+            <div class="card-premium reveal-item stagger-2">
+              <div class="relative overflow-hidden h-44">
+                <img src="csProj.png" alt="Podcast Library"
+                     class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
+                <div class="absolute inset-0 bg-gradient-to-t from-[#0f172a]/80 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-end p-5">
+                  <span class="text-[.7rem] bg-white/20 text-white px-2 py-1 rounded-full backdrop-blur-sm">C#</span>
+                </div>
+              </div>
+              <div class="p-6">
+                <div class="flex items-center justify-between mb-3">
+                  <span class="skill-pill text-[.7rem]" data-i18n="school_project_tag">Skolprojekt</span>
+                  <span class="text-xs text-[#94a3b8]">2024</span>
+                </div>
+                <h4 class="font-bold text-[#0f172a] mb-2" data-i18n="project_podcast_title">Podcastbibliotek</h4>
+                <p class="text-sm text-[#64748b] leading-relaxed mb-5" data-i18n="project_podcast_description">
+                  En applikation som agerar som ett bibliotek för dina favoritpodcasts.
+                </p>
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-4">
+                    <a href="https://github.com/verhill/PodcastLibrary"
+                       class="text-sm font-semibold text-[#1e40af] hover:text-[#1e3a8a] transition-colors flex items-center gap-2">
+                      <i class="fas fa-external-link-alt text-xs"></i>
+                      <span data-i18n="view_project">Visa projekt</span>
+                    </a>
+                    <button type="button" onclick="navigateToProject('podcast')"
+                            class="text-sm font-medium text-[#94a3b8] hover:text-[#1e40af] transition-colors">
+                      <span data-i18n="details_btn">Detaljer →</span>
+                    </button>
+                  </div>
+                  <img src="upCs.png" alt="C#" class="w-5 h-5">
+                </div>
+              </div>
+            </div>
+
+            <!-- CV Website -->
+            <div class="card-premium reveal-item stagger-3">
+              <div class="relative overflow-hidden h-44">
+                <img src="CvWeb.png" alt="CV Website"
+                     class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
+                <div class="absolute inset-0 bg-gradient-to-t from-[#0f172a]/80 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-end p-5">
+                  <div class="flex flex-wrap gap-2">
+                    <span class="text-[.7rem] bg-white/20 text-white px-2 py-1 rounded-full backdrop-blur-sm">C#</span>
+                    <span class="text-[.7rem] bg-white/20 text-white px-2 py-1 rounded-full backdrop-blur-sm">.NET</span>
+                  </div>
+                </div>
+              </div>
+              <div class="p-6">
+                <div class="flex items-center justify-between mb-3">
+                  <span class="skill-pill text-[.7rem]" data-i18n="school_project_tag">Skolprojekt</span>
+                  <span class="text-xs text-[#94a3b8]">2024</span>
+                </div>
+                <h4 class="font-bold text-[#0f172a] mb-2" data-i18n="project_cv_title">CV-Webbplats</h4>
+                <p class="text-sm text-[#64748b] leading-relaxed mb-5" data-i18n="project_cv_description">
+                  En fullstack-webbapplikation för att hantera CV:n och projekt.
+                </p>
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-4">
+                    <a href="https://github.com/verhill/PodcastLibrary"
+                       class="text-sm font-semibold text-[#1e40af] hover:text-[#1e3a8a] transition-colors flex items-center gap-2">
+                      <i class="fas fa-external-link-alt text-xs"></i>
+                      <span data-i18n="view_project">Visa projekt</span>
+                    </a>
+                    <button type="button" onclick="navigateToProject('cvwebsite')"
+                            class="text-sm font-medium text-[#94a3b8] hover:text-[#1e40af] transition-colors">
+                      <span data-i18n="details_btn">Detaljer →</span>
+                    </button>
+                  </div>
+                  <div class="flex gap-2">
+                    <img src="upCs.png" alt="C#" class="w-5 h-5">
+                    <img src="netlogo.png" alt=".NET" class="w-5 h-5">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Timeline (hidden, toggled by Script.js) ─ -->
+        <section id="timeline" class="hidden py-16">
+          <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-14">
+              <div class="overline justify-center mb-3" data-i18n="timeline_label">Utbildningsresa</div>
+              <h2 class="text-3xl font-extrabold text-[#0f172a] tracking-tight" data-i18n="timeline_title">
+                <span data-i18n="timeline_title_text">Min Utbildningsresa</span>
+              </h2>
+              <p class="text-[#64748b] mt-3" data-i18n="timeline_subtitle">Min utveckling från nybörjare till systemvetenskapsstudent</p>
+            </div>
+
+            <div class="relative">
+              <!-- Center line -->
+              <div class="hidden md:block absolute left-1/2 top-0 bottom-0 w-px bg-[#e2e8f0] -translate-x-1/2">
+                <div class="absolute top-0 left-0 w-full h-full bg-[#1e40af] origin-top scale-y-0 timeline-progress"></div>
+              </div>
+
+              <div class="space-y-16 md:space-y-24">
+                <!-- 2021 -->
+                <div class="relative md:grid md:grid-cols-[1fr_40px_1fr] md:gap-8 items-center timeline-item">
+                  <div class="mb-6 md:mb-0">
+                    <div class="card-premium p-6">
+                      <div class="flex items-center gap-3 mb-4">
+                        <div class="border border-[#1e40af] text-[#1e40af] font-bold text-sm px-3 py-1 rounded-lg" data-i18n="year_2021">2021</div>
+                        <div class="h-px flex-1 bg-[#e2e8f0]"></div>
+                      </div>
+                      <h3 class="font-bold text-[#0f172a] mb-2" data-i18n="timeline_2021_title">Början på min resa</h3>
+                      <p class="text-sm text-[#64748b] mb-2" data-i18n="timeline_2021_1">Började på civilingenjörsprogrammet och lärde mig grunderna i programmering.</p>
+                      <p class="text-sm text-[#64748b] mb-4" data-i18n="timeline_2021_2">Läste Python, C och SQL samt grundläggande nätverkslära.</p>
+                      <div class="flex flex-wrap gap-2">
+                        <span class="skill-pill"><img src="Python.svg.png" class="w-3 h-3" alt="Python"><span data-i18n="python_tag">Python</span></span>
+                        <span class="skill-pill" data-i18n="c_tag">C</span>
+                        <span class="skill-pill" data-i18n="sql_tag">SQL</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="hidden md:flex justify-center">
+                    <div class="tl-dot"></div>
+                  </div>
+                  <div>
+                    <div class="card-premium overflow-hidden">
+                      <div class="relative h-36 overflow-hidden">
+                        <img src="pythonProj.png" alt="Python Project"
+                             class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
+                      </div>
+                      <div class="p-5">
+                        <p class="text-sm text-[#64748b] mb-3" data-i18n="timeline_2021_3">Ett grupparbete där uppgiften var att skapa ett dataspel med Python och Pygame.</p>
+                        <a href="https://github.com/verhill/NotSpaceInvaders"
+                           class="text-sm font-semibold text-[#1e40af] hover:text-[#1e3a8a] flex items-center gap-2 transition-colors">
+                          <i class="fab fa-github"></i>
+                          <span data-i18n="github">Visa på GitHub</span>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 2023 -->
+                <div class="relative md:grid md:grid-cols-[1fr_40px_1fr] md:gap-8 items-center timeline-item">
+                  <div class="order-3 md:order-1">
+                    <div class="card-premium overflow-hidden">
+                      <div class="relative h-36 overflow-hidden">
+                        <img src="mib.projectlogo.png" alt="MIB Project"
+                             class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
+                      </div>
+                      <div class="p-5">
+                        <p class="text-sm text-[#64748b] mb-3" data-i18n="timeline_2024_consut3">Första objektorienterade projektet - ett administrativt system för organisationen MIB.</p>
+                        <a href="https://github.com/verhill/MiBProject"
+                           class="text-sm font-semibold text-[#1e40af] hover:text-[#1e3a8a] flex items-center gap-2 transition-colors">
+                          <i class="fab fa-github"></i>
+                          <span data-i18n="github">Visa på GitHub</span>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="hidden md:flex justify-center order-2">
+                    <div class="tl-dot"></div>
+                  </div>
+                  <div class="mb-6 md:mb-0 order-1 md:order-3">
+                    <div class="card-premium p-6">
+                      <div class="flex items-center gap-3 mb-4">
+                        <div class="border border-[#1e40af] text-[#1e40af] font-bold text-sm px-3 py-1 rounded-lg" data-i18n="year_2023">2023</div>
+                        <div class="h-px flex-1 bg-[#e2e8f0]"></div>
+                      </div>
+                      <h3 class="font-bold text-[#0f172a] mb-2" data-i18n="timeline_2023_title">Objektorientering och Java</h3>
+                      <p class="text-sm text-[#64748b] mb-2" data-i18n="timeline_2023_2">Bytte till systemvetenskapsprogrammet och fokuserade mer på programmering.</p>
+                      <p class="text-sm text-[#64748b] mb-4" data-i18n="timeline_2023_3">Lärde mig SQL och objektorienterad programmering i Java.</p>
+                      <div class="flex flex-wrap gap-2">
+                        <span class="skill-pill"><img src="upJava.webp" class="w-3 h-3" alt="Java"><span data-i18n="java_tag">Java</span></span>
+                        <span class="skill-pill" data-i18n="sql_tag">SQL</span>
+                        <span class="skill-pill" data-i18n="oop_tag">OOP</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 2024 -->
+                <div class="relative md:grid md:grid-cols-[1fr_40px_1fr] md:gap-8 items-center timeline-item">
+                  <div class="mb-6 md:mb-0">
+                    <div class="card-premium p-6">
+                      <div class="flex items-center gap-3 mb-4">
+                        <div class="border border-[#1e40af] text-[#1e40af] font-bold text-sm px-3 py-1 rounded-lg" data-i18n="year_2024">2024</div>
+                        <div class="h-px flex-1 bg-[#e2e8f0]"></div>
+                      </div>
+                      <h3 class="font-bold text-[#0f172a] mb-2" data-i18n="timeline_2024_title">Fullstack-utveckling</h3>
+                      <p class="text-sm text-[#64748b] mb-2" data-i18n="timeline_2024_1">Fördjupade mig inom front-end (HTML, CSS, JavaScript, Vue.js) och back-end med C# och SQL.</p>
+                      <p class="text-sm text-[#64748b] mb-4" data-i18n="timeline_2024_2">Började arbeta med .NET ramverket.</p>
+                      <div class="flex flex-wrap gap-2">
+                        <span class="skill-pill"><img src="upCs.png" class="w-3 h-3" alt="C#"><span data-i18n="csharp_tag">C#</span></span>
+                        <span class="skill-pill" data-i18n="dotnet_tag">.NET</span>
+                        <span class="skill-pill" data-i18n="vue_tag">Vue.js</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="hidden md:flex justify-center">
+                    <div class="tl-dot"></div>
+                  </div>
+                  <div>
+                    <div class="card-premium overflow-hidden">
+                      <div class="relative h-36 overflow-hidden">
+                        <img src="EgenHemsida.png" alt="Consulting Website"
+                             class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
+                      </div>
+                      <div class="p-5">
+                        <p class="text-sm text-[#64748b] mb-3" data-i18n="timeline_2024_consut2">Byggde en påhittad Konsulthemsida med HTML, CSS och Vue.js.</p>
+                        <a href="https://github.com/verhill/PersonalWebsite"
+                           class="text-sm font-semibold text-[#1e40af] hover:text-[#1e3a8a] flex items-center gap-2 transition-colors">
+                          <i class="fab fa-github"></i>
+                          <span data-i18n="github">Visa på GitHub</span>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 2025 -->
+                <div class="relative md:grid md:grid-cols-[1fr_40px_1fr] md:gap-8 items-center timeline-item">
+                  <div class="order-3 md:order-1">
+                    <div class="card-premium overflow-hidden">
+                      <div class="relative h-36 overflow-hidden">
+                        <img src="CvWeb.png" alt="CV System"
+                             class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
+                      </div>
+                      <div class="p-5">
+                        <p class="text-sm text-[#64748b] mb-3" data-i18n="timeline_2024_consut4">Hemsida för hantering av CV:n och projekt där användare kan söka efter andra användare och deras erfarenheter.</p>
+                        <a href="#" class="text-sm font-semibold text-[#1e40af] hover:text-[#1e3a8a] flex items-center gap-2 transition-colors">
+                          <i class="fab fa-github"></i>
+                          <span data-i18n="github">Visa på GitHub</span>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="hidden md:flex justify-center order-2">
+                    <div class="tl-dot"></div>
+                  </div>
+                  <div class="mb-6 md:mb-0 order-1 md:order-3">
+                    <div class="card-premium p-6">
+                      <div class="flex items-center gap-3 mb-4">
+                        <div class="border border-[#1e40af] text-[#1e40af] font-bold text-sm px-3 py-1 rounded-lg" data-i18n="year_2025">2025</div>
+                        <div class="h-px flex-1 bg-[#e2e8f0]"></div>
+                      </div>
+                      <h3 class="font-bold text-[#0f172a] mb-2" data-i18n="timeline_2025_title">Professionella projekt</h3>
+                      <p class="text-sm text-[#64748b] mb-4" data-i18n="timeline_2025_2">Fördjupad utveckling av applikationer med fokus på användbarhet och skalbara lösningar.</p>
+                      <div class="flex flex-wrap gap-2">
+                        <span class="skill-pill"><img src="netlogo.png" class="w-3 h-3" alt=".NET"><span data-i18n="dotnet_tag">.NET</span></span>
+                        <span class="skill-pill" data-i18n="csharp_tag">C#</span>
+                        <span class="skill-pill" data-i18n="fullstack_tag">Fullstack</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Hide timeline button -->
+            <div class="text-center mt-12">
+              <button type="button" id="hide-timeline-btn"
+                      class="btn-ghost inline-flex items-center gap-2">
+                <i class="fas fa-chevron-up text-xs"></i>
+                <span data-i18n="hide_timeline">Dölj tidslinje</span>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ── Divider ─────────────────────────────── -->
+        <div class="flex items-center gap-4 my-16 reveal-item">
+          <div class="flex-1 h-px bg-[#e2e8f0]"></div>
+          <div class="w-2 h-2 rounded-full bg-[#1e40af]/30"></div>
+          <div class="flex-1 h-px bg-[#e2e8f0]"></div>
+        </div>
+
+        <!-- ── Personal projects ───────────────────── -->
+        <div>
+          <div class="flex items-center justify-between mb-8">
+            <div class="flex items-center gap-3 reveal-item">
+              <img src="updateProfile.png" alt="Logo" class="w-8 h-8 rounded-full">
+              <h3 class="font-bold text-[#0f172a]" data-i18n="personal_projects_title">Personliga projekt</h3>
+            </div>
+            <a href="https://github.com/verhill"
+               class="text-sm font-semibold text-[#1e40af] hover:text-[#1e3a8a] flex items-center gap-2 transition-colors reveal-item">
+              <i class="fab fa-github"></i>
+              <span data-i18n="view_all">Se alla</span>
+            </a>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- ConstructAI — Featured project -->
+            <div class="card-premium reveal-item stagger-1">
+              <div class="constructai-placeholder relative overflow-hidden h-44 flex flex-col items-center justify-center">
+                <div class="constructai-placeholder-title">ConstructAI</div>
+                <div class="constructai-placeholder-sub mt-2" data-i18n="project_constructai_stackline">Vite + React | Three.js | Claude API</div>
+              </div>
+              <div class="p-6">
+                <div class="flex items-center justify-between mb-3">
+                  <div class="flex items-center gap-2">
+                    <span class="skill-pill text-[.7rem]" data-i18n="personal_project_tag">Personligt Projekt</span>
+                    <span class="ongoing-badge">
+                      <span class="animate-ping inline-block w-1.5 h-1.5 rounded-full bg-[#fb923c] opacity-75"></span>
+                      <span data-i18n="ongoing_badge">Pågående</span>
+                    </span>
+                  </div>
+                  <span class="text-xs text-[#94a3b8]">2025</span>
+                </div>
+                <h4 class="font-bold text-[#0f172a] mb-2">ConstructAI</h4>
+                <p class="text-sm text-[#64748b] leading-relaxed mb-5" data-i18n="project_constructai_description">
+                  AI-driven plattform för generativ husdesign med bildgenerering, planlösningar och 3D-modellering.
+                </p>
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-4">
+                    <button type="button" onclick="navigateToProject('constructai')"
+                            class="text-sm font-medium text-[#94a3b8] hover:text-[#1e40af] transition-colors">
+                      <span data-i18n="details_btn">Detaljer →</span>
+                    </button>
+                  </div>
+                  <div class="flex flex-wrap gap-2">
+                    <span class="skill-pill text-[.65rem]" data-i18n="tech_vite">Vite</span>
+                    <span class="skill-pill text-[.65rem]" data-i18n="tech_react">React</span>
+                    <span class="skill-pill text-[.65rem]" data-i18n="tech_threejs">Three.js</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- AI Car Analysis -->
+            <div class="card-premium reveal-item stagger-2">
+              <div class="relative overflow-hidden h-44">
+                <img src="CarePortal.png" alt="AI Bilskadeanalys"
+                     class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
+                <div class="absolute inset-0 bg-gradient-to-t from-[#0f172a]/80 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-end p-5">
+                  <div class="flex flex-wrap gap-2">
+                    <span class="text-[.7rem] bg-white/20 text-white px-2 py-1 rounded-full backdrop-blur-sm" data-i18n="tech_blazor">Blazor</span>
+                    <span class="text-[.7rem] bg-white/20 text-white px-2 py-1 rounded-full backdrop-blur-sm" data-i18n="tech_dotnet">.NET</span>
+                    <span class="text-[.7rem] bg-white/20 text-white px-2 py-1 rounded-full backdrop-blur-sm" data-i18n="tech_openai">OpenAI</span>
+                  </div>
+                </div>
+              </div>
+              <div class="p-6">
+                <div class="flex items-center justify-between mb-3">
+                  <span class="skill-pill text-[.7rem]" data-i18n="personal_project_tag">Personligt Projekt</span>
+                  <span class="text-xs text-[#94a3b8]">2025</span>
+                </div>
+                <h4 class="font-bold text-[#0f172a] mb-2" data-i18n="project_ai_car_analysis_name">AI Bilskadeanalys</h4>
+                <p class="text-sm text-[#64748b] leading-relaxed mb-5" data-i18n="project_ai_car_analysis_description">
+                  App för AI-analys av bilskador med kostnadsestimering och verkstadssökning. Integrerar OpenAI, Google Maps och Cloudinary.
+                </p>
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-4">
+                    <a href="https://mail.google.com/mail/?view=cm&to=hillver.david@gmail.com&su=Åtkomst%20till%20AI%20Bilskadeanalys-projektet&body=Hej%20David,%0D%0A%0D%0AJag%20skulle%20vilja%20be%20om%20åtkomst%20till%20ditt%20AI%20Bilskadeanalys-projekt.%0D%0A%0D%0AMed%20vänliga%20hälsningar,"
+                       target="_blank"
+                       class="text-sm font-semibold text-[#1e40af] hover:text-[#1e3a8a] transition-colors flex items-center gap-2">
+                      <i class="fas fa-external-link-alt text-xs"></i>
+                      <span data-i18n="view_project">Visa projekt</span>
+                    </a>
+                    <button type="button" onclick="navigateToProject('ai-car')"
+                            class="text-sm font-medium text-[#94a3b8] hover:text-[#1e40af] transition-colors">
+                      <span data-i18n="details_btn">Detaljer →</span>
+                    </button>
+                  </div>
+                  <div class="flex gap-2">
+                    <img src="blazor.png" alt="Blazor" class="w-5 h-5" data-i18n="alt_tech_blazor">
+                    <img src="netlogo.png" alt=".NET" class="w-5 h-5" data-i18n="alt_tech_dotnet">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider" data-label="03 — Kontakt"></div>
+
+  <!-- ═══════════════════════════════════════════════
+       CONTACT
+  ═══════════════════════════════════════════════════ -->
+  <section id="contact" class="py-24 bg-white">
+    <div class="container mx-auto px-6">
+      <div class="max-w-3xl mx-auto text-center">
+
+        <div class="overline justify-center reveal-item"><span class="sec-num">03</span> <span data-i18n="contact">Kontakt</span></div>
+        <h2 class="text-4xl md:text-5xl font-extrabold text-[#0f172a] tracking-tight leading-tight mb-4 reveal-left stagger-1"
+            data-i18n="contact_heading">
+          Låt oss<br>ta ett samtal.
+        </h2>
+        <p class="text-lg text-[#64748b] mb-14 reveal-item stagger-2" data-i18n="contactDesc">
+          Öppen för heltidsroller och frilansprojekt — låt oss bygga något tillsammans.
+        </p>
+
+        <!-- Contact links row -->
+        <div class="contact-links reveal-item stagger-1">
+          <a href="mailto:hillver.david@gmail.com" class="contact-link">
+            <span class="contact-label" data-i18n="contact_email_label">Email</span>
+            <span class="contact-value">hillver.david@gmail.com</span>
+          </a>
+          <div class="contact-divider"></div>
+          <a href="https://www.linkedin.com/in/david-hillver-015510303/"
+             target="_blank" rel="noopener" class="contact-link">
+            <span class="contact-label" data-i18n="contact_linkedin_label">LinkedIn</span>
+            <span class="contact-value">David Hillver</span>
+          </a>
+          <div class="contact-divider"></div>
+          <a href="https://github.com/verhill"
+             target="_blank" rel="noopener" class="contact-link">
+            <span class="contact-label" data-i18n="contact_github_label">GitHub</span>
+            <span class="contact-value">verhill</span>
+          </a>
+          <div class="contact-divider"></div>
+          <a href="tel:+46727114702" class="contact-link">
+            <span class="contact-label" data-i18n="ContactPhone">Telefon</span>
+            <span class="contact-value">+46 072 711 47 02</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       PROJECT DETAIL PAGE (virtual, hash-routed)
+  ═══════════════════════════════════════════════════ -->
+  <div id="detail-page" role="main" aria-label="Projektdetaljer">
+    <!-- Populated by navigateToProject() in JS -->
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════════════════ -->
+  <footer class="bg-[#0f172a]">
+    <!-- Premium top border -->
+    <div class="footer-top-line"></div>
+
+    <div class="container mx-auto px-6 py-8">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+        <a href="#" class="flex items-center sm:flex-1">
+          <img src="updateProfile.png" alt="David Hillver" class="h-10 opacity-80 hover:opacity-100 transition-opacity">
+        </a>
+        <div class="flex gap-5">
+          <a href="mailto:hillver.david@gmail.com" aria-label="Email David Hillver" class="text-[#94a3b8] hover:text-white transition-colors">
+            <i class="fas fa-envelope text-lg"></i>
+          </a>
+          <a href="https://www.linkedin.com/in/david-hillver-015510303/" target="_blank" aria-label="LinkedIn profile"
+             class="text-[#94a3b8] hover:text-white transition-colors">
+            <i class="fab fa-linkedin-in text-lg"></i>
+          </a>
+          <a href="https://github.com/verhill" target="_blank" aria-label="GitHub profile"
+             class="text-[#94a3b8] hover:text-white transition-colors">
+            <i class="fab fa-github text-lg"></i>
+          </a>
+        </div>
+        <p class="text-[#475569] text-sm sm:flex-1 sm:text-right" data-i18n="copyright">© 2025 David Hillver. Alla rättigheter förbehållna.</p>
+      </div>
+      <!-- Secret Easter egg -->
+      <div class="footer-secret">
+        Du hittade det hemliga stället. &nbsp;
+        <span class="footer-secret-reveal">Imponerande. <a href="mailto:hillver.david@gmail.com">Kontakta mig.</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ─── Project modal ───────────────────────────── -->
+  <div id="project-modal" class="modal-overlay" role="dialog" aria-modal="true"
+       aria-labelledby="modal-project-title" hidden>
+    <div class="modal-card">
+      <button type="button" class="modal-close-btn" id="modal-close-btn" aria-label="Stäng">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+          <path d="M18 6L6 18M6 6l12 12"/>
+        </svg>
+      </button>
+      <div id="modal-inner"></div>
+    </div>
+  </div>
+
+  <!-- ─── Scripts ────────────────────────────────── -->
+  <script>
+    // Scroll progress bar
+    const progressBar = document.getElementById('scroll-progress');
+    window.addEventListener('scroll', () => {
+      const total = document.body.scrollHeight - window.innerHeight;
+      progressBar.style.width = (window.scrollY / total * 100) + '%';
+    }, { passive: true });
+
+    // Scroll reveal via IntersectionObserver
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.reveal-item').forEach(el => revealObserver.observe(el));
+
+    // Active nav highlight on scroll
+    const navLinks = document.querySelectorAll('.nav-link-item');
+    const sections = ['about', 'projects', 'contact'];
+    const headerHeight = 80;
+
+    window.addEventListener('scroll', () => {
+      const pos = window.scrollY + headerHeight + 100;
+      let active = '';
+      sections.forEach(id => {
+        const el = document.getElementById(id);
+        if (el && el.offsetTop <= pos) active = id;
+      });
+      navLinks.forEach(a => {
+        const href = a.getAttribute('href')?.replace('#', '');
+        a.classList.toggle('active', href === active);
+      });
+    }, { passive: true });
+  </script>
+
+  <!-- Existing logic: language switcher, timeline toggle, mobile menu -->
+  <script src="Script.js"></script>
+
+  <!-- ─── Terminal · Modal · Translation overrides ── -->
+  <script>
+    // ── A. Terminal typewriter ────────────────────────────────────────────
+    (function initTerminal() {
+      const cmdEl  = document.getElementById('tc-cmd');
+      const outEl  = document.getElementById('tc-output');
+      const idleEl = document.getElementById('tc-idle');
+      if (!cmdEl) return;
+
+      const COMMAND = ' cat .\about.json';
+
+      const JSON_LINES = [
+        '<span class="tc-brace">{</span>',
+        '&nbsp;&nbsp;<span class="tc-jkey">"name"</span><span class="tc-jpunct">:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="tc-jstr">"David Hillver"</span><span class="tc-jpunct">,</span>',
+        '&nbsp;&nbsp;<span class="tc-jkey">"role"</span><span class="tc-jpunct">:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="tc-jstr">"Backend Developer"</span><span class="tc-jpunct">,</span>',
+        '&nbsp;&nbsp;<span class="tc-jkey">"stack"</span><span class="tc-jpunct">:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="tc-jpunct">[</span><span class="tc-jstr">"C#"</span><span class="tc-jpunct">, </span><span class="tc-jstr">".NET"</span><span class="tc-jpunct">, </span><span class="tc-jstr">"PostgreSQL"</span><span class="tc-jpunct">],</span>',
+        '&nbsp;&nbsp;<span class="tc-jkey">"focus"</span><span class="tc-jpunct">:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="tc-jpunct">[</span><span class="tc-jstr">"backend"</span><span class="tc-jpunct">, </span><span class="tc-jstr">"system design"</span><span class="tc-jpunct">, </span><span class="tc-jstr">"AI"</span><span class="tc-jpunct">],</span>',
+        '&nbsp;&nbsp;<span class="tc-jkey">"university"</span><span class="tc-jpunct">: </span><span class="tc-jstr">"Örebro University"</span><span class="tc-jpunct">,</span>',
+        '&nbsp;&nbsp;<span class="tc-jkey">"graduating"</span><span class="tc-jpunct">: </span><span class="tc-jnum">2026</span><span class="tc-jpunct">,</span>',
+        '&nbsp;&nbsp;<span class="tc-jkey">"status"</span><span class="tc-jpunct">:&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="tc-jstr">"available ✓"</span>',
+        '<span class="tc-brace">}</span>',
+      ];
+
+      const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+      function typeText(el, text, spd) {
+        return new Promise(resolve => {
+          let i = 0;
+          const iv = setInterval(() => {
+            el.textContent += text[i++];
+            if (i >= text.length) { clearInterval(iv); resolve(); }
+          }, spd);
+        });
+      }
+
+      async function run() {
+        await sleep(600);
+        await typeText(cmdEl, COMMAND, 55);
+        await sleep(160);
+
+        for (const html of JSON_LINES) {
+          await sleep(90);
+          const row = document.createElement('div');
+          row.innerHTML = html;
+          outEl.appendChild(row);
+        }
+
+        await sleep(250);
+        if (idleEl) idleEl.classList.remove('tc-idle-hidden');
+      }
+
+      run();
+    })();
+
+    // ── B. Project modal ──────────────────────────────────────────────────
+    const PROJECT_DATA = {
+      hatmakers: {
+        title: 'Hatmakarna', year: '2024', type: 'Skolprojekt',
+        desc: 'Fullständig e-handelsplattform för ett fiktivt hattföretag, byggd med Scrum-metodik i ett team om 5 studenter (kurs IK207G). Innehåller produktkatalog, kundvagn och orderhanteringssystem.',
+        stack: ['C#', 'ASP.NET Core', 'SQL Server', 'HTML/CSS', 'JavaScript'],
+        role: 'Ansvarade för backend-arkitektur och databasdesign. Implementerade produktkatalog, kundvagn och orderhantering med clean-architecture-principer.',
+        github: 'https://github.com/verhill/HatMakers',
+        demo: null, note: null,
+      },
+      podcast: {
+        title: 'Podcastbibliotek', year: '2024', type: 'Skolprojekt',
+        desc: 'Konsolapplikation i C# för att hantera och organisera dina favoritpodcasts. Fokus på objektorienterade designprinciper och ren kodstruktur.',
+        stack: ['C#', '.NET'],
+        role: 'Ensam utvecklare. Designade klassstrukturen med OOP-principer och implementerade fil-I/O för persistent lagring av podcastdata.',
+        github: 'https://github.com/verhill/PodcastLibrary',
+        demo: null, note: null,
+      },
+      cvwebsite: {
+        title: 'CV-Webbplats', year: '2024', type: 'Skolprojekt',
+        desc: 'Fullstack-webbapplikation för att skapa, hantera och presentera CV:n. Användare kan registrera sig, skapa profiler och söka efter andra användares kompetenser och erfarenheter.',
+        stack: ['C#', 'ASP.NET Core', '.NET', 'SQL Server'],
+        role: 'Byggde hela backend-API:t och databasstrukturen. Implementerade användarautentisering, profilhantering och söktjänst.',
+        github: null, demo: null,
+        note: 'Kod ej publik — kontakta mig för demo',
+      },
+      'ai-car': {
+        title: 'AI Bilskadeanalys', year: '2025', type: 'Personligt Projekt',
+        desc: 'Webbapp som analyserar bilder av bilskador med AI, estimerar reparationskostnader och hjälper användare att hitta närmaste verkstäder. Integrerar OpenAI Vision API, Google Maps och Cloudinary för bildlagring.',
+        stack: ['Blazor', 'ASP.NET Core', '.NET', 'OpenAI API', 'Google Maps API', 'Cloudinary', 'PostgreSQL'],
+        role: 'Fullstack-arkitekt och ensam utvecklare. Designade AI-pipeline, kostnadsestimeringslogik och geografisk verkstadssökning från grunden.',
+        github: null, demo: null,
+        note: 'Privat repo — kontakta mig för tillgång och demo',
+      },
+    };
+
+    function openProjectModal(id) {
+      const d = PROJECT_DATA[id];
+      if (!d) return;
+      const ghBtn = d.github
+        ? `<a href="${d.github}" target="_blank" rel="noopener" class="modal-link-btn modal-link-primary"><i class="fab fa-github"></i> GitHub</a>`
+        : '';
+      const demoBtn = d.demo
+        ? `<a href="${d.demo}" target="_blank" rel="noopener" class="modal-link-btn modal-link-secondary"><i class="fas fa-external-link-alt"></i> Live Demo</a>`
+        : '';
+      const noteEl = d.note
+        ? `<p class="modal-note"><i class="fas fa-lock"></i> ${d.note}</p>`
+        : '';
+      document.getElementById('modal-inner').innerHTML = `
+        <div class="modal-body">
+          <span class="modal-tag">${d.type} · ${d.year}</span>
+          <h2 class="modal-title" id="modal-project-title">${d.title}</h2>
+          <p class="modal-desc">${d.desc}</p>
+          <div class="modal-section-label">Tech Stack</div>
+          <div class="modal-stack">${d.stack.map(t => `<span class="modal-tech-tag">${t}</span>`).join('')}</div>
+          <div class="modal-section-label">Min Roll</div>
+          <p class="modal-role">${d.role}</p>
+          <div class="modal-links">${ghBtn}${demoBtn}</div>
+          ${noteEl}
+        </div>`;
+      const modal = document.getElementById('project-modal');
+      modal.hidden = false;
+      document.body.style.overflow = 'hidden';
+      document.getElementById('modal-close-btn').focus();
+    }
+
+    function closeProjectModal() {
+      document.getElementById('project-modal').hidden = true;
+      document.body.style.overflow = '';
+    }
+
+    (function() {
+      const modal    = document.getElementById('project-modal');
+      const closeBtn = document.getElementById('modal-close-btn');
+      if (closeBtn) closeBtn.addEventListener('click', closeProjectModal);
+      if (modal)    modal.addEventListener('click', e => { if (e.target === modal) closeProjectModal(); });
+      document.addEventListener('keydown', e => { if (e.key === 'Escape') closeProjectModal(); });
+    })();
+
+    // ── C. Translation overrides (fires after Script.js's DOMContentLoaded) ──
+    (function() {
+      const yr = new Date().getFullYear();
+      const OVERRIDES = {
+        sv: {
+          hero_description: 'Jag bygger backend-system och databasarkitekturer — rena, skalbara och produktionsklara. Avslutar min kandidatexamen vid Örebro Universitet (2026).',
+          contactDesc: 'Öppen för heltidsroller och frilansprojekt — låt oss bygga något tillsammans.',
+          aboutDescription: 'Systemvetenskapsstudent vid Örebro Universitet med fokus på backend-arkitektur och databasdesign. Jag bygger produktionsklara lösningar i C# och .NET — rena, skalbara och väldokumenterade.',
+          aboutDescription2: 'Parallellt med studierna driver jag egna projekt inom AI-integration och fullstack-webbutveckling. Avslutar min kandidatexamen 2026 och söker min första heltidsroll inom backend eller systemutveckling.',
+          copyright: `© ${yr} David Hillver. Alla rättigheter förbehållna.`,
+        },
+        en: {
+          hero_description: 'I build backend systems and database architectures — clean, scalable, and production-ready. Currently finishing my B.Sc at Örebro University (2026).',
+          contactDesc: "Open to full-time roles and freelance projects — let's build something together.",
+          aboutDescription: 'Systems science student at Örebro University specialising in backend architecture and database design. I build production-ready solutions in C# and .NET — clean, scalable and well-documented.',
+          aboutDescription2: 'Alongside my studies I run personal projects in AI integration and fullstack web development. Graduating in 2026 and looking for my first full-time role in backend or systems development.',
+          copyright: `© ${yr} David Hillver. All rights reserved.`,
+        },
+      };
+
+      function applyOverrides(lang) {
+        const map = OVERRIDES[lang] || {};
+        Object.entries(map).forEach(([key, text]) => {
+          document.querySelectorAll(`[data-i18n="${key}"]`).forEach(el => { el.textContent = text; });
+        });
+      }
+
+      window.addEventListener('DOMContentLoaded', () => {
+        applyOverrides('sv');
+        ['lang-sv', 'lang-en', 'lang-sv-mobile', 'lang-en-mobile'].forEach(id => {
+          const btn = document.getElementById(id);
+          if (!btn) return;
+          const lang = id.includes('sv') ? 'sv' : 'en';
+          btn.addEventListener('click', () => setTimeout(() => applyOverrides(lang), 15));
+        });
+      });
+    })();
+  </script>
+
+  <!-- ─── Dark mode · Project detail routing · Parallax ── -->
+  <script>
+  // ══════════════════════════════════════════════════════
+  // A. THEME TOGGLE
+  // ══════════════════════════════════════════════════════
+  (function initTheme() {
+    const saved = localStorage.getItem('theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', saved);
+    updateThemeIcons(saved);
+  })();
+
+  function updateThemeIcons(theme) {
+    const isDark = theme === 'dark';
+    document.querySelectorAll('#theme-toggle, #theme-toggle-mobile').forEach(btn => {
+      if (!btn) return;
+      btn.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+      btn.setAttribute('title', isDark ? 'Byt till ljust läge' : 'Byt till mörkt läge');
+    });
+  }
+
+  function toggleTheme() {
+    const current = document.documentElement.getAttribute('data-theme') || 'dark';
+    const next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    updateThemeIcons(next);
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('theme-toggle')?.addEventListener('click', toggleTheme);
+    document.getElementById('theme-toggle-mobile')?.addEventListener('click', toggleTheme);
+  });
+
+  // ══════════════════════════════════════════════════════
+  // B. PARALLAX HERO BACKGROUND
+  // ══════════════════════════════════════════════════════
+  (function initParallax() {
+    const mesh  = document.querySelector('.gradient-mesh');
+    const dots  = document.querySelector('.hero-dot-grid');
+    const blob  = document.querySelector('.hero-blob');
+    let ticking = false;
+
+    window.addEventListener('scroll', () => {
+      if (ticking) return;
+      requestAnimationFrame(() => {
+        const y = window.scrollY;
+        const shift = Math.min(y * 0.15, 20); // max 20px
+        if (mesh)  mesh.style.transform  = `translateY(${shift}px)`;
+        if (dots)  dots.style.transform  = `translateY(${shift * 0.5}px)`;
+        if (blob)  blob.style.transform  = `translateY(${shift * 0.8}px)`;
+        ticking = false;
+      });
+      ticking = true;
+    }, { passive: true });
+  })();
+
+  // ══════════════════════════════════════════════════════
+  // C. PROJECT DETAIL DATA
+  // ══════════════════════════════════════════════════════
+  const PROJECT_DETAIL_DATA = {
+    hatmakers: {
+      slug: 'hatmakers',
+      title: 'Hatmakarna',
+      title_en: 'The Hat Makers',
+      year: 2024,
+      category: 'Skolprojekt',
+      category_en: 'School Project',
+      tagline: 'Fullstack e-handel med Scrum och ASP.NET Core',
+      tagline_en: 'Full-stack e-commerce with Scrum and ASP.NET Core',
+      problem: 'Hur kan ett litet team effektivt leverera en fullständig, produktionsnära e-handelsplattform inom kurslängd med hjälp av agila metoder?',
+      problem_en: 'How can a small team efficiently deliver a complete, production-ready e-commerce platform within a course timeframe using agile methods?',
+      solution: 'Vi implementerade clean architecture med tydliga lager — controllers, services, repositories — och använde ASP.NET Core för REST API och SQL Server för datalagring. Sprintplaneringen i Scrum höll oss fokuserade och levererade kontinuerligt värde.',
+      solution_en: 'We implemented clean architecture with clear layers — controllers, services, repositories — and used ASP.NET Core for the REST API and SQL Server for data storage. Sprint planning in Scrum kept us focused and delivered continuous value.',
+      architecture: 'MVC-arkitektur med repository-pattern och dependency injection. Databasschemat normaliserades till 3NF med relationer för produkter, ordrar och kunder.',
+      architecture_en: 'MVC architecture with repository pattern and dependency injection. The database schema was normalized to 3NF with relations for products, orders, and customers.',
+      techStack: ['C#', 'ASP.NET Core', 'SQL Server', 'HTML/CSS', 'JavaScript', 'Scrum'],
+      screenshots: [],
+      githubUrl: 'https://github.com/verhill/HatMakers',
+      liveUrl: '',
+      status: 'Demo',
+    },
+    podcast: {
+      slug: 'podcast',
+      title: 'Podcastbibliotek',
+      title_en: 'Podcast Library',
+      year: 2024,
+      category: 'Skolprojekt',
+      category_en: 'School Project',
+      tagline: 'Konsolapplikation för podcasthantering i C#',
+      tagline_en: 'Console application for podcast management in C#',
+      problem: 'Hur designar man en välstrukturerad OOP-applikation som är lätt att underhålla och bygga vidare på?',
+      problem_en: 'How do you design a well-structured OOP application that is easy to maintain and extend?',
+      solution: 'Designade klassstrukturen med tydliga ansvar (Single Responsibility), implementerade arv och interfaces, och byggde en fil-I/O-mekanism för att spara och läsa in podcastdata mellan sessioner.',
+      solution_en: 'Designed the class structure with clear responsibilities (Single Responsibility), implemented inheritance and interfaces, and built a file I/O mechanism to save and load podcast data between sessions.',
+      architecture: 'Klassbaserat OOP med inheritance hierarchy: Podcast → Episode, IPlayable interface, och en Repository-klass för serialisering till JSON.',
+      architecture_en: 'Class-based OOP with inheritance hierarchy: Podcast → Episode, IPlayable interface, and a Repository class for JSON serialization.',
+      techStack: ['C#', '.NET', 'OOP', 'JSON'],
+      screenshots: [],
+      githubUrl: 'https://github.com/verhill/PodcastLibrary',
+      liveUrl: '',
+      status: 'Demo',
+    },
+    cvwebsite: {
+      slug: 'cvwebsite',
+      title: 'CV-Webbplats',
+      title_en: 'CV Website',
+      year: 2024,
+      category: 'Skolprojekt',
+      category_en: 'School Project',
+      tagline: 'Fullstack-plattform för CV och projekthantering',
+      tagline_en: 'Full-stack platform for CV and project management',
+      problem: 'Hur bygger man ett system för CV-hantering med rollbaserad åtkomst, sökfunktionalitet och en ren användargränssnitt?',
+      problem_en: 'How do you build a CV management system with role-based access, search functionality, and a clean user interface?',
+      solution: 'Byggde hela backend-API:t med ASP.NET Core, designade relationsdatabasen i SQL Server, och implementerade JWT-baserad autentisering med rollsystem för Student och Arbetsgivare.',
+      solution_en: 'Built the entire backend API with ASP.NET Core, designed the relational database in SQL Server, and implemented JWT-based authentication with a role system for Student and Employer.',
+      architecture: 'REST API med controller/service-lager, Entity Framework Core för ORM, SQL Server för data, och JWT för autentisering.',
+      architecture_en: 'REST API with controller/service layer, Entity Framework Core for ORM, SQL Server for data, and JWT for authentication.',
+      techStack: ['C#', 'ASP.NET Core', '.NET', 'SQL Server', 'Entity Framework', 'JWT'],
+      screenshots: [],
+      githubUrl: '',
+      liveUrl: '',
+      status: 'Privat',
+    },
+    constructai: {
+      slug: 'constructai',
+      title: 'ConstructAI',
+      title_en: 'ConstructAI',
+      year: 2025,
+      category: 'Personligt Projekt',
+      category_en: 'Personal Project',
+      ongoing: true,
+      status: 'Ongoing',
+      tagline: 'AI-driven plattform för att generera husdesign, planlösningar och 3D-modeller från användarinput.',
+      tagline_en: 'AI-driven platform for generating home design, floor plans and 3D models from user input.',
+      problem: 'Att gå från en idé eller textprompt till en sammanhängande husdesign är ofta fragmenterat mellan flera verktyg. Exteriör, planlösning och 3D-modellering hanteras i separata steg, vilket skapar manuella överlämningar och inkonsekvent kvalitet.',
+      problem_en: 'Going from an idea or text prompt to a coherent home design is often fragmented across multiple tools. Exterior concepting, floor plan design and 3D modeling are usually handled in separate steps, creating manual handoffs and inconsistent quality.',
+      solution: 'ConstructAI låter användaren skapa ett huskoncept från prompt, genererar en planlösning utifrån den skapade husbilden och producerar en strukturerad designspecifikation. Specifikationen används sedan som underlag för att bygga upp en visualiserbar 3D-modell.',
+      solution_en: 'ConstructAI lets the user generate a house concept from a prompt, derives a floor plan from the generated house image and produces a structured design specification. That specification is then used as input for building a visualizable 3D model.',
+      architecture: 'Vite + React i frontend, Three.js för 3D-visualisering och ASP.NET Core API för orkestrering av AI-flödena. Flerstegspipeline där AI används för huskoncept -> planlösning -> strukturerad specifikation -> 3D-underlag. Data lagras i PostgreSQL.',
+      architecture_en: 'Vite + React in the frontend, Three.js for 3D visualization and an ASP.NET Core API for orchestration of AI flows. Multi-step pipeline where AI is used for house concept -> floor plan -> structured specification -> 3D-ready input. Data is stored in PostgreSQL.',
+      techStack: ['Vite', 'React', 'Three.js', 'Claude API', 'ASP.NET Core', 'PostgreSQL'],
+      screenshots: [],
+      githubUrl: '',
+      liveUrl: '',
+      casestudy: {
+        problem: {
+          sv: 'Att gå från en textprompt till en sammanhängande husdesign med både exteriör, planlösning och 3D-modell krävde tidigare flera separata verktyg och manuella steg.',
+          en: 'Going from a text prompt to a coherent home design with exterior concept, floor plan and 3D model previously required multiple tools and manual steps.'
+        },
+        decision: {
+          sv: 'Valde en flerstegspipeline där AI först genererar husbild, sedan planlösning och därefter en strukturerad specifikation som kan användas vidare för 3D-generering.',
+          en: 'Chose a multi-step pipeline where AI first generates a house image, then a floor plan, and then a structured specification that can be used for 3D generation.'
+        },
+        result: {
+          sv: 'Projektet visar hur AI-genererat innehåll kan föras vidare mellan flera steg och omvandlas till ett mer strukturerat underlag för interaktiv 3D-visualisering.',
+          en: 'The project demonstrates how AI-generated content can be carried across multiple stages and transformed into a more structured foundation for interactive 3D visualization.'
+        },
+        lessons: {
+          sv: 'En tydlig kontraktsmodell mellan stegen var avgörande för att minska felpropagering. Kvaliteten ökade markant när utdata från varje steg normaliserades innan nästa steg.',
+          en: 'A clear contract model between stages was critical to reduce error propagation. Quality improved significantly when output from each stage was normalized before entering the next stage.'
+        },
+      },
+      metrics: [
+        { value: 'AI', label: { sv: 'AI-driven design', en: 'AI-driven design' } },
+        { value: 'Image->Plan', label: { sv: 'Planlösning från bild', en: 'Floor plan from image' } },
+        { value: '3D', label: { sv: '3D-modellering', en: '3D modeling' } },
+        { value: 'Pipeline', label: { sv: 'Flerstegspipeline', en: 'Multi-step pipeline' } },
+      ],
+    },
+    'ai-car': {
+      slug: 'ai-car',
+      title: 'AI Bilskadeanalys',
+      title_en: 'AI Car Damage Analysis',
+      year: 2025,
+      category: 'Personligt Projekt',
+      category_en: 'Personal Project',
+      tagline: 'AI-driven analys av bilskador med kostnadsbedömning',
+      tagline_en: 'AI-driven car damage analysis with cost assessment',
+      problem: 'Bilägare saknar ett snabbt och objektivt sätt att bedöma skador och uppskatta kostnader utan att behöva boka in på verkstad direkt.',
+      problem_en: 'Car owners lack a fast and objective way to assess damage and estimate costs without immediately booking a workshop visit.',
+      solution: 'Byggde en Blazor WASM-frontend som kommunicerar med ett ASP.NET Core API. Bilder laddas upp till Cloudinary, analyseras av OpenAI Vision, och geografiska verkstäder hämtas via Google Maps Places API.',
+      solution_en: 'Built a Blazor WASM frontend that communicates with an ASP.NET Core API. Images are uploaded to Cloudinary, analyzed by OpenAI Vision, and nearby workshops are retrieved via the Google Maps Places API.',
+      architecture: 'Blazor WASM (klient) ↔ ASP.NET Core API (server) ↔ PostgreSQL (data) + Cloudinary (bilder) + OpenAI API + Google Maps API. Clean architecture med Domain/Application/Infrastructure-lager.',
+      architecture_en: 'Blazor WASM (client) ↔ ASP.NET Core API (server) ↔ PostgreSQL (data) + Cloudinary (images) + OpenAI API + Google Maps API. Clean architecture with Domain/Application/Infrastructure layers.',
+      techStack: ['Blazor WASM', 'ASP.NET Core', '.NET', 'OpenAI API', 'Google Maps API', 'Cloudinary', 'PostgreSQL'],
+      screenshots: [],
+      githubUrl: '',
+      liveUrl: '',
+      status: 'Privat',
+    },
+  };
+
+  // ══════════════════════════════════════════════════════
+  // D. PROJECT DETAIL ROUTING
+  // ══════════════════════════════════════════════════════
+  const mainContent    = document.getElementById('main-content-wrapper');
+  const detailPage     = document.getElementById('detail-page');
+
+  function navigateToProject(slug) {
+    const data = PROJECT_DETAIL_DATA[slug];
+    if (!data) return;
+    renderDetailPage(data);
+    window.location.hash = 'projekt/' + slug;
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }
+
+  function renderDetailPage(data) {
+    const lang = document.documentElement.lang || 'sv';
+    const t = translations[lang] || translations['sv'];
+    // Pick language-specific content field, fall back to base (SV) field
+    const lc = (key) => (lang === 'en' && data[key + '_en']) ? data[key + '_en'] : data[key];
+    const tx = (key, fallback = '') => {
+      const value = t && Object.prototype.hasOwnProperty.call(t, key) ? t[key] : '';
+      return (typeof value === 'string' && value.trim() !== '') ? value : fallback;
+    };
+
+    const statusClass = {
+      'Live': 'status-live',
+      'Demo': 'status-demo',
+      'Privat': 'status-privat',
+      'Ongoing': 'status-ongoing',
+    }[data.status] || 'status-demo';
+
+    const statusLabel = lang === 'en'
+      ? ({ 'Privat': 'Private', 'Demo': 'Demo', 'Live': 'Live', 'Ongoing': 'Ongoing' }[data.status] || data.status)
+      : ({ 'Ongoing': 'Pågående' }[data.status] || data.status);
+
+    const techTags = data.techStack.map(tech =>
+      `<span class="detail-tech-tag">${tech}</span>`
+    ).join('');
+
+    const screenshotsCard = data.screenshots && data.screenshots.length > 0
+      ? `<div class="detail-card">
+           <div class="detail-section-label" style="margin-bottom:1rem;">${t.detail_screenshots}</div>
+           ${data.screenshots.map(src => `<img src="${src}" alt="${lc('title')} screenshot" class="w-full rounded-xl" loading="lazy">`).join('')}
+         </div>` : '';
+
+    const ghBtn = data.githubUrl
+      ? `<a href="${data.githubUrl}" target="_blank" rel="noopener" class="detail-action-btn detail-btn-primary">
+           <i class="fab fa-github"></i> GitHub
+         </a>` : '';
+    const liveBtn = data.liveUrl
+      ? `<a href="${data.liveUrl}" target="_blank" rel="noopener" class="detail-action-btn detail-btn-secondary">
+           <i class="fas fa-external-link-alt"></i> Live Demo
+         </a>` : '';
+
+    const archSection = data.architecture
+      ? `<div class="detail-section-label" style="margin-top:1.5rem">${t.detail_architecture}</div>
+         <p class="detail-prose">${lc('architecture')}</p>`
+      : '';
+
+    const noteHtml = !data.githubUrl && !data.liveUrl
+      ? `<p style="margin-top:.75rem;font-size:.8rem;color:var(--c-text-muted);font-style:italic;display:flex;align-items:center;gap:6px;">
+           <i class="fas fa-lock"></i> ${t.detail_contact_note}
+         </p>` : '';
+
+    const ongoingBannerText = tx(
+      'ongoing_banner',
+      lang === 'en' ? 'Project under active development.' : 'Projektet är under aktiv utveckling.'
+    );
+    const ongoingBanner = data.ongoing
+      ? `<div class="ongoing-banner" style="padding:.75rem 1rem;margin-bottom:1.5rem;display:flex;align-items:center;gap:10px;font-size:.85rem;font-weight:600;">
+           <span class="animate-ping inline-block w-2 h-2 rounded-full bg-[#fb923c]"></span>
+           ${ongoingBannerText}
+         </div>` : '';
+
+    const metricsHtml = data.metrics && data.metrics.length > 0
+      ? `<div class="detail-metrics-row">
+           ${data.metrics.map(m => {
+             const label = lang === 'en'
+               ? (m.label?.en || m.label?.sv || '')
+               : (m.label?.sv || m.label?.en || '');
+             return `
+               <div class="detail-metric">
+                 <span style="font-size:1.5rem;font-weight:800;color:var(--c-accent);">${m.value}</span>
+                 <span style="font-size:.75rem;color:var(--c-text-muted);margin-top:2px;">${label}</span>
+               </div>`;
+           }).join('')}
+         </div>` : '';
+
+    const casestudyProblem = lang === 'en'
+      ? (data.casestudy?.problem?.en || data.casestudy?.problem?.sv || '')
+      : (data.casestudy?.problem?.sv || data.casestudy?.problem?.en || '');
+    const casestudyDecision = lang === 'en'
+      ? (data.casestudy?.decision?.en || data.casestudy?.decision?.sv || '')
+      : (data.casestudy?.decision?.sv || data.casestudy?.decision?.en || '');
+    const casestudyResult = lang === 'en'
+      ? (data.casestudy?.result?.en || data.casestudy?.result?.sv || '')
+      : (data.casestudy?.result?.sv || data.casestudy?.result?.en || '');
+    const casestudyLessons = lang === 'en'
+      ? (data.casestudy?.lessons?.en || data.casestudy?.lessons?.sv || '')
+      : (data.casestudy?.lessons?.sv || data.casestudy?.lessons?.en || '');
+    const casestudyHtml = data.casestudy
+      ? `<div class="detail-card" style="margin-top:0;">
+           <div class="detail-section-label" style="margin-bottom:1rem;">${tx('detail_casestudy', 'Case Study')}</div>
+           <div class="cs-grid">
+             <div class="cs-card cs-problem">
+               <div style="font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#ef4444;margin-bottom:.5rem;">${tx('detail_cs_problem', 'Problem')}</div>
+               <p style="font-size:.82rem;color:var(--c-text-secondary);line-height:1.6;">${casestudyProblem}</p>
+             </div>
+             <div class="cs-card cs-decision">
+               <div style="font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#f59e0b;margin-bottom:.5rem;">${tx('detail_cs_decision', 'Decision')}</div>
+               <p style="font-size:.82rem;color:var(--c-text-secondary);line-height:1.6;">${casestudyDecision}</p>
+             </div>
+             <div class="cs-card cs-result">
+               <div style="font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#22c55e;margin-bottom:.5rem;">${tx('detail_cs_result', 'Result')}</div>
+               <p style="font-size:.82rem;color:var(--c-text-secondary);line-height:1.6;">${casestudyResult}</p>
+             </div>
+           </div>
+           <div class="cs-lessons" style="margin-top:1rem;padding:.8rem 1rem;border-radius:8px;background:var(--c-surface-2);">
+             <div style="font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--c-accent);margin-bottom:.4rem;">${tx('detail_cs_lessons', 'Lessons Learned')}</div>
+             <p style="font-size:.82rem;color:var(--c-text-secondary);line-height:1.6;">${casestudyLessons}</p>
+           </div>
+         </div>` : '';
+
+    detailPage.innerHTML = `
+      <!-- HERO -->
+      <div class="detail-hero">
+        <div style="max-width:900px;margin:0 auto;padding:2rem 1.5rem 0;">
+          <button class="detail-back-btn" onclick="closeDetailPage()" aria-label="${t.detail_back}">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+              <path d="M19 12H5M12 5l-7 7 7 7"/>
+            </svg>
+            ${t.detail_back}
+          </button>
+
+          <div style="display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-bottom:1rem;">
+            <span class="detail-status-badge ${statusClass}">${statusLabel}</span>
+            <span style="font-size:.8rem;color:var(--c-text-muted);">${data.year} · ${lc('category')}</span>
+          </div>
+
+          <h1 class="detail-title">${lc('title')}</h1>
+          <p class="detail-tagline">${lc('tagline')}</p>
+
+          <div class="detail-tech-stack" style="margin-bottom:2rem;">
+            ${techTags}
+          </div>
+        </div>
+      </div>
+
+      <!-- BODY -->
+      <div class="detail-body">
+        <div style="display:grid;grid-template-columns:1fr;gap:2rem;">
+
+          ${ongoingBanner}
+          ${metricsHtml}
+
+          <!-- Main content — 2-col on desktop -->
+          <div style="display:grid;grid-template-columns:1fr;gap:2rem;" class="detail-grid-cols">
+
+            <!-- Left: Problem + Solution -->
+            <div style="display:flex;flex-direction:column;gap:1.5rem;">
+              <div class="detail-card">
+                <div class="detail-section-label">${t.detail_problem}</div>
+                <p class="detail-prose">${lc('problem')}</p>
+              </div>
+              <div class="detail-card">
+                <div class="detail-section-label">${t.detail_solution}</div>
+                <p class="detail-prose">${lc('solution')}</p>
+                ${archSection}
+              </div>
+            </div>
+
+            <!-- Right: Tech + Screenshots (if any) -->
+            <div style="display:flex;flex-direction:column;gap:1.5rem;">
+              <div class="detail-card">
+                <div class="detail-section-label">${tx('detail_tech_stack', 'Tech Stack')}</div>
+                <div class="detail-tech-stack" style="margin-top:.5rem;">
+                  ${techTags}
+                </div>
+              </div>
+              ${screenshotsCard}
+            </div>
+          </div>
+
+          ${casestudyHtml}
+
+          <!-- Actions -->
+          <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;padding-top:.5rem;">
+            ${ghBtn}
+            ${liveBtn}
+            ${noteHtml}
+          </div>
+        </div>
+      </div>
+    `;
+
+    detailPage.classList.add('visible');
+    detailPage.classList.remove('hiding');
+
+    // Apply 2-col layout on desktop
+    const grid = detailPage.querySelector('.detail-grid-cols');
+    if (grid && window.innerWidth >= 768) {
+      grid.style.gridTemplateColumns = '1fr 1fr';
+    }
+  }
+
+  function closeDetailPage() {
+    detailPage.classList.add('hiding');
+    setTimeout(() => {
+      detailPage.classList.remove('visible', 'hiding');
+      detailPage.innerHTML = '';
+      history.pushState('', document.title, window.location.pathname);
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    }, 260);
+  }
+
+  // Handle browser back/forward and initial hash
+  window.addEventListener('hashchange', handleHash);
+  window.addEventListener('DOMContentLoaded', handleHash);
+
+  function handleHash() {
+    const hash = window.location.hash;
+    if (hash.startsWith('#projekt/')) {
+      const slug = hash.replace('#projekt/', '');
+      const data = PROJECT_DETAIL_DATA[slug];
+      if (data) renderDetailPage(data);
+    } else {
+      if (detailPage.classList.contains('visible')) {
+        closeDetailPage();
+      }
+    }
+  }
+
+  // Handle responsive resize for detail grid
+  window.addEventListener('resize', () => {
+    const grid = detailPage.querySelector('.detail-grid-cols');
+    if (!grid) return;
+    grid.style.gridTemplateColumns = window.innerWidth >= 768 ? '1fr 1fr' : '1fr';
+  });
+  </script>
+
+  <!-- ─── Cursor · Magnetic · Konami · Easter eggs ── -->
+  <script>
+  // ══════════════════════════════════════════════════════
+  // CONSOLE EASTER EGG — fires immediately
+  // ══════════════════════════════════════════════════════
+  console.log(
+    '%c 👋 Hej! Du kollar på min kod — det gillar jag.\n    GitHub: github.com/verhill ',
+    'background:#0a0a0f;color:#4f6ef7;padding:12px 18px;border-radius:6px;' +
+    'font-size:13px;font-family:monospace;border-left:3px solid #4f6ef7;line-height:1.8;'
+  );
+
+  // ══════════════════════════════════════════════════════
+  // CURSOR RING — additive overlay, OS cursor always visible
+  // ══════════════════════════════════════════════════════
+  document.addEventListener('DOMContentLoaded', function() {
+    if (window.matchMedia('(pointer: coarse)').matches) return;
+
+    const ring = document.getElementById('cursor-ring');
+    if (!ring) return;
+
+    let hasMovedOnce = false;
+
+    document.addEventListener('mousemove', function(e) {
+      ring.style.left = e.clientX + 'px';
+      ring.style.top  = e.clientY + 'px';
+      if (!hasMovedOnce) {
+        hasMovedOnce = true;
+        ring.classList.add('cursor-visible');
+      }
+    });
+
+    document.addEventListener('mouseleave', function() {
+      ring.classList.remove('cursor-visible');
+    });
+
+    document.addEventListener('mouseenter', function() {
+      if (hasMovedOnce) ring.classList.add('cursor-visible');
+    });
+
+    document.addEventListener('mouseover', function(e) {
+      const target = e.target.closest('a, button, [role="button"], input, textarea, label, select');
+      if (target) ring.classList.add('cursor-hovering');
+    });
+
+    document.addEventListener('mouseout', function(e) {
+      const target = e.target.closest('a, button, [role="button"], input, textarea, label, select');
+      if (target) ring.classList.remove('cursor-hovering');
+    });
+  });
+
+  // ══════════════════════════════════════════════════════
+  // MAGNETIC BUTTONS
+  // ══════════════════════════════════════════════════════
+  (function initMagnetic() {
+    if (window.matchMedia('(pointer: coarse)').matches) return;
+
+    const RADIUS = 60;   // px — activation zone
+    const MAX    = 6;    // px — max displacement
+
+    document.querySelectorAll('[data-magnetic]').forEach(btn => {
+      btn.addEventListener('mousemove', (e) => {
+        const r  = btn.getBoundingClientRect();
+        const cx = r.left + r.width  / 2;
+        const cy = r.top  + r.height / 2;
+        const dx = e.clientX - cx;
+        const dy = e.clientY - cy;
+        const dist = Math.hypot(dx, dy);
+        if (dist < RADIUS) {
+          const pull = (1 - dist / RADIUS) * MAX;
+          const nx   = dx / Math.max(dist, 1);
+          const ny   = dy / Math.max(dist, 1);
+          btn.style.transform  = `translate(${nx * pull}px, ${ny * pull}px)`;
+          btn.style.transition = 'transform 0.1s ease';
+        }
+      });
+
+      btn.addEventListener('mouseleave', () => {
+        btn.style.transform  = 'translate(0, 0)';
+        btn.style.transition = 'transform 0.3s ease';
+      });
+    });
+  })();
+
+  // ══════════════════════════════════════════════════════
+  // REVEAL-LEFT OBSERVER (reuses existing revealObserver)
+  // ══════════════════════════════════════════════════════
+  document.addEventListener('DOMContentLoaded', () => {
+    // revealObserver is defined in the earlier inline script (global scope)
+    if (typeof revealObserver !== 'undefined') {
+      document.querySelectorAll('.reveal-left').forEach(el => revealObserver.observe(el));
+    }
+
+    // Timeline dot pop observer
+    const dotObs = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          const delay = i * 150;
+          setTimeout(() => entry.target.classList.add('pop'), delay);
+          dotObs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.6 });
+
+    document.querySelectorAll('.tl-dot').forEach(dot => {
+      dot.classList.add('tl-dot-animate');
+      dotObs.observe(dot);
+    });
+
+    // Auto-stagger cards that have no stagger class yet (future-proofing)
+    document.querySelectorAll('.projects-grid .card-premium, [data-stagger-group] .card-premium').forEach((card, i) => {
+      if (!card.classList.contains('stagger-1') &&
+          !card.classList.contains('stagger-2') &&
+          !card.classList.contains('stagger-3')) {
+        card.style.transitionDelay = (i % 6) * 0.08 + 's';
+      }
+    });
+  });
+
+  // ══════════════════════════════════════════════════════
+  // KONAMI CODE — ↑↑↓↓←→←→BA
+  // ══════════════════════════════════════════════════════
+  (function initKonami() {
+    const CODE = [
+      'ArrowUp','ArrowUp','ArrowDown','ArrowDown',
+      'ArrowLeft','ArrowRight','ArrowLeft','ArrowRight',
+      'b','a'
+    ];
+    let seq = [];
+
+    document.addEventListener('keydown', (e) => {
+      seq.push(e.key);
+      if (seq.length > CODE.length) seq.shift();
+      if (seq.join() === CODE.join()) {
+        seq = [];
+        launchTerminal();
+      }
+    });
+
+    function launchTerminal() {
+      if (document.getElementById('konami-overlay')) return; // prevent double
+
+      const overlay = document.createElement('div');
+      overlay.className = 'konami-overlay';
+      overlay.id = 'konami-overlay';
+      overlay.innerHTML = `
+        <div class="konami-terminal" id="konami-box">
+          <div class="konami-header">
+            <div class="konami-header-dot"></div>
+            <div class="konami-header-dot" style="opacity:.35"></div>
+            <div class="konami-header-dot" style="opacity:.2"></div>
+            <span class="konami-header-title">terminal — secure_access.sh</span>
+          </div>
+          <div class="konami-body" id="konami-body">
+            <span class="konami-line" id="kl-0"></span>
+            <span class="konami-line" id="kl-1"></span>
+            <span class="konami-line" id="kl-2"></span>
+            <span class="konami-line" id="kl-3"></span>
+            <span class="konami-line" id="kl-4"></span>
+            <div class="konami-input-row" id="konami-prompt" style="display:none;">
+              <span class="konami-prompt-sym">&gt;&nbsp;</span>
+              <input type="text" class="konami-input" id="konami-input"
+                     autocomplete="off" spellcheck="false" aria-label="Terminal input">
+              <span class="konami-blink"></span>
+            </div>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(overlay);
+
+      const LINES = [
+        { id: 'kl-0', text: 'ACCESS GRANTED — welcome, developer.' },
+        { id: 'kl-1', text: 'loading david_hillver.exe...' },
+        { id: 'kl-2', text: 'skills: [C#] [.NET] [PostgreSQL] [React] [TypeScript]' },
+        { id: 'kl-3', text: 'status: AVAILABLE FOR HIRE' },
+        { id: 'kl-4', text: "type 'exit' to return to normal mode" },
+      ];
+
+      const sleep    = ms => new Promise(r => setTimeout(r, ms));
+      const typeText = (el, text, spd) => new Promise(resolve => {
+        let i = 0;
+        const iv = setInterval(() => {
+          el.textContent += text[i++];
+          if (i >= text.length) { clearInterval(iv); resolve(); }
+        }, spd);
+      });
+
+      (async () => {
+        await sleep(200);
+        for (const { id, text } of LINES) {
+          const el = document.getElementById(id);
+          if (!el) continue;
+          await typeText(el, text, 30);
+          await sleep(100);
+        }
+        await sleep(150);
+        const prompt = document.getElementById('konami-prompt');
+        if (prompt) prompt.style.display = 'flex';
+        document.getElementById('konami-input')?.focus();
+      })();
+
+      // Close on click outside terminal box
+      overlay.addEventListener('click', (e) => {
+        if (!document.getElementById('konami-box').contains(e.target)) {
+          dismissTerminal();
+        }
+      });
+
+      // Close on Escape or "exit" command
+      document.addEventListener('keydown', function onKey(e) {
+        if (e.key === 'Escape') {
+          dismissTerminal();
+          document.removeEventListener('keydown', onKey);
+        }
+      });
+
+      const input = document.getElementById('konami-input');
+      if (input) {
+        input.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') {
+            const val = input.value.trim().toLowerCase();
+            if (val === 'exit') dismissTerminal();
+            input.value = '';
+          }
+        });
+      }
+    }
+
+    function dismissTerminal() {
+      const overlay = document.getElementById('konami-overlay');
+      if (!overlay) return;
+      overlay.style.animation = 'konamiFadeOut 0.4s ease forwards';
+      setTimeout(() => overlay.remove(), 420);
+    }
+  })();
+  </script>
+
+  <!-- ─── GitHub Section ──────────────────────────── -->
+  <script>
+  (function initGitHubSection() {
+    const GH_USER    = 'verhill';
+    const GRAPH_DARK = `https://ghchart.rshah.org/4f6ef7/${GH_USER}`;
+    const GRAPH_LIGHT= `https://ghchart.rshah.org/1a237e/${GH_USER}`;
+
+    const contribCard = document.getElementById('gh-contrib-card');
+    const contribImg  = document.getElementById('gh-contrib-img');
+    const contribSkel = document.getElementById('gh-contrib-skeleton');
+    const statRow     = document.getElementById('gh-stat-row');
+    const activityCard= document.getElementById('gh-activity-card');
+    const activitySkel= document.getElementById('gh-activity-skeleton');
+    const eventList   = document.getElementById('gh-event-list');
+
+    if (!contribCard || !activityCard) return;
+
+    function getLang() {
+      return document.documentElement.lang || 'sv';
+    }
+
+    function tr(key) {
+      const lang = getLang();
+      return (translations[lang] && translations[lang][key])
+        || (translations['sv'] && translations['sv'][key])
+        || key;
+    }
+
+    function timeAgo(dateStr) {
+      const diff  = Date.now() - new Date(dateStr).getTime();
+      const mins  = Math.floor(diff / 60000);
+      const hours = Math.floor(diff / 3600000);
+      const days  = Math.floor(diff / 86400000);
+      if (mins  < 60) return tr('gh_time_min').replace('{n}', mins);
+      if (hours < 24) return tr('gh_time_hours').replace('{n}', hours);
+      if (days === 1) return tr('gh_time_yesterday');
+      if (days  < 30) return tr('gh_time_days').replace('{n}', days);
+      return new Date(dateStr).toLocaleDateString(getLang() === 'sv' ? 'sv-SE' : 'en-GB');
+    }
+
+    function buildRepoLink(repoFullName) {
+      const short = repoFullName.replace(`${GH_USER}/`, '');
+      return `<a href="https://github.com/${repoFullName}" target="_blank" rel="noopener" class="gh-event-link">${short}</a>`;
+    }
+
+    function formatEvent(e) {
+      const link = buildRepoLink(e.repo.name);
+      switch (e.type) {
+        case 'PushEvent': {
+          const n   = e.payload.commits?.length || 1;
+          const msg = e.payload.commits?.[0]?.message?.split('\n')[0] || '';
+          const txt = n === 1
+            ? tr('gh_push_single')
+            : tr('gh_push_text').replace('{n}', n);
+          return { icon: '⬆️', text: `${txt} ${link}`, commit: msg };
+        }
+        case 'CreateEvent': {
+          const ref = e.payload.ref || e.payload.ref_type || '';
+          return { icon: '🌿', text: `${tr('gh_create_text').replace('{ref}', ref)} ${link}`, commit: '' };
+        }
+        case 'PullRequestEvent': {
+          const title = e.payload.pull_request?.title || '';
+          return { icon: '🔀', text: `${tr('gh_pr_text')} ${link}`, commit: title };
+        }
+        case 'WatchEvent':
+          return { icon: '⭐', text: `${tr('gh_starred_text')} ${link}`, commit: '' };
+        case 'ForkEvent':
+          return { icon: '🍴', text: `${tr('gh_forked_text')} ${link}`, commit: '' };
+        default:
+          return null;
+      }
+    }
+
+    // ── Contribution graph ──────────────────────────
+    function getGraphSrc() {
+      return (document.documentElement.getAttribute('data-theme') === 'dark')
+        ? GRAPH_DARK : GRAPH_LIGHT;
+    }
+
+    function loadContribGraph() {
+      contribImg.src = getGraphSrc();
+      contribImg.onload = () => {
+        contribSkel.style.display = 'none';
+        contribImg.style.display  = 'block';
+      };
+      contribImg.onerror = () => {
+        contribCard.style.display = 'none';
+      };
+    }
+
+    // Swap graph on theme toggle
+    new MutationObserver(() => {
+      if (contribImg.style.display !== 'none') {
+        contribImg.src = getGraphSrc();
+      }
+    }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+    // ── Parallel API fetches ────────────────────────
+    function abortFetch(ms) {
+      const ctrl = new AbortController();
+      const tid  = setTimeout(() => ctrl.abort(), ms);
+      return { signal: ctrl.signal, clear: () => clearTimeout(tid) };
+    }
+
+    const a1 = abortFetch(4000);
+    const a2 = abortFetch(4000);
+
+    Promise.all([
+      fetch(`https://api.github.com/users/${GH_USER}`, { signal: a1.signal })
+        .then(r => { a1.clear(); if (!r.ok) throw r.status; return r.json(); }),
+      fetch(`https://api.github.com/users/${GH_USER}/events/public`, { signal: a2.signal })
+        .then(r => { a2.clear(); if (!r.ok) throw r.status; return r.json(); }),
+    ]).then(([user, events]) => {
+      // Stats
+      document.getElementById('gh-stat-repos').textContent = user.public_repos;
+      document.getElementById('gh-stat-followers').textContent = user.followers;
+      document.getElementById('gh-stat-following').textContent = user.following;
+      statRow.style.display = 'flex';
+
+      // Activity feed
+      const relevant = ['PushEvent','CreateEvent','PullRequestEvent','WatchEvent','ForkEvent'];
+      const filtered  = events.slice(0, 20)
+        .filter(e => relevant.includes(e.type))
+        .slice(0, 4);
+
+      activitySkel.style.display = 'none';
+
+      // Store events globally so changeLanguage() can re-render
+      window._ghCachedEvents = filtered;
+
+      window.renderGhActivity = function() {
+        const cached = window._ghCachedEvents;
+        if (!cached) return;
+        if (cached.length === 0) {
+          eventList.innerHTML = `<p class="gh-notice">${tr('gh_no_events')}</p>`;
+        } else {
+          eventList.innerHTML = cached.map(e => {
+            const ev = formatEvent(e);
+            if (!ev) return '';
+            const commitHtml = ev.commit
+              ? `<div class="gh-event-commit">${ev.commit.substring(0, 72)}</div>`
+              : '';
+            return `
+              <div class="gh-event">
+                <span class="gh-event-icon">${ev.icon}</span>
+                <div class="gh-event-body">
+                  <div class="gh-event-text">${ev.text}</div>
+                  <div class="gh-event-meta">${timeAgo(e.created_at)}</div>
+                  ${commitHtml}
+                </div>
+              </div>`;
+          }).join('');
+        }
+        eventList.style.display = 'flex';
+      };
+
+      window.renderGhActivity();
+
+    }).catch(err => {
+      console.warn('GitHub API:', err);
+      activitySkel.style.display = 'none';
+      if (err === 403) {
+        eventList.innerHTML = `<p class="gh-notice">${tr('gh_rate_limit')}</p>`;
+        eventList.style.display = 'flex';
+      } else {
+        activityCard.style.display = 'none';
+      }
+    });
+
+    loadContribGraph();
+  })();
+  </script>
+</body>
+
+</html>
