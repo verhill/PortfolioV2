@@ -2459,6 +2459,61 @@
     loadContribGraph();
   })();
   </script>
+
+  <!-- ─── Three.js Hero Icosahedron ──────────────── -->
+  <script>
+  (function initHeroThree() {
+    var wrap   = document.getElementById('hero-3d-wrap');
+    var canvas = document.getElementById('hero-canvas');
+    if (!canvas || typeof THREE === 'undefined') return;
+
+    var scene  = new THREE.Scene();
+    var w      = wrap.clientWidth  || 420;
+    var h      = wrap.clientHeight || 380;
+    var camera = new THREE.PerspectiveCamera(50, w / h, 0.1, 100);
+    camera.position.z = 3.2;
+
+    var renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(w, h, false);
+
+    var geo     = new THREE.IcosahedronGeometry(1, 1);
+    var wireGeo = new THREE.WireframeGeometry(geo);
+    var mat     = new THREE.LineBasicMaterial({ color: 0xb8743a, opacity: 0.55, transparent: true });
+    var mesh    = new THREE.LineSegments(wireGeo, mat);
+    scene.add(mesh);
+
+    var mouseX = 0, mouseY = 0;
+    var targetX = 0, targetY = 0;
+
+    document.addEventListener('mousemove', function(e) {
+      mouseX = (e.clientX / window.innerWidth  - 0.5) * 0.6;
+      mouseY = (e.clientY / window.innerHeight - 0.5) * 0.6;
+    }, { passive: true });
+
+    if (typeof ResizeObserver !== 'undefined') {
+      new ResizeObserver(function() {
+        var nw = wrap.clientWidth  || 420;
+        var nh = wrap.clientHeight || 380;
+        camera.aspect = nw / nh;
+        camera.updateProjectionMatrix();
+        renderer.setSize(nw, nh, false);
+      }).observe(wrap);
+    }
+
+    function animate() {
+      requestAnimationFrame(animate);
+      targetX += (mouseX - targetX) * 0.04;
+      targetY += (mouseY - targetY) * 0.04;
+      mesh.rotation.y += 0.003;
+      mesh.rotation.x  = targetY * 0.5;
+      mesh.rotation.z  = targetX * 0.3;
+      renderer.render(scene, camera);
+    }
+
+    animate();
+  })();
+  </script>
 </body>
 
 </html>
