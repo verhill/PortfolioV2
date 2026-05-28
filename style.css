@@ -1169,16 +1169,16 @@ header {
 [data-theme="dark"] .terminal-window {
   box-shadow: 0 24px 64px rgba(0, 0, 0, 0.7),
               0 0 0 1px rgba(255,255,255,.07),
-              0 0 80px rgba(79, 110, 247, 0.25);
+              0 0 80px var(--c-accent-glow);
 }
 [data-theme="dark"] .terminal-window:hover {
   box-shadow: 0 32px 80px rgba(0, 0, 0, 0.8),
               0 0 0 1px rgba(255,255,255,.12),
-              0 0 100px rgba(79, 110, 247, 0.35);
+              0 0 100px var(--c-accent-glow);
 }
 [data-theme="dark"] .tc-wrap::before {
   background: radial-gradient(ellipse at 60% 50%,
-    var(--c-accent-glow) 0%, rgba(99, 102, 241, 0.12) 45%, transparent 70%);
+    var(--c-accent-glow) 0%, rgba(184, 116, 58, 0.08) 45%, transparent 70%);
 }
 
 /* ============================================================
@@ -1187,7 +1187,7 @@ header {
 .gradient-mesh {
   background:
     radial-gradient(ellipse at 20% 50%, var(--c-accent-tint) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 20%, rgba(139, 92, 246, 0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(184, 116, 58, 0.04) 0%, transparent 50%),
     radial-gradient(ellipse at 60% 80%, var(--c-accent-tint) 0%, transparent 50%);
   animation: meshDrift 12s ease-in-out infinite alternate;
   pointer-events: none;
@@ -1200,8 +1200,8 @@ header {
 }
 [data-theme="dark"] .gradient-mesh {
   background:
-    radial-gradient(ellipse at 20% 50%, rgba(79, 110, 247, 0.18) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 20%, rgba(139, 92, 246, 0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 20% 50%, var(--c-accent-tint) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(184, 116, 58, 0.08) 0%, transparent 50%),
     radial-gradient(ellipse at 60% 80%, var(--c-accent-tint) 0%, transparent 50%);
 }
 
@@ -1230,10 +1230,10 @@ header {
    HERO DOT GRID DARK MODE
 ============================================================ */
 [data-theme="dark"] .hero-dot-grid {
-  background-image: radial-gradient(rgba(79, 110, 247, 0.12) 1px, transparent 1px);
+  background-image: radial-gradient(rgba(184, 116, 58, 0.10) 1px, transparent 1px);
 }
 [data-theme="dark"] .hero-blob {
-  background: radial-gradient(circle, rgba(79, 110, 247, 0.18) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(184, 116, 58, 0.15) 0%, transparent 70%);
 }
 
 /* ============================================================
