@@ -5,26 +5,26 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>David Hillver | Fullstack Developer</title>
-  <meta name="description" content="David Hillver — Fullstack developer specializing in C# .NET, backend systems and database architecture. B.Sc Systemvetenskap at Örebro University, graduating 2026.">
+  <meta name="description" content="David Hillver: Fullstack developer specializing in C# .NET, backend systems and database architecture. B.Sc Systemvetenskap at Örebro University, graduating 2026.">
   <meta name="author" content="David Hillver">
   <meta name="theme-color" content="#0f172a">
   <meta property="og:type"         content="website">
   <meta property="og:url"          content="">
   <meta property="og:title"        content="David Hillver | Fullstack Developer">
-  <meta property="og:description"  content="Backend developer — C# · .NET · PostgreSQL · AI integration. B.Sc Örebro University 2026.">
+  <meta property="og:description"  content="Backend developer: C# · .NET · PostgreSQL · AI integration. B.Sc Örebro University 2026.">
   <meta property="og:image"        content="NyCvBild.png">
   <meta name="twitter:card"        content="summary_large_image">
   <meta name="twitter:title"       content="David Hillver | Fullstack Developer">
-  <meta name="twitter:description" content="Backend developer — C# · .NET · PostgreSQL · AI integration.">
+  <meta name="twitter:description" content="Backend developer: C# · .NET · PostgreSQL · AI integration.">
   <link rel="icon" href="DHLogo.png" type="image/png">
   <link rel="icon" href="DHLogo.png" sizes="32x32" type="image/png">
   <link rel="icon" href="DHLogo.png" sizes="16x16" type="image/png">
   <link rel="apple-touch-icon" href="DHLogo.png">
-  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.tailwindcss.com/3.4.16"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 
   <style>
@@ -43,7 +43,7 @@
     /* ─── Scroll progress bar ────────────────────────────────────── */
     #scroll-progress {
       position: fixed; top: 0; left: 0; height: 3px;
-      background: #1e40af; z-index: 9999; width: 0;
+      background: var(--c-accent); z-index: 9999; width: 0;
       transition: width .08s linear;
     }
 
@@ -64,13 +64,13 @@
     /* ─── Section overline ───────────────────────────────────────── */
     .overline {
       font-size: .7rem; font-weight: 700; letter-spacing: .2em;
-      text-transform: uppercase; color: #1e40af;
+      text-transform: uppercase; color: var(--c-accent);
       display: inline-flex; align-items: center; gap: 10px;
       margin-bottom: 16px;
     }
     .overline::before {
       content: ''; width: 24px; height: 2px;
-      background: #1e40af; flex-shrink: 0;
+      background: var(--c-accent); flex-shrink: 0;
     }
 
     /* ─── Premium button styles ──────────────────────────────────── */
@@ -95,7 +95,7 @@
       transition: border-color .2s, color .2s, transform .2s;
     }
     .btn-ghost:hover {
-      border-color: #1e40af; color: #1e40af;
+      border-color: var(--c-accent); color: var(--c-accent);
       transform: translateY(-2px);
     }
 
@@ -151,7 +151,7 @@
     }
     .card-premium::after {
       content: ''; position: absolute; inset: 0 0 auto 0;
-      height: 2px; background: #1e40af;
+      height: 2px; background: var(--c-accent);
       transform: scaleX(0); transform-origin: left;
       transition: transform .3s ease;
     }
@@ -172,7 +172,7 @@
       transition: background .15s, border-color .15s, color .15s, transform .15s;
     }
     .skill-pill:hover {
-      background: #eff6ff; border-color: #bfdbfe; color: #1e40af;
+      background: #eff6ff; border-color: #bfdbfe; color: var(--c-accent);
       transform: scale(1.05);
     }
 
@@ -187,7 +187,7 @@
     /* ─── Timeline dot ───────────────────────────────────────────── */
     .tl-dot {
       width: 16px; height: 16px; border-radius: 50%;
-      background: #1e40af; border: 3px solid #fff;
+      background: var(--c-accent); border: 3px solid #fff;
       box-shadow: 0 0 0 3px #dbeafe;
     }
 
@@ -195,7 +195,7 @@
     header { font-family: 'Inter', sans-serif; }
 
     /* Active nav link */
-    .nav-link-item.active { color: #1e40af !important; }
+    .nav-link-item.active { color: var(--c-accent) !important; }
     .nav-link-item.active::after { width: 100%; }
 
     /* ─── Section number badge ───────────────────────────────────── */
@@ -208,13 +208,12 @@
     /* ─── Footer top border ──────────────────────────────────────── */
     .footer-top-line {
       height: 3px;
-      background: linear-gradient(90deg, #1e40af 0%, #3b82f6 50%, transparent 100%);
+      background: linear-gradient(90deg, var(--c-accent) 0%, #3b82f6 50%, transparent 100%);
     }
 
-    /* ─── Utility classes (extracted from inline styles) ────────── */
+    /* Header is solid, no glassmorphism */
     .header-blur {
-      -webkit-backdrop-filter: blur(16px);
-      backdrop-filter: blur(16px);
+      background-color: var(--c-bg);
     }
     .float-badge-3 { animation-delay: .8s; }
     .icon-xs { font-size: .7rem; }
@@ -288,7 +287,7 @@
     .tc-ps1-path { color: #8be9fd; } /* path cyan */
     .tc-ps1-gt  { color: #cccccc; margin-right: 6px; }
     .tc-cmd     { color: #cccccc; }
-    /* JSON syntax — VS Code Dark+ */
+    /* JSON syntax: VS Code Dark+ */
     .tc-brace  { color: #ffd700; }
     .tc-jkey   { color: #9cdcfe; }
     .tc-jstr   { color: #ce9178; }
@@ -317,9 +316,9 @@
       box-shadow: 0 32px 80px rgba(15,23,42,.3);
       max-width: 600px; width: 100%; max-height: 90vh; overflow-y: auto;
       position: relative;
-      animation: modalSlideUp .25s cubic-bezier(.34,1.56,.64,1);
+      animation: modalSlideUp .28s cubic-bezier(.16,1,.3,1);
     }
-    @keyframes modalSlideUp { from{transform:translateY(22px);opacity:0} to{transform:translateY(0);opacity:1} }
+    @keyframes modalSlideUp { from{transform:translateY(16px);opacity:0} to{transform:translateY(0);opacity:1} }
     .modal-close-btn {
       position: absolute; top: 16px; right: 16px;
       width: 36px; height: 36px; border-radius: 8px;
@@ -331,7 +330,7 @@
     .modal-body { padding: 32px; }
     .modal-tag {
       display: inline-block; font-size: .68rem; font-weight: 700;
-      letter-spacing: .14em; text-transform: uppercase; color: #1e40af;
+      letter-spacing: .14em; text-transform: uppercase; color: var(--c-accent);
       background: #eff6ff; padding: 4px 12px; border-radius: 999px; margin-bottom: 14px;
     }
     .modal-title {
@@ -359,49 +358,41 @@
     .modal-link-primary {
       background: #0f172a; color: #fff;
     }
-    .modal-link-primary:hover { background: #1e3a8a; }
+    .modal-link-primary:hover { background: var(--c-accent-strong); }
     .modal-link-secondary {
       background: #f8fafc; color: #0f172a; border: 1.5px solid #e2e8f0;
     }
-    .modal-link-secondary:hover { border-color: #1e40af; color: #1e40af; }
+    .modal-link-secondary:hover { border-color: var(--c-accent); color: var(--c-accent); }
     .modal-note {
       font-size: .8rem; color: #94a3b8; font-style: italic; margin-top: 10px;
       display: flex; align-items: center; gap: 6px;
     }
 
-    /* ─── Section dividers ──────────────────────────────────────── */
+    /* Section dividers: quiet horizontal rule, label inset at left */
     .section-divider {
       position: relative;
-      height: 1px;
-      background: #e2e8f0;
+      height: 0;
+      border-top: 1px solid var(--c-border);
       margin: 0;
-      overflow: visible;
-    }
-    .section-divider::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 4px;
-      background: linear-gradient(90deg, #1e40af 0%, #3b82f6 40%, #93c5fd 70%, transparent 100%);
-      margin-top: -3px;
     }
     .section-divider::after {
       content: attr(data-label);
       position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      background: #ffffff;
-      color: #94a3b8;
+      left: 1.5rem;
+      top: 0;
+      transform: translateY(-50%);
+      background: var(--c-bg);
+      color: var(--c-text-muted);
       font-size: .65rem;
-      font-weight: 700;
-      letter-spacing: .2em;
+      font-weight: 600;
+      letter-spacing: .22em;
       text-transform: uppercase;
-      padding: 4px 16px;
-      border: 1px solid #e2e8f0;
-      border-radius: 999px;
-      white-space: nowrap;
+      padding: 0 .9rem;
       font-family: 'Inter', sans-serif;
+      font-variant-numeric: tabular-nums;
+    }
+    @media (min-width: 768px) {
+      .section-divider::after { left: 3rem; }
     }
 
     /* ─── Responsive ─────────────────────────────────────────────── */
@@ -412,7 +403,8 @@
 </head>
 
 <body class="font-['Inter'] antialiased">
-<div id="cursor-ring"></div>
+<a href="#main" class="skip-link" data-i18n="skip_link">Hoppa till innehållet</a>
+<div id="cursor-ring" aria-hidden="true"></div>
 
   <!-- Scroll progress bar -->
   <div id="scroll-progress"></div>
@@ -420,39 +412,39 @@
   <!-- ═══════════════════════════════════════════════
        NAVIGATION
   ═══════════════════════════════════════════════════ -->
-  <header class="bg-white/90 border-b border-[#e2e8f0] sticky top-0 z-50 transition-all duration-300 header-blur">
+  <header class="border-b sticky top-0 z-50 transition-all duration-300 header-blur nav-dark">
     <div class="w-full px-6 py-3">
       <div class="flex items-center w-full">
         <!-- Logo -->
         <a href="#" class="flex items-center group">
           <img src="updateProfile.png" alt="David Hillver"
-               class="h-14 transition-transform duration-300 group-hover:scale-105">
+               class="h-11 transition-transform duration-300 group-hover:scale-105" loading="lazy">
         </a>
 
         <!-- Desktop nav -->
         <div class="ml-auto">
           <nav class="hidden md:flex items-center space-x-8">
             <a href="#about"
-               class="text-[#64748b] hover:text-[#1e40af] transition-colors font-medium text-sm relative pb-1 nav-link-item nav-link">
+               class="text-[#64748b] hover:text-[var(--c-accent)] transition-colors font-medium text-sm relative pb-1 nav-link-item nav-link">
               <span data-i18n="about">Om mig</span>
-              <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-[#1e40af] transition-all duration-300 group-hover:w-full nav-underline"></span>
+              <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-[var(--c-accent)] transition-all duration-300 group-hover:w-full nav-underline"></span>
             </a>
             <a href="#projects"
-               class="text-[#64748b] hover:text-[#1e40af] transition-colors font-medium text-sm relative pb-1 nav-link-item nav-link">
+               class="text-[#64748b] hover:text-[var(--c-accent)] transition-colors font-medium text-sm relative pb-1 nav-link-item nav-link">
               <span data-i18n="projects">Projekt</span>
-              <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-[#1e40af] transition-all duration-300 nav-underline"></span>
+              <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-[var(--c-accent)] transition-all duration-300 nav-underline"></span>
             </a>
             <a href="#contact"
-               class="text-[#64748b] hover:text-[#1e40af] transition-colors font-medium text-sm relative pb-1 nav-link-item">
+               class="text-[#64748b] hover:text-[var(--c-accent)] transition-colors font-medium text-sm relative pb-1 nav-link-item">
               <span data-i18n="contact">Kontakt</span>
             </a>
             <!-- Language flags -->
-            <div class="flex items-center gap-2 ml-2 pl-6 border-l border-[#e2e8f0]">
-              <button type="button" id="lang-sv" class="opacity-70 hover:opacity-100 transition-opacity">
-                <img src="svensk.png" alt="Svenska" class="w-6 h-6">
+            <div class="flex items-center gap-2 ml-2 pl-6 border-l border-[#e2e8f0]" role="group" aria-label="Språkval">
+              <button type="button" id="lang-sv" class="opacity-70 hover:opacity-100 transition-opacity" aria-label="Byt språk till svenska">
+                <img src="svensk.png" alt="" class="w-6 h-6" loading="lazy">
               </button>
-              <button type="button" id="lang-en" class="opacity-70 hover:opacity-100 transition-opacity">
-                <img src="uk.png" alt="English" class="w-6 h-6">
+              <button type="button" id="lang-en" class="opacity-70 hover:opacity-100 transition-opacity" aria-label="Switch language to English">
+                <img src="uk.png" alt="" class="w-6 h-6" loading="lazy">
               </button>
               <!-- Theme toggle -->
               <button type="button" id="theme-toggle" class="theme-toggle-btn ml-1" title="Växla tema" aria-label="Växla mörkt/ljust läge">
@@ -462,7 +454,7 @@
           </nav>
 
           <!-- Mobile hamburger -->
-          <button type="button" class="md:hidden text-[#475569] hover:text-[#1e40af] transition-colors" id="mobile-menu-button">
+          <button type="button" class="md:hidden text-[#475569] hover:text-[var(--c-accent)] transition-colors" id="mobile-menu-button" aria-label="Öppna meny" aria-expanded="false" aria-controls="mobile-menu">
             <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
             </svg>
@@ -475,21 +467,21 @@
     <div id="mobile-menu"
          class="hidden fixed inset-0 z-40 p-8 md:hidden transition-all duration-300 transform translate-x-full mobile-menu-overlay">
       <div class="flex justify-end mb-10">
-        <button type="button" id="mobile-menu-close" class="text-[#475569] hover:text-[#1e40af]">
+        <button type="button" id="mobile-menu-close" class="text-[#475569] hover:text-[var(--c-accent)]" aria-label="Stäng meny">
           <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
           </svg>
         </button>
       </div>
       <nav class="flex flex-col space-y-8">
-        <a href="#about"  class="text-3xl font-bold text-[#0f172a] hover:text-[#1e40af] transition-colors tracking-tight" data-i18n="about">Om mig</a>
-        <a href="#timeline" class="text-3xl font-bold text-[#0f172a] hover:text-[#1e40af] transition-colors tracking-tight" data-i18n="timeline">Erfarenhet</a>
-        <a href="#projects" class="text-3xl font-bold text-[#0f172a] hover:text-[#1e40af] transition-colors tracking-tight" data-i18n="projects">Projekt</a>
-        <a href="#contact"  class="text-3xl font-bold text-[#0f172a] hover:text-[#1e40af] transition-colors tracking-tight" data-i18n="contact">Kontakt</a>
+        <a href="#about"  class="text-3xl font-bold text-[#0f172a] hover:text-[var(--c-accent)] transition-colors tracking-tight" data-i18n="about">Om mig</a>
+        <a href="#timeline" class="text-3xl font-bold text-[#0f172a] hover:text-[var(--c-accent)] transition-colors tracking-tight" data-i18n="timeline">Erfarenhet</a>
+        <a href="#projects" class="text-3xl font-bold text-[#0f172a] hover:text-[var(--c-accent)] transition-colors tracking-tight" data-i18n="projects">Projekt</a>
+        <a href="#contact"  class="text-3xl font-bold text-[#0f172a] hover:text-[var(--c-accent)] transition-colors tracking-tight" data-i18n="contact">Kontakt</a>
       </nav>
       <div class="flex gap-4 mt-12 items-center">
-        <button type="button" id="lang-sv-mobile"><img src="svensk.png" alt="Svenska" class="w-9 h-9"></button>
-        <button type="button" id="lang-en-mobile"><img src="uk.png" alt="English" class="w-9 h-9"></button>
+        <button type="button" id="lang-sv-mobile" aria-label="Byt språk till svenska"><img src="svensk.png" alt="" class="w-9 h-9" loading="lazy"></button>
+        <button type="button" id="lang-en-mobile" aria-label="Switch language to English"><img src="uk.png" alt="" class="w-9 h-9" loading="lazy"></button>
         <button type="button" id="theme-toggle-mobile" class="theme-toggle-btn w-10 h-10" aria-label="Växla tema">
           <i class="fas fa-sun"></i>
         </button>
@@ -500,7 +492,7 @@
   <!-- ═══════════════════════════════════════════════
        HERO
   ═══════════════════════════════════════════════════ -->
-  <section class="hero-section relative overflow-hidden min-h-screen flex items-center">
+  <section id="main" tabindex="-1" class="hero-section relative overflow-hidden min-h-screen flex items-center">
     <!-- Animated gradient mesh background -->
     <div class="gradient-mesh absolute inset-0" aria-hidden="true"></div>
     <!-- Dot grid background -->
@@ -511,17 +503,8 @@
     <div class="container mx-auto px-6 py-28 lg:py-36 relative z-10">
       <div class="grid lg:grid-cols-[1fr_420px] gap-16 xl:gap-24 items-center">
 
-        <!-- LEFT — Text content -->
+        <!-- LEFT: Text content -->
         <div>
-          <!-- Availability badge -->
-          <div class="avail-badge mb-8 reveal-item">
-            <span class="relative flex h-2.5 w-2.5">
-              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-              <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500 avail-dot-pulse"></span>
-            </span>
-            <span data-i18n="availability">Tillgänglig för arbete</span>
-          </div>
-
           <!-- Big name -->
           <h1 class="hero-name mb-5 reveal-item stagger-1" data-i18n="hero_title">
             David<br>Hillver
@@ -529,15 +512,15 @@
 
           <!-- Role line with dash -->
           <div class="flex items-center gap-4 mb-6 reveal-item stagger-2">
-            <div class="w-8 h-0.5 bg-[#1e40af]"></div>
-            <p class="text-base font-semibold text-[#1e40af] uppercase tracking-[.15em]"
+            <div class="w-8 h-0.5 bg-[var(--c-accent)]"></div>
+            <p class="text-base font-semibold text-[var(--c-accent)] uppercase tracking-[.15em]"
                data-i18n="hero_subtitle">Fullstack Developer</p>
           </div>
 
           <!-- Tagline -->
           <p class="text-lg text-[#475569] mb-10 max-w-lg leading-relaxed reveal-item stagger-3"
              data-i18n="hero_description">
-            Jag bygger backend-system och databasarkitekturer — rena, skalbara och produktionsklara. Avslutar min kandidatexamen vid Örebro Universitet (2026).
+            Jag bygger backend-system och databasarkitekturer i C# och .NET. Studerar Systemvetenskap vid Örebro universitet, examen våren 2026.
           </p>
 
           <!-- CTAs -->
@@ -551,35 +534,23 @@
             <a href="#contact" class="btn-ghost" data-magnetic data-i18n="contact_me">Kontakta Mig</a>
             <a href="CV_DavidHillver.pdf" download="CV_DavidHillver.pdf"
                class="btn-ghost inline-flex items-center gap-2" data-magnetic>
-              <i class="fas fa-file-pdf text-[#1e40af]"></i>
+              <i class="fas fa-file-pdf text-[var(--c-accent)]"></i>
               <span data-i18n="download_cv">Ladda ner CV</span>
             </a>
           </div>
 
-          <!-- Stats row -->
-          <div class="flex items-center gap-8 reveal-item stagger-5">
-            <div>
-              <div class="text-2xl font-black text-[#0f172a] tracking-tight">3+</div>
-              <div class="text-xs font-medium text-[#94a3b8] uppercase tracking-wider mt-0.5" data-i18n="stat_projects">Projekt</div>
-            </div>
-            <div class="stat-divider"></div>
-            <div>
-              <div class="text-2xl font-black text-[#0f172a] tracking-tight">Örebro</div>
-              <div class="text-xs font-medium text-[#94a3b8] uppercase tracking-wider mt-0.5" data-i18n="stat_university">Universitet</div>
-            </div>
-            <div class="stat-divider"></div>
-            <div>
-              <div class="text-2xl font-black text-[#0f172a] tracking-tight">2026</div>
-              <div class="text-xs font-medium text-[#94a3b8] uppercase tracking-wider mt-0.5" data-i18n="stat_graduation">Examen</div>
-            </div>
-          </div>
+          <!-- Editorial line in place of stat tiles -->
+          <p class="hero-meta reveal-item stagger-5" data-i18n="hero_meta">
+            B.Sc Systemvetenskap, Örebro universitet. Examen våren 2026.
+            Just nu: bygger ConstructAI och söker första anställningen.
+          </p>
         </div>
 
-        <!-- RIGHT — Terminal block -->
+        <!-- RIGHT: Terminal block -->
         <div class="hidden lg:block reveal-item stagger-2 tc-wrap">
           <div class="terminal-window">
             <!-- Windows Terminal tab bar -->
-            <div class="tc-tabbar">
+            <div class="tc-tabbar" aria-hidden="true">
               <div class="tc-tab">
                 <span>Terminal</span>
                 <span class="tc-tab-close">✕</span>
@@ -611,7 +582,7 @@
     <div class="hero-bottom-fade absolute bottom-0 left-0 right-0 h-20 pointer-events-none"></div>
   </section>
 
-  <div class="section-divider" data-label="01 — Om mig"></div>
+  <div class="section-divider" data-label="01 / Om mig"></div>
 
   <!-- ═══════════════════════════════════════════════
        ABOUT
@@ -652,7 +623,7 @@
                 <div class="space-y-3 text-sm">
                   <div class="flex items-center gap-3">
                     <div class="w-8 h-8 bg-[#f1f5f9] rounded-lg flex items-center justify-center flex-shrink-0">
-                      <i class="fas fa-map-marker-alt text-[#1e40af] text-xs"></i>
+                      <i class="fas fa-map-marker-alt text-[var(--c-accent)] text-xs"></i>
                     </div>
                     <div>
                       <div class="text-xs text-[#94a3b8] font-medium uppercase tracking-wider" data-i18n="location_label">Plats</div>
@@ -661,7 +632,7 @@
                   </div>
                   <div class="flex items-center gap-3">
                     <div class="w-8 h-8 bg-[#f1f5f9] rounded-lg flex items-center justify-center flex-shrink-0">
-                      <i class="fas fa-university text-[#1e40af] text-xs"></i>
+                      <i class="fas fa-university text-[var(--c-accent)] text-xs"></i>
                     </div>
                     <div>
                       <div class="text-xs text-[#94a3b8] font-medium uppercase tracking-wider" data-i18n="education_label">Utbildning</div>
@@ -670,7 +641,7 @@
                   </div>
                   <div class="flex items-center gap-3">
                     <div class="w-8 h-8 bg-[#f1f5f9] rounded-lg flex items-center justify-center flex-shrink-0">
-                      <i class="fas fa-code text-[#1e40af] text-xs"></i>
+                      <i class="fas fa-code text-[var(--c-accent)] text-xs"></i>
                     </div>
                     <div>
                       <div class="text-xs text-[#94a3b8] font-medium uppercase tracking-wider" data-i18n="specialization_label">Specialisering</div>
@@ -687,11 +658,11 @@
               <div class="px-6 pt-4 pb-5">
                 <div class="text-xs font-bold text-[#94a3b8] uppercase tracking-wider mb-3" data-i18n="tech_competence">Teknisk Kompetens</div>
                 <div class="flex flex-wrap gap-2">
-                  <span class="skill-pill"><img src="upCs.png" class="w-3.5 h-3.5" alt="C#"><span data-i18n="csharp_tag">C#</span></span>
-                  <span class="skill-pill"><img src="netlogo.png" class="w-3.5 h-3.5" alt=".NET"><span data-i18n="dotnet_tag">.NET</span></span>
-                  <span class="skill-pill"><img src="upJava.webp" class="w-3.5 h-3.5" alt="Java"><span data-i18n="java_tag">Java</span></span>
-                  <span class="skill-pill"><img src="Python.svg.png" class="w-3.5 h-3.5" alt="Python"><span data-i18n="python_tag">Python</span></span>
-                  <span class="skill-pill"><i class="fas fa-database text-[#1e40af] icon-xs"></i><span data-i18n="sql_tag">SQL</span></span>
+                  <span class="skill-pill"><img src="upCs.png" class="w-3.5 h-3.5" alt="C#" loading="lazy"><span data-i18n="csharp_tag">C#</span></span>
+                  <span class="skill-pill"><img src="netlogo.png" class="w-3.5 h-3.5" alt=".NET" loading="lazy"><span data-i18n="dotnet_tag">.NET</span></span>
+                  <span class="skill-pill"><img src="upJava.webp" class="w-3.5 h-3.5" alt="Java" loading="lazy"><span data-i18n="java_tag">Java</span></span>
+                  <span class="skill-pill"><img src="Python.svg.png" class="w-3.5 h-3.5" alt="Python" loading="lazy"><span data-i18n="python_tag">Python</span></span>
+                  <span class="skill-pill"><i class="fas fa-database text-[var(--c-accent)] icon-xs"></i><span data-i18n="sql_tag">SQL</span></span>
                 </div>
               </div>
 
@@ -702,9 +673,9 @@
               <div class="px-6 pt-4 pb-6">
                 <div class="text-xs font-bold text-[#94a3b8] uppercase tracking-wider mb-3" data-i18n="interests">Intressen</div>
                 <div class="flex flex-wrap gap-2">
-                  <span class="skill-pill"><i class="fas fa-code text-[#1e40af] icon-xs"></i><span data-i18n="coding">Programmering</span></span>
-                  <span class="skill-pill"><i class="fas fa-dumbbell text-[#1e40af] icon-xs"></i><span data-i18n="training">Träning</span></span>
-                  <span class="skill-pill"><i class="fas fa-futbol text-[#1e40af] icon-xs"></i><span data-i18n="football">Fotboll</span></span>
+                  <span class="skill-pill"><i class="fas fa-code text-[var(--c-accent)] icon-xs"></i><span data-i18n="coding">Programmering</span></span>
+                  <span class="skill-pill"><i class="fas fa-dumbbell text-[var(--c-accent)] icon-xs"></i><span data-i18n="training">Träning</span></span>
+                  <span class="skill-pill"><i class="fas fa-futbol text-[var(--c-accent)] icon-xs"></i><span data-i18n="football">Fotboll</span></span>
                 </div>
               </div>
             </div>
@@ -715,7 +686,7 @@
               <div class="space-y-4">
                 <div class="flex items-start gap-3">
                   <div class="w-8 h-8 bg-[#eff6ff] rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <i class="fas fa-server text-[#1e40af] text-xs"></i>
+                    <i class="fas fa-server text-[var(--c-accent)] text-xs"></i>
                   </div>
                   <div>
                     <div class="text-sm font-semibold text-[#0f172a]" data-i18n="backend_development_title">Backend-utveckling</div>
@@ -724,7 +695,7 @@
                 </div>
                 <div class="flex items-start gap-3">
                   <div class="w-8 h-8 bg-[#eff6ff] rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <i class="fas fa-database text-[#1e40af] text-xs"></i>
+                    <i class="fas fa-database text-[var(--c-accent)] text-xs"></i>
                   </div>
                   <div>
                     <div class="text-sm font-semibold text-[#0f172a]" data-i18n="database_design_title">Databasdesign</div>
@@ -733,7 +704,7 @@
                 </div>
                 <div class="flex items-start gap-3">
                   <div class="w-8 h-8 bg-[#eff6ff] rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <i class="fas fa-project-diagram text-[#1e40af] text-xs"></i>
+                    <i class="fas fa-project-diagram text-[var(--c-accent)] text-xs"></i>
                   </div>
                   <div>
                     <div class="text-sm font-semibold text-[#0f172a]" data-i18n="system_architecture_title">Systemarkitektur</div>
@@ -742,7 +713,7 @@
                 </div>
                 <div class="flex items-start gap-3">
                   <div class="w-8 h-8 bg-[#eff6ff] rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <i class="fas fa-users text-[#1e40af] text-xs"></i>
+                    <i class="fas fa-users text-[var(--c-accent)] text-xs"></i>
                   </div>
                   <div>
                     <div class="text-sm font-semibold text-[#0f172a]" data-i18n="agile_collaboration_title">Agilt samarbete</div>
@@ -755,7 +726,7 @@
             <!-- GitHub Activity Feed -->
               <div class="card-premium p-6 reveal-item stagger-3" id="gh-activity-card">
                 <div class="flex items-center gap-3 mb-5">
-                  <div class="w-1 h-6 bg-[#1e40af] rounded-full flex-shrink-0"></div>
+                  <div class="w-1 h-6 bg-[var(--c-accent)] rounded-full flex-shrink-0"></div>
                   <i class="fas fa-clock text-sm flex-shrink-0" style="color:var(--c-accent)"></i>
                   <h3 class="text-sm font-bold" style="color:var(--c-text-primary)" data-i18n="gh_activity_title">Senaste aktivitet</h3>
                 </div>
@@ -775,17 +746,15 @@
             <!-- Professional profile -->
             <div class="card-premium p-8 reveal-item stagger-1">
               <div class="flex items-center gap-3 mb-6">
-                <div class="w-1 h-6 bg-[#1e40af] rounded-full flex-shrink-0"></div>
+                <div class="w-1 h-6 bg-[var(--c-accent)] rounded-full flex-shrink-0"></div>
                 <h3 class="text-xl font-bold text-[#0f172a]" data-i18n="professional_profile">Professionell Profil</h3>
               </div>
               <div class="space-y-4 text-[#475569] text-base leading-[1.65]">
                 <p data-i18n="aboutDescription">
-                  Systemvetenskapsstudent vid Örebro Universitet med fokus på backend-arkitektur och databasdesign.
-                  Jag bygger produktionsklara lösningar i C# och .NET — rena, skalbara och väldokumenterade.
+                  Jag läser sista året på Systemvetenskapliga programmet vid Örebro universitet. Fokus på backend-arkitektur och databaser, främst i C# och .NET.
                 </p>
                 <p data-i18n="aboutDescription2">
-                  Parallellt med studierna driver jag egna projekt inom AI-integration och fullstack-webbutveckling.
-                  Avslutar min kandidatexamen 2026 och söker min första heltidsroll inom backend eller systemutveckling.
+                  Vid sidan av studierna bygger jag egna projekt inom AI-integration och fullstack. Examen våren 2026, söker första heltidsrollen inom backend eller systemutveckling.
                 </p>
               </div>
             </div>
@@ -793,16 +762,16 @@
             <!-- Course list card -->
             <div class="card-premium p-8 reveal-item stagger-2">
               <div class="flex items-center gap-3 mb-6">
-                <div class="w-1 h-6 bg-[#1e40af] rounded-full flex-shrink-0"></div>
+                <div class="w-1 h-6 bg-[var(--c-accent)] rounded-full flex-shrink-0"></div>
                 <h3 class="text-xl font-bold text-[#0f172a]" data-i18n="education_title">Utbildning vid Örebro Universitet</h3>
               </div>
               <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <!-- Systemvetenskap -->
                 <div>
                   <div class="text-sm font-bold text-[#0f172a] mb-1 flex items-center justify-between">
-                    <span data-i18n="program_systemscience">Systemvetenskapliga programmet — SSV1K</span>
+                    <span data-i18n="program_systemscience">Systemvetenskapliga programmet (SSV1K)</span>
                   </div>
-                  <div class="text-xs text-[#1e40af] font-semibold mb-4" data-i18n="credits_180hp">180 hp</div>
+                  <div class="text-xs text-[var(--c-accent)] font-semibold mb-4" data-i18n="credits_180hp">180 hp</div>
                   <ul class="space-y-2.5">
                     <li class="flex items-start gap-2 text-[.83rem] text-[#475569]">
                       <i class="fas fa-check text-green-500 mt-0.5 flex-shrink-0 text-xs"></i>
@@ -844,14 +813,22 @@
                       <i class="fas fa-check text-green-500 mt-0.5 flex-shrink-0 text-xs"></i>
                       <span data-i18n="course_informatics">Informatik - IK100G</span>
                     </li>
+                    <li class="flex items-start gap-2 text-[.83rem] text-[#475569]">
+                      <i class="fas fa-check text-green-500 mt-0.5 flex-shrink-0 text-xs"></i>
+                      <span data-i18n="course_sysdev_adv">Systemutvecklingsprojekt, fortsättningskurs - IK209G</span>
+                    </li>
+                    <li class="flex items-start gap-2 text-[.83rem] text-[#475569]">
+                      <i class="fas fa-check text-green-500 mt-0.5 flex-shrink-0 text-xs"></i>
+                      <span data-i18n="course_informatics_bachelor">Informatik med systemvetenskaplig inriktning, kandidatkurs - IK300G</span>
+                    </li>
                   </ul>
                 </div>
                 <!-- Civilingenjör -->
                 <div>
                   <div class="text-sm font-bold text-[#0f172a] mb-1">
-                    <span data-i18n="program_engineering">Civilingenjör, Datateknik — TDT2Y</span>
+                    <span data-i18n="program_engineering">Civilingenjör, Datateknik (TDT2Y)</span>
                   </div>
-                  <div class="text-xs text-[#1e40af] font-semibold mb-4" data-i18n="credits_300hp">300 hp</div>
+                  <div class="text-xs text-[var(--c-accent)] font-semibold mb-4" data-i18n="credits_300hp">300 hp</div>
                   <ul class="space-y-2.5">
                     <li class="flex items-start gap-2 text-[.83rem] text-[#475569]">
                       <i class="fas fa-check text-green-500 mt-0.5 flex-shrink-0 text-xs"></i>
@@ -881,18 +858,18 @@
             <!-- GitHub Contribution Graph -->
             <div class="card-premium p-6 reveal-item stagger-3" id="gh-contrib-card">
               <div class="flex items-center gap-3 mb-5">
-                <div class="w-1 h-6 bg-[#1e40af] rounded-full flex-shrink-0"></div>
+                <div class="w-1 h-6 bg-[var(--c-accent)] rounded-full flex-shrink-0"></div>
                 <svg class="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 16 16" style="color:var(--c-text-primary)">
                   <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
                 </svg>
                 <h3 class="text-sm font-bold" style="color:var(--c-text-primary)" data-i18n="gh_contrib_title">GitHub Bidrag</h3>
               </div>
               <div id="gh-contrib-skeleton" class="gh-skel-block"></div>
-              <img id="gh-contrib-img" class="gh-contrib-img" style="display:none" alt="GitHub contribution graph">
+              <img id="gh-contrib-img" class="gh-contrib-img" style="display:none" alt="GitHub contribution graph" loading="lazy">
               <div class="gh-stat-row" id="gh-stat-row" style="display:none">
-                <span class="gh-stat-pill">📦 <span id="gh-stat-repos">—</span> <span data-i18n="gh_stat_repos">repos</span></span>
-                <span class="gh-stat-pill">👥 <span id="gh-stat-followers">—</span> <span data-i18n="gh_stat_followers">följare</span></span>
-                <span class="gh-stat-pill">🔗 <span id="gh-stat-following">—</span> <span data-i18n="gh_stat_following">följer</span></span>
+                <span class="gh-stat-pill">📦 <span id="gh-stat-repos">, </span> <span data-i18n="gh_stat_repos">repos</span></span>
+                <span class="gh-stat-pill">👥 <span id="gh-stat-followers">, </span> <span data-i18n="gh_stat_followers">följare</span></span>
+                <span class="gh-stat-pill">🔗 <span id="gh-stat-following">, </span> <span data-i18n="gh_stat_following">följer</span></span>
               </div>
             </div>
             </div>
@@ -901,7 +878,7 @@
     </div>
   </section>
 
-  <div class="section-divider" data-label="02 — Projekt"></div>
+  <div class="section-divider" data-label="02 / Projekt"></div>
 
   <!-- ═══════════════════════════════════════════════
        PROJECTS
@@ -926,12 +903,12 @@
           <div class="flex items-center justify-between mb-8">
             <div class="flex items-center gap-3 reveal-item">
               <div class="w-7 h-7 bg-[#eff6ff] rounded-lg flex items-center justify-center">
-                <i class="fas fa-graduation-cap text-[#1e40af] text-xs"></i>
+                <i class="fas fa-graduation-cap text-[var(--c-accent)] text-xs"></i>
               </div>
               <h3 class="font-bold text-[#0f172a]" data-i18n="school_projects_title">Skolprojekt</h3>
             </div>
             <button type="button" id="timeline-btn"
-                    class="flex items-center gap-2 text-sm font-semibold text-[#1e40af] hover:text-[#1e3a8a] transition-colors reveal-item">
+                    class="flex items-center gap-2 text-sm font-semibold text-[var(--c-accent)] hover:text-[var(--c-accent-strong)] transition-colors reveal-item">
               <i class="fas fa-history"></i>
               <span data-i18n="view_timeline">Visa tidslinje</span>
             </button>
@@ -942,7 +919,7 @@
             <div class="card-premium reveal-item stagger-1">
               <div class="relative overflow-hidden h-44">
                 <img src="nyhatt (1).png" alt="Hat Makers"
-                     class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
+                     class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" loading="lazy">
                 <div class="absolute inset-0 bg-gradient-to-t from-[#0f172a]/80 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-end p-5">
                   <div class="flex flex-wrap gap-2">
                     <span class="text-[.7rem] bg-white/20 text-white px-2 py-1 rounded-full backdrop-blur-sm">C#</span>
@@ -963,18 +940,18 @@
                 <div class="flex items-center justify-between">
                   <div class="flex items-center gap-4">
                     <a href="https://github.com/verhill/HatMakers"
-                       class="text-sm font-semibold text-[#1e40af] hover:text-[#1e3a8a] transition-colors flex items-center gap-2">
+                       class="text-sm font-semibold text-[var(--c-accent)] hover:text-[var(--c-accent-strong)] transition-colors flex items-center gap-2">
                       <i class="fas fa-external-link-alt text-xs"></i>
                       <span data-i18n="view_project">Visa projekt</span>
                     </a>
                     <button type="button" onclick="navigateToProject('hatmakers')"
-                            class="text-sm font-medium text-[#94a3b8] hover:text-[#1e40af] transition-colors">
+                            class="text-sm font-medium text-[#94a3b8] hover:text-[var(--c-accent)] transition-colors">
                       <span data-i18n="details_btn">Detaljer →</span>
                     </button>
                   </div>
                   <div class="flex gap-2">
-                    <img src="upCs.png" alt="C#" class="w-5 h-5">
-                    <img src="netlogo.png" alt=".NET" class="w-5 h-5">
+                    <img src="csharp.jpg" alt="C#" class="w-5 h-5" loading="lazy">
+                    <img src="netlogo.png" alt=".NET" class="w-5 h-5" loading="lazy">
                   </div>
                 </div>
               </div>
@@ -984,7 +961,7 @@
             <div class="card-premium reveal-item stagger-2">
               <div class="relative overflow-hidden h-44">
                 <img src="csProj.png" alt="Podcast Library"
-                     class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
+                     class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" loading="lazy">
                 <div class="absolute inset-0 bg-gradient-to-t from-[#0f172a]/80 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-end p-5">
                   <span class="text-[.7rem] bg-white/20 text-white px-2 py-1 rounded-full backdrop-blur-sm">C#</span>
                 </div>
@@ -1001,16 +978,16 @@
                 <div class="flex items-center justify-between">
                   <div class="flex items-center gap-4">
                     <a href="https://github.com/verhill/PodcastLibrary"
-                       class="text-sm font-semibold text-[#1e40af] hover:text-[#1e3a8a] transition-colors flex items-center gap-2">
+                       class="text-sm font-semibold text-[var(--c-accent)] hover:text-[var(--c-accent-strong)] transition-colors flex items-center gap-2">
                       <i class="fas fa-external-link-alt text-xs"></i>
                       <span data-i18n="view_project">Visa projekt</span>
                     </a>
                     <button type="button" onclick="navigateToProject('podcast')"
-                            class="text-sm font-medium text-[#94a3b8] hover:text-[#1e40af] transition-colors">
+                            class="text-sm font-medium text-[#94a3b8] hover:text-[var(--c-accent)] transition-colors">
                       <span data-i18n="details_btn">Detaljer →</span>
                     </button>
                   </div>
-                  <img src="upCs.png" alt="C#" class="w-5 h-5">
+                  <img src="upCs.png" alt="C#" class="w-5 h-5" loading="lazy">
                 </div>
               </div>
             </div>
@@ -1019,7 +996,7 @@
             <div class="card-premium reveal-item stagger-3">
               <div class="relative overflow-hidden h-44">
                 <img src="CvWeb.png" alt="CV Website"
-                     class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
+                     class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" loading="lazy">
                 <div class="absolute inset-0 bg-gradient-to-t from-[#0f172a]/80 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-end p-5">
                   <div class="flex flex-wrap gap-2">
                     <span class="text-[.7rem] bg-white/20 text-white px-2 py-1 rounded-full backdrop-blur-sm">C#</span>
@@ -1039,18 +1016,18 @@
                 <div class="flex items-center justify-between">
                   <div class="flex items-center gap-4">
                     <a href="https://github.com/verhill/PodcastLibrary"
-                       class="text-sm font-semibold text-[#1e40af] hover:text-[#1e3a8a] transition-colors flex items-center gap-2">
+                       class="text-sm font-semibold text-[var(--c-accent)] hover:text-[var(--c-accent-strong)] transition-colors flex items-center gap-2">
                       <i class="fas fa-external-link-alt text-xs"></i>
                       <span data-i18n="view_project">Visa projekt</span>
                     </a>
                     <button type="button" onclick="navigateToProject('cvwebsite')"
-                            class="text-sm font-medium text-[#94a3b8] hover:text-[#1e40af] transition-colors">
+                            class="text-sm font-medium text-[#94a3b8] hover:text-[var(--c-accent)] transition-colors">
                       <span data-i18n="details_btn">Detaljer →</span>
                     </button>
                   </div>
                   <div class="flex gap-2">
-                    <img src="upCs.png" alt="C#" class="w-5 h-5">
-                    <img src="netlogo.png" alt=".NET" class="w-5 h-5">
+                    <img src="upCs.png" alt="C#" class="w-5 h-5" loading="lazy">
+                    <img src="netlogo.png" alt=".NET" class="w-5 h-5" loading="lazy">
                   </div>
                 </div>
               </div>
@@ -1072,7 +1049,7 @@
             <div class="relative">
               <!-- Center line -->
               <div class="hidden md:block absolute left-1/2 top-0 bottom-0 w-px bg-[#e2e8f0] -translate-x-1/2">
-                <div class="absolute top-0 left-0 w-full h-full bg-[#1e40af] origin-top scale-y-0 timeline-progress"></div>
+                <div class="absolute top-0 left-0 w-full h-full bg-[var(--c-accent)] origin-top scale-y-0 timeline-progress"></div>
               </div>
 
               <div class="space-y-16 md:space-y-24">
@@ -1081,14 +1058,14 @@
                   <div class="mb-6 md:mb-0">
                     <div class="card-premium p-6">
                       <div class="flex items-center gap-3 mb-4">
-                        <div class="border border-[#1e40af] text-[#1e40af] font-bold text-sm px-3 py-1 rounded-lg" data-i18n="year_2021">2021</div>
+                        <div class="border border-[var(--c-accent)] text-[var(--c-accent)] font-bold text-sm px-3 py-1 rounded-lg" data-i18n="year_2021">2021</div>
                         <div class="h-px flex-1 bg-[#e2e8f0]"></div>
                       </div>
                       <h3 class="font-bold text-[#0f172a] mb-2" data-i18n="timeline_2021_title">Början på min resa</h3>
                       <p class="text-sm text-[#64748b] mb-2" data-i18n="timeline_2021_1">Började på civilingenjörsprogrammet och lärde mig grunderna i programmering.</p>
                       <p class="text-sm text-[#64748b] mb-4" data-i18n="timeline_2021_2">Läste Python, C och SQL samt grundläggande nätverkslära.</p>
                       <div class="flex flex-wrap gap-2">
-                        <span class="skill-pill"><img src="Python.svg.png" class="w-3 h-3" alt="Python"><span data-i18n="python_tag">Python</span></span>
+                        <span class="skill-pill"><img src="Python.svg.png" class="w-3 h-3" alt="Python" loading="lazy"><span data-i18n="python_tag">Python</span></span>
                         <span class="skill-pill" data-i18n="c_tag">C</span>
                         <span class="skill-pill" data-i18n="sql_tag">SQL</span>
                       </div>
@@ -1101,12 +1078,12 @@
                     <div class="card-premium overflow-hidden">
                       <div class="relative h-36 overflow-hidden">
                         <img src="pythonProj.png" alt="Python Project"
-                             class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
+                             class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" loading="lazy">
                       </div>
                       <div class="p-5">
                         <p class="text-sm text-[#64748b] mb-3" data-i18n="timeline_2021_3">Ett grupparbete där uppgiften var att skapa ett dataspel med Python och Pygame.</p>
                         <a href="https://github.com/verhill/NotSpaceInvaders"
-                           class="text-sm font-semibold text-[#1e40af] hover:text-[#1e3a8a] flex items-center gap-2 transition-colors">
+                           class="text-sm font-semibold text-[var(--c-accent)] hover:text-[var(--c-accent-strong)] flex items-center gap-2 transition-colors">
                           <i class="fab fa-github"></i>
                           <span data-i18n="github">Visa på GitHub</span>
                         </a>
@@ -1121,12 +1098,12 @@
                     <div class="card-premium overflow-hidden">
                       <div class="relative h-36 overflow-hidden">
                         <img src="mib.projectlogo.png" alt="MIB Project"
-                             class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
+                             class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" loading="lazy">
                       </div>
                       <div class="p-5">
                         <p class="text-sm text-[#64748b] mb-3" data-i18n="timeline_2024_consut3">Första objektorienterade projektet - ett administrativt system för organisationen MIB.</p>
                         <a href="https://github.com/verhill/MiBProject"
-                           class="text-sm font-semibold text-[#1e40af] hover:text-[#1e3a8a] flex items-center gap-2 transition-colors">
+                           class="text-sm font-semibold text-[var(--c-accent)] hover:text-[var(--c-accent-strong)] flex items-center gap-2 transition-colors">
                           <i class="fab fa-github"></i>
                           <span data-i18n="github">Visa på GitHub</span>
                         </a>
@@ -1139,14 +1116,14 @@
                   <div class="mb-6 md:mb-0 order-1 md:order-3">
                     <div class="card-premium p-6">
                       <div class="flex items-center gap-3 mb-4">
-                        <div class="border border-[#1e40af] text-[#1e40af] font-bold text-sm px-3 py-1 rounded-lg" data-i18n="year_2023">2023</div>
+                        <div class="border border-[var(--c-accent)] text-[var(--c-accent)] font-bold text-sm px-3 py-1 rounded-lg" data-i18n="year_2023">2023</div>
                         <div class="h-px flex-1 bg-[#e2e8f0]"></div>
                       </div>
                       <h3 class="font-bold text-[#0f172a] mb-2" data-i18n="timeline_2023_title">Objektorientering och Java</h3>
                       <p class="text-sm text-[#64748b] mb-2" data-i18n="timeline_2023_2">Bytte till systemvetenskapsprogrammet och fokuserade mer på programmering.</p>
                       <p class="text-sm text-[#64748b] mb-4" data-i18n="timeline_2023_3">Lärde mig SQL och objektorienterad programmering i Java.</p>
                       <div class="flex flex-wrap gap-2">
-                        <span class="skill-pill"><img src="upJava.webp" class="w-3 h-3" alt="Java"><span data-i18n="java_tag">Java</span></span>
+                        <span class="skill-pill"><img src="upJava.webp" class="w-3 h-3" alt="Java" loading="lazy"><span data-i18n="java_tag">Java</span></span>
                         <span class="skill-pill" data-i18n="sql_tag">SQL</span>
                         <span class="skill-pill" data-i18n="oop_tag">OOP</span>
                       </div>
@@ -1159,14 +1136,14 @@
                   <div class="mb-6 md:mb-0">
                     <div class="card-premium p-6">
                       <div class="flex items-center gap-3 mb-4">
-                        <div class="border border-[#1e40af] text-[#1e40af] font-bold text-sm px-3 py-1 rounded-lg" data-i18n="year_2024">2024</div>
+                        <div class="border border-[var(--c-accent)] text-[var(--c-accent)] font-bold text-sm px-3 py-1 rounded-lg" data-i18n="year_2024">2024</div>
                         <div class="h-px flex-1 bg-[#e2e8f0]"></div>
                       </div>
                       <h3 class="font-bold text-[#0f172a] mb-2" data-i18n="timeline_2024_title">Fullstack-utveckling</h3>
                       <p class="text-sm text-[#64748b] mb-2" data-i18n="timeline_2024_1">Fördjupade mig inom front-end (HTML, CSS, JavaScript, Vue.js) och back-end med C# och SQL.</p>
                       <p class="text-sm text-[#64748b] mb-4" data-i18n="timeline_2024_2">Började arbeta med .NET ramverket.</p>
                       <div class="flex flex-wrap gap-2">
-                        <span class="skill-pill"><img src="upCs.png" class="w-3 h-3" alt="C#"><span data-i18n="csharp_tag">C#</span></span>
+                        <span class="skill-pill"><img src="upCs.png" class="w-3 h-3" alt="C#" loading="lazy"><span data-i18n="csharp_tag">C#</span></span>
                         <span class="skill-pill" data-i18n="dotnet_tag">.NET</span>
                         <span class="skill-pill" data-i18n="vue_tag">Vue.js</span>
                       </div>
@@ -1179,12 +1156,12 @@
                     <div class="card-premium overflow-hidden">
                       <div class="relative h-36 overflow-hidden">
                         <img src="EgenHemsida.png" alt="Consulting Website"
-                             class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
+                             class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" loading="lazy">
                       </div>
                       <div class="p-5">
                         <p class="text-sm text-[#64748b] mb-3" data-i18n="timeline_2024_consut2">Byggde en påhittad Konsulthemsida med HTML, CSS och Vue.js.</p>
                         <a href="https://github.com/verhill/PersonalWebsite"
-                           class="text-sm font-semibold text-[#1e40af] hover:text-[#1e3a8a] flex items-center gap-2 transition-colors">
+                           class="text-sm font-semibold text-[var(--c-accent)] hover:text-[var(--c-accent-strong)] flex items-center gap-2 transition-colors">
                           <i class="fab fa-github"></i>
                           <span data-i18n="github">Visa på GitHub</span>
                         </a>
@@ -1199,11 +1176,11 @@
                     <div class="card-premium overflow-hidden">
                       <div class="relative h-36 overflow-hidden">
                         <img src="CvWeb.png" alt="CV System"
-                             class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
+                             class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" loading="lazy">
                       </div>
                       <div class="p-5">
                         <p class="text-sm text-[#64748b] mb-3" data-i18n="timeline_2024_consut4">Hemsida för hantering av CV:n och projekt där användare kan söka efter andra användare och deras erfarenheter.</p>
-                        <a href="#" class="text-sm font-semibold text-[#1e40af] hover:text-[#1e3a8a] flex items-center gap-2 transition-colors">
+                        <a href="#" class="text-sm font-semibold text-[var(--c-accent)] hover:text-[var(--c-accent-strong)] flex items-center gap-2 transition-colors">
                           <i class="fab fa-github"></i>
                           <span data-i18n="github">Visa på GitHub</span>
                         </a>
@@ -1216,13 +1193,13 @@
                   <div class="mb-6 md:mb-0 order-1 md:order-3">
                     <div class="card-premium p-6">
                       <div class="flex items-center gap-3 mb-4">
-                        <div class="border border-[#1e40af] text-[#1e40af] font-bold text-sm px-3 py-1 rounded-lg" data-i18n="year_2025">2025</div>
+                        <div class="border border-[var(--c-accent)] text-[var(--c-accent)] font-bold text-sm px-3 py-1 rounded-lg" data-i18n="year_2025">2025</div>
                         <div class="h-px flex-1 bg-[#e2e8f0]"></div>
                       </div>
                       <h3 class="font-bold text-[#0f172a] mb-2" data-i18n="timeline_2025_title">Professionella projekt</h3>
                       <p class="text-sm text-[#64748b] mb-4" data-i18n="timeline_2025_2">Fördjupad utveckling av applikationer med fokus på användbarhet och skalbara lösningar.</p>
                       <div class="flex flex-wrap gap-2">
-                        <span class="skill-pill"><img src="netlogo.png" class="w-3 h-3" alt=".NET"><span data-i18n="dotnet_tag">.NET</span></span>
+                        <span class="skill-pill"><img src="netlogo.png" class="w-3 h-3" alt=".NET" loading="lazy"><span data-i18n="dotnet_tag">.NET</span></span>
                         <span class="skill-pill" data-i18n="csharp_tag">C#</span>
                         <span class="skill-pill" data-i18n="fullstack_tag">Fullstack</span>
                       </div>
@@ -1246,7 +1223,7 @@
         <!-- ── Divider ─────────────────────────────── -->
         <div class="flex items-center gap-4 my-16 reveal-item">
           <div class="flex-1 h-px bg-[#e2e8f0]"></div>
-          <div class="w-2 h-2 rounded-full bg-[#1e40af]/30"></div>
+          <div class="w-2 h-2 rounded-full bg-[var(--c-accent)]/30"></div>
           <div class="flex-1 h-px bg-[#e2e8f0]"></div>
         </div>
 
@@ -1254,103 +1231,96 @@
         <div>
           <div class="flex items-center justify-between mb-8">
             <div class="flex items-center gap-3 reveal-item">
-              <img src="updateProfile.png" alt="Logo" class="w-8 h-8 rounded-full">
+              <img src="updateProfile.png" alt="Logo" class="w-8 h-8 rounded-full" loading="lazy">
               <h3 class="font-bold text-[#0f172a]" data-i18n="personal_projects_title">Personliga projekt</h3>
             </div>
             <a href="https://github.com/verhill"
-               class="text-sm font-semibold text-[#1e40af] hover:text-[#1e3a8a] flex items-center gap-2 transition-colors reveal-item">
+               class="text-sm font-semibold text-[var(--c-accent)] hover:text-[var(--c-accent-strong)] flex items-center gap-2 transition-colors reveal-item">
               <i class="fab fa-github"></i>
               <span data-i18n="view_all">Se alla</span>
             </a>
           </div>
 
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <!-- ConstructAI — Featured project -->
-            <div class="card-premium reveal-item stagger-1">
-              <div class="constructai-placeholder relative overflow-hidden h-44 flex flex-col items-center justify-center">
-                <div class="constructai-placeholder-title">ConstructAI</div>
-                <div class="constructai-placeholder-sub mt-2" data-i18n="project_constructai_stackline">Vite + React | Three.js | Claude API</div>
+          <!-- FEATURED: ConstructAI, full-width statement -->
+          <article class="featured-project reveal-item stagger-1">
+            <div class="featured-visual constructai-placeholder">
+              <div class="constructai-placeholder-title">ConstructAI</div>
+              <div class="constructai-placeholder-sub mt-2" data-i18n="project_constructai_stackline">Vite + React · Three.js · Claude API</div>
+            </div>
+            <div class="featured-content">
+              <div class="featured-meta">
+                <span class="featured-flag" data-i18n="featured_flag">Featured</span>
+                <span class="featured-status">
+                  <span class="featured-dot"></span>
+                  <span data-i18n="ongoing_badge">Pågående</span>
+                </span>
+                <span class="featured-year">2025</span>
               </div>
-              <div class="p-6">
-                <div class="flex items-center justify-between mb-3">
-                  <div class="flex items-center gap-2">
-                    <span class="skill-pill text-[.7rem]" data-i18n="personal_project_tag">Personligt Projekt</span>
-                    <span class="ongoing-badge">
-                      <span class="animate-ping inline-block w-1.5 h-1.5 rounded-full bg-[#fb923c] opacity-75"></span>
-                      <span data-i18n="ongoing_badge">Pågående</span>
-                    </span>
-                  </div>
-                  <span class="text-xs text-[#94a3b8]">2025</span>
-                </div>
-                <h4 class="font-bold text-[#0f172a] mb-2">ConstructAI</h4>
-                <p class="text-sm text-[#64748b] leading-relaxed mb-5" data-i18n="project_constructai_description">
-                  AI-driven plattform för generativ husdesign med bildgenerering, planlösningar och 3D-modellering.
-                </p>
-                <div class="flex items-center justify-between">
-                  <div class="flex items-center gap-4">
-                    <button type="button" onclick="navigateToProject('constructai')"
-                            class="text-sm font-medium text-[#94a3b8] hover:text-[#1e40af] transition-colors">
-                      <span data-i18n="details_btn">Detaljer →</span>
-                    </button>
-                  </div>
-                  <div class="flex flex-wrap gap-2">
-                    <span class="skill-pill text-[.65rem]" data-i18n="tech_vite">Vite</span>
-                    <span class="skill-pill text-[.65rem]" data-i18n="tech_react">React</span>
-                    <span class="skill-pill text-[.65rem]" data-i18n="tech_threejs">Three.js</span>
-                  </div>
-                </div>
+              <h3 class="featured-title">ConstructAI</h3>
+              <p class="featured-lede" data-i18n="project_constructai_description">
+                AI-driven plattform för generativ husdesign med bildgenerering, planlösningar och 3D-modellering.
+              </p>
+              <div class="featured-stack">
+                <span class="skill-pill" data-i18n="tech_vite">Vite</span>
+                <span class="skill-pill" data-i18n="tech_react">React</span>
+                <span class="skill-pill" data-i18n="tech_threejs">Three.js</span>
+                <span class="skill-pill">Claude API</span>
+              </div>
+              <div class="featured-actions">
+                <a href="https://mail.google.com/mail/?view=cm&to=hillver.david@gmail.com&su=Åtkomst%20till%20ConstructAI-projektet&body=Hej%20David,%0D%0A%0D%0AJag%20skulle%20vilja%20be%20om%20åtkomst%20till%20ditt%20ConstructAI-projekt.%0D%0A%0D%0AMed%20vänliga%20hälsningar,"
+                   target="_blank" class="featured-cta-primary">
+                  <i class="fas fa-envelope text-xs"></i>
+                  <span data-i18n="email_access">Email för åtkomst</span>
+                </a>
+                <button type="button" onclick="navigateToProject('constructai')" class="featured-cta-ghost">
+                  <span data-i18n="details_btn_long">Läs fallstudien</span>
+                  <span aria-hidden="true">→</span>
+                </button>
               </div>
             </div>
+          </article>
 
-            <!-- AI Car Analysis -->
-            <div class="card-premium reveal-item stagger-2">
-              <div class="relative overflow-hidden h-44">
-                <img src="CarePortal.png" alt="AI Bilskadeanalys"
-                     class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
-                <div class="absolute inset-0 bg-gradient-to-t from-[#0f172a]/80 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-end p-5">
-                  <div class="flex flex-wrap gap-2">
-                    <span class="text-[.7rem] bg-white/20 text-white px-2 py-1 rounded-full backdrop-blur-sm" data-i18n="tech_blazor">Blazor</span>
-                    <span class="text-[.7rem] bg-white/20 text-white px-2 py-1 rounded-full backdrop-blur-sm" data-i18n="tech_dotnet">.NET</span>
-                    <span class="text-[.7rem] bg-white/20 text-white px-2 py-1 rounded-full backdrop-blur-sm" data-i18n="tech_openai">OpenAI</span>
-                  </div>
-                </div>
+          <!-- Other personal projects: single column row below -->
+          <div class="other-projects">
+            <article class="card-premium reveal-item stagger-2 other-project">
+              <div class="other-project-visual">
+                <img src="CarePortal.png" alt="AI Bilskadeanalys" loading="lazy">
               </div>
-              <div class="p-6">
-                <div class="flex items-center justify-between mb-3">
-                  <span class="skill-pill text-[.7rem]" data-i18n="personal_project_tag">Personligt Projekt</span>
-                  <span class="text-xs text-[#94a3b8]">2025</span>
+              <div class="other-project-body">
+                <div class="flex items-center gap-3 mb-2">
+                  <span class="other-year">2025</span>
+                  <span class="other-divider"></span>
+                  <span class="other-tag" data-i18n="personal_project_tag">Personligt projekt</span>
                 </div>
-                <h4 class="font-bold text-[#0f172a] mb-2" data-i18n="project_ai_car_analysis_name">AI Bilskadeanalys</h4>
-                <p class="text-sm text-[#64748b] leading-relaxed mb-5" data-i18n="project_ai_car_analysis_description">
+                <h4 class="other-title" data-i18n="project_ai_car_analysis_name">AI Bilskadeanalys</h4>
+                <p class="other-desc" data-i18n="project_ai_car_analysis_description">
                   App för AI-analys av bilskador med kostnadsestimering och verkstadssökning. Integrerar OpenAI, Google Maps och Cloudinary.
                 </p>
-                <div class="flex items-center justify-between">
-                  <div class="flex items-center gap-4">
-                    <a href="https://mail.google.com/mail/?view=cm&to=hillver.david@gmail.com&su=Åtkomst%20till%20AI%20Bilskadeanalys-projektet&body=Hej%20David,%0D%0A%0D%0AJag%20skulle%20vilja%20be%20om%20åtkomst%20till%20ditt%20AI%20Bilskadeanalys-projekt.%0D%0A%0D%0AMed%20vänliga%20hälsningar,"
-                       target="_blank"
-                       class="text-sm font-semibold text-[#1e40af] hover:text-[#1e3a8a] transition-colors flex items-center gap-2">
-                      <i class="fas fa-external-link-alt text-xs"></i>
-                      <span data-i18n="view_project">Visa projekt</span>
-                    </a>
-                    <button type="button" onclick="navigateToProject('ai-car')"
-                            class="text-sm font-medium text-[#94a3b8] hover:text-[#1e40af] transition-colors">
-                      <span data-i18n="details_btn">Detaljer →</span>
-                    </button>
-                  </div>
-                  <div class="flex gap-2">
-                    <img src="blazor.png" alt="Blazor" class="w-5 h-5" data-i18n="alt_tech_blazor">
-                    <img src="netlogo.png" alt=".NET" class="w-5 h-5" data-i18n="alt_tech_dotnet">
-                  </div>
+                <div class="other-stack">
+                  <span class="skill-pill" data-i18n="tech_blazor">Blazor</span>
+                  <span class="skill-pill" data-i18n="tech_dotnet">.NET</span>
+                  <span class="skill-pill" data-i18n="tech_openai">OpenAI</span>
+                </div>
+                <div class="other-actions">
+                  <a href="https://mail.google.com/mail/?view=cm&to=hillver.david@gmail.com&su=Åtkomst%20till%20AI%20Bilskadeanalys-projektet&body=Hej%20David,%0D%0A%0D%0AJag%20skulle%20vilja%20be%20om%20åtkomst%20till%20ditt%20AI%20Bilskadeanalys-projekt.%0D%0A%0D%0AMed%20vänliga%20hälsningar,"
+                     target="_blank" class="featured-cta-primary">
+                    <i class="fas fa-external-link-alt text-xs"></i>
+                    <span data-i18n="view_project">Visa projekt</span>
+                  </a>
+                  <button type="button" onclick="navigateToProject('ai-car')" class="featured-cta-ghost">
+                    <span data-i18n="details_btn_long">Läs fallstudien</span>
+                    <span aria-hidden="true">→</span>
+                  </button>
                 </div>
               </div>
-            </div>
+            </article>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <div class="section-divider" data-label="03 — Kontakt"></div>
+  <div class="section-divider" data-label="03 / Kontakt"></div>
 
   <!-- ═══════════════════════════════════════════════
        CONTACT
@@ -1362,10 +1332,10 @@
         <div class="overline justify-center reveal-item"><span class="sec-num">03</span> <span data-i18n="contact">Kontakt</span></div>
         <h2 class="text-4xl md:text-5xl font-extrabold text-[#0f172a] tracking-tight leading-tight mb-4 reveal-left stagger-1"
             data-i18n="contact_heading">
-          Låt oss<br>ta ett samtal.
+          Hör av dig.
         </h2>
         <p class="text-lg text-[#64748b] mb-14 reveal-item stagger-2" data-i18n="contactDesc">
-          Öppen för heltidsroller och frilansprojekt — låt oss bygga något tillsammans.
+          Öppen för heltidsroller med start våren 2026 och frilansuppdrag dessförinnan.
         </p>
 
         <!-- Contact links row -->
@@ -1413,7 +1383,7 @@
     <div class="container mx-auto px-6 py-8">
       <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
         <a href="#" class="flex items-center sm:flex-1">
-          <img src="updateProfile.png" alt="David Hillver" class="h-10 opacity-80 hover:opacity-100 transition-opacity">
+          <img src="updateProfile.png" alt="David Hillver" class="h-10 opacity-80 hover:opacity-100 transition-opacity" loading="lazy">
         </a>
         <div class="flex gap-5">
           <a href="mailto:hillver.david@gmail.com" aria-label="Email David Hillver" class="text-[#94a3b8] hover:text-white transition-colors">
@@ -1572,7 +1542,7 @@
         stack: ['C#', 'ASP.NET Core', '.NET', 'SQL Server'],
         role: 'Byggde hela backend-API:t och databasstrukturen. Implementerade användarautentisering, profilhantering och söktjänst.',
         github: null, demo: null,
-        note: 'Kod ej publik — kontakta mig för demo',
+        note: 'Kod ej publik. Kontakta mig för demo',
       },
       'ai-car': {
         title: 'AI Bilskadeanalys', year: '2025', type: 'Personligt Projekt',
@@ -1580,7 +1550,7 @@
         stack: ['Blazor', 'ASP.NET Core', '.NET', 'OpenAI API', 'Google Maps API', 'Cloudinary', 'PostgreSQL'],
         role: 'Fullstack-arkitekt och ensam utvecklare. Designade AI-pipeline, kostnadsestimeringslogik och geografisk verkstadssökning från grunden.',
         github: null, demo: null,
-        note: 'Privat repo — kontakta mig för tillgång och demo',
+        note: 'Privat repo. Kontakta mig för tillgång och demo',
       },
     };
 
@@ -1632,16 +1602,16 @@
       const yr = new Date().getFullYear();
       const OVERRIDES = {
         sv: {
-          hero_description: 'Jag bygger backend-system och databasarkitekturer — rena, skalbara och produktionsklara. Avslutar min kandidatexamen vid Örebro Universitet (2026).',
-          contactDesc: 'Öppen för heltidsroller och frilansprojekt — låt oss bygga något tillsammans.',
-          aboutDescription: 'Systemvetenskapsstudent vid Örebro Universitet med fokus på backend-arkitektur och databasdesign. Jag bygger produktionsklara lösningar i C# och .NET — rena, skalbara och väldokumenterade.',
+          hero_description: 'Jag bygger backend-system och databasarkitekturer: rena, skalbara och produktionsklara. Avslutar min kandidatexamen vid Örebro Universitet (2026).',
+          contactDesc: 'Öppen för heltidsroller och frilansprojekt. Låt oss bygga något tillsammans.',
+          aboutDescription: 'Systemvetenskapsstudent vid Örebro Universitet med fokus på backend-arkitektur och databasdesign. Jag bygger produktionsklara lösningar i C# och .NET: rena, skalbara och väldokumenterade.',
           aboutDescription2: 'Parallellt med studierna driver jag egna projekt inom AI-integration och fullstack-webbutveckling. Avslutar min kandidatexamen 2026 och söker min första heltidsroll inom backend eller systemutveckling.',
           copyright: `© ${yr} David Hillver. Alla rättigheter förbehållna.`,
         },
         en: {
-          hero_description: 'I build backend systems and database architectures — clean, scalable, and production-ready. Currently finishing my B.Sc at Örebro University (2026).',
-          contactDesc: "Open to full-time roles and freelance projects — let's build something together.",
-          aboutDescription: 'Systems science student at Örebro University specialising in backend architecture and database design. I build production-ready solutions in C# and .NET — clean, scalable and well-documented.',
+          hero_description: 'I build backend systems and database architectures: clean, scalable, and production-ready. Currently finishing my B.Sc at Örebro University (2026).',
+          contactDesc: "Open to full-time roles and freelance projects. Let's build something together.",
+          aboutDescription: 'Systems science student at Örebro University specialising in backend architecture and database design. I build production-ready solutions in C# and .NET: clean, scalable and well-documented.',
           aboutDescription2: 'Alongside my studies I run personal projects in AI integration and fullstack web development. Graduating in 2026 and looking for my first full-time role in backend or systems development.',
           copyright: `© ${yr} David Hillver. All rights reserved.`,
         },
@@ -1737,8 +1707,8 @@
       tagline_en: 'Full-stack e-commerce with Scrum and ASP.NET Core',
       problem: 'Hur kan ett litet team effektivt leverera en fullständig, produktionsnära e-handelsplattform inom kurslängd med hjälp av agila metoder?',
       problem_en: 'How can a small team efficiently deliver a complete, production-ready e-commerce platform within a course timeframe using agile methods?',
-      solution: 'Vi implementerade clean architecture med tydliga lager — controllers, services, repositories — och använde ASP.NET Core för REST API och SQL Server för datalagring. Sprintplaneringen i Scrum höll oss fokuserade och levererade kontinuerligt värde.',
-      solution_en: 'We implemented clean architecture with clear layers — controllers, services, repositories — and used ASP.NET Core for the REST API and SQL Server for data storage. Sprint planning in Scrum kept us focused and delivered continuous value.',
+      solution: 'Vi implementerade clean architecture med tydliga lager (controllers, services, repositories) och använde ASP.NET Core för REST API och SQL Server för datalagring. Sprintplaneringen i Scrum höll oss fokuserade och levererade kontinuerligt värde.',
+      solution_en: 'We implemented clean architecture with clear layers (controllers, services, repositories) and used ASP.NET Core for the REST API and SQL Server for data storage. Sprint planning in Scrum kept us focused and delivered continuous value.',
       architecture: 'MVC-arkitektur med repository-pattern och dependency injection. Databasschemat normaliserades till 3NF med relationer för produkter, ordrar och kunder.',
       architecture_en: 'MVC architecture with repository pattern and dependency injection. The database schema was normalized to 3NF with relations for products, orders, and customers.',
       techStack: ['C#', 'ASP.NET Core', 'SQL Server', 'HTML/CSS', 'JavaScript', 'Scrum'],
@@ -2013,7 +1983,7 @@
           ${ongoingBanner}
           ${metricsHtml}
 
-          <!-- Main content — 2-col on desktop -->
+          <!-- Main content: 2-col on desktop -->
           <div style="display:grid;grid-template-columns:1fr;gap:2rem;" class="detail-grid-cols">
 
             <!-- Left: Problem + Solution -->
@@ -2101,16 +2071,16 @@
   <!-- ─── Cursor · Magnetic · Konami · Easter eggs ── -->
   <script>
   // ══════════════════════════════════════════════════════
-  // CONSOLE EASTER EGG — fires immediately
+  // CONSOLE EASTER EGG: fires immediately
   // ══════════════════════════════════════════════════════
   console.log(
-    '%c 👋 Hej! Du kollar på min kod — det gillar jag.\n    GitHub: github.com/verhill ',
-    'background:#0a0a0f;color:#4f6ef7;padding:12px 18px;border-radius:6px;' +
-    'font-size:13px;font-family:monospace;border-left:3px solid #4f6ef7;line-height:1.8;'
+    '%c 👋 Hej! Du kollar på min kod: det gillar jag.\n    GitHub: github.com/verhill ',
+    'background:#0a0a0f;color:var(--c-accent);padding:12px 18px;border-radius:6px;' +
+    'font-size:13px;font-family:monospace;border-left:3px solid var(--c-accent);line-height:1.8;'
   );
 
   // ══════════════════════════════════════════════════════
-  // CURSOR RING — additive overlay, OS cursor always visible
+  // CURSOR RING: additive overlay, OS cursor always visible
   // ══════════════════════════════════════════════════════
   document.addEventListener('DOMContentLoaded', function() {
     if (window.matchMedia('(pointer: coarse)').matches) return;
@@ -2154,8 +2124,8 @@
   (function initMagnetic() {
     if (window.matchMedia('(pointer: coarse)').matches) return;
 
-    const RADIUS = 60;   // px — activation zone
-    const MAX    = 6;    // px — max displacement
+    const RADIUS = 60;   // px: activation zone
+    const MAX    = 6;    // px: max displacement
 
     document.querySelectorAll('[data-magnetic]').forEach(btn => {
       btn.addEventListener('mousemove', (e) => {
@@ -2217,7 +2187,7 @@
   });
 
   // ══════════════════════════════════════════════════════
-  // KONAMI CODE — ↑↑↓↓←→←→BA
+  // KONAMI CODE: ↑↑↓↓←→←→BA
   // ══════════════════════════════════════════════════════
   (function initKonami() {
     const CODE = [
@@ -2248,7 +2218,7 @@
             <div class="konami-header-dot"></div>
             <div class="konami-header-dot" style="opacity:.35"></div>
             <div class="konami-header-dot" style="opacity:.2"></div>
-            <span class="konami-header-title">terminal — secure_access.sh</span>
+            <span class="konami-header-title">terminal: secure_access.sh</span>
           </div>
           <div class="konami-body" id="konami-body">
             <span class="konami-line" id="kl-0"></span>
@@ -2268,7 +2238,7 @@
       document.body.appendChild(overlay);
 
       const LINES = [
-        { id: 'kl-0', text: 'ACCESS GRANTED — welcome, developer.' },
+        { id: 'kl-0', text: 'ACCESS GRANTED: welcome, developer.' },
         { id: 'kl-1', text: 'loading david_hillver.exe...' },
         { id: 'kl-2', text: 'skills: [C#] [.NET] [PostgreSQL] [React] [TypeScript]' },
         { id: 'kl-3', text: 'status: AVAILABLE FOR HIRE' },

@@ -883,11 +883,6 @@ header {
   color: var(--c-text-primary);
 }
 
-[data-theme="dark"] header {
-  background-color: var(--c-nav-bg) !important;
-  border-color: var(--c-border) !important;
-}
-
 /* Sections */
 [data-theme="dark"] #about,
 [data-theme="dark"] #contact {
@@ -2022,4 +2017,46 @@ body {
   font-style: italic;
   text-align: center;
   padding: 16px 0;
+}
+
+/* ============================================================
+   NAV DARK — deep navy in both light and dark mode
+============================================================ */
+.nav-dark {
+  background-color: var(--c-nav-bg) !important;
+  border-color: rgba(255, 255, 255, 0.06) !important;
+}
+.nav-dark .nav-link-item {
+  color: rgba(255, 255, 255, 0.60) !important;
+}
+.nav-dark .nav-link-item:hover,
+.nav-dark .nav-link-item.active {
+  color: var(--c-accent) !important;
+}
+.nav-dark .nav-link::after {
+  background: var(--c-accent) !important;
+}
+.nav-dark .theme-toggle-btn {
+  border-color: rgba(255, 255, 255, 0.14) !important;
+  color: rgba(255, 255, 255, 0.45) !important;
+}
+.nav-dark .theme-toggle-btn:hover {
+  border-color: var(--c-accent) !important;
+  color: var(--c-accent) !important;
+  background: rgba(184, 116, 58, 0.08) !important;
+}
+.nav-dark .stat-divider,
+.nav-dark [class*="border-l"] {
+  border-color: rgba(255, 255, 255, 0.10) !important;
+}
+/* Mobile menu stays dark too */
+[data-theme="dark"] .mobile-menu-overlay,
+[data-theme="light"] .mobile-menu-overlay {
+  background-color: #0f1629 !important;
+}
+#mobile-menu a {
+  color: rgba(255, 255, 255, 0.80) !important;
+}
+#mobile-menu a:hover {
+  color: var(--c-accent) !important;
 }
