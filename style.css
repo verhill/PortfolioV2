@@ -2046,7 +2046,8 @@ body {
   background: rgba(184, 116, 58, 0.08) !important;
 }
 .nav-dark .stat-divider,
-.nav-dark [class*="border-l"] {
+.nav-dark nav div[class*="border-l"],
+.nav-dark nav [class*="pl-6"] {
   border-color: rgba(255, 255, 255, 0.10) !important;
 }
 /* Mobile menu stays dark too */
