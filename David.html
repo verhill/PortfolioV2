@@ -26,6 +26,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
   <style>
     /* ─── Debug console (unchanged) ─────────────────────────────── */
@@ -548,33 +549,13 @@
           </p>
         </div>
 
-        <!-- RIGHT: Terminal block -->
-        <div class="hidden lg:block reveal-item stagger-2 tc-wrap">
-          <div class="terminal-window">
-            <!-- Windows Terminal tab bar -->
-            <div class="tc-tabbar" aria-hidden="true">
-              <div class="tc-tab">
-                <span>Terminal</span>
-                <span class="tc-tab-close">✕</span>
-              </div>
-              <div class="tc-new-tab">+</div>
-              <!-- Window controls -->
-              <div class="tc-winbtns">
-                <div class="tc-wb">︴</div>
-                <div class="tc-wb">□</div>
-                <div class="tc-wb tc-wb-close">✕</div>
-              </div>
-            </div>
-            <div class="tc-body">
-              <div class="tc-prompt-row">
-                <span class="tc-ps1-path">C:\portfolio</span><span class="tc-ps1-gt">&gt;</span><span id="tc-cmd" class="tc-cmd"></span>
-              </div>
-              <div id="tc-output"></div>
-              <div class="tc-idle-row tc-idle-hidden" id="tc-idle">
-                <span class="tc-ps1-path">C:\portfolio</span><span class="tc-ps1-gt">&gt;</span><span class="tc-cursor"></span>
-              </div>
-            </div>
-          </div>
+        <!-- RIGHT: Three.js wireframe icosahedron -->
+        <div class="hidden lg:flex reveal-item stagger-2 items-center justify-center"
+             id="hero-3d-wrap"
+             style="min-height:380px;position:relative;">
+          <canvas id="hero-canvas"
+                  style="display:block;width:100%;height:100%;position:absolute;inset:0;"
+                  aria-hidden="true"></canvas>
         </div>
 
       </div>
