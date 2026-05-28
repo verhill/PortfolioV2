@@ -2061,3 +2061,39 @@ body {
 #mobile-menu a:hover {
   color: var(--c-accent) !important;
 }
+
+/* ============================================================
+   CONTACT DARK — navy background matching nav/footer
+============================================================ */
+#contact.contact-dark {
+  background-color: #0f1629 !important;
+}
+.contact-dark .overline {
+  color: rgba(255, 255, 255, 0.35) !important;
+}
+.contact-dark .overline::before {
+  background: rgba(255, 255, 255, 0.25) !important;
+}
+.contact-dark .sec-num {
+  color: rgba(255, 255, 255, 0.25) !important;
+}
+.contact-dark h2 {
+  color: #ffffff !important;
+}
+.contact-dark p,
+.contact-dark [class*="text-[#64748b]"],
+.contact-dark [class*="text-lg"] {
+  color: rgba(255, 255, 255, 0.55) !important;
+}
+.contact-dark .contact-label {
+  color: rgba(255, 255, 255, 0.30) !important;
+}
+.contact-dark .contact-value {
+  color: rgba(255, 255, 255, 0.82) !important;
+}
+.contact-dark .contact-divider {
+  background: rgba(255, 255, 255, 0.10) !important;
+}
+.contact-dark .contact-link:hover .contact-value {
+  color: var(--c-accent) !important;
+}
