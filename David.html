@@ -378,21 +378,23 @@
     .section-divider::after {
       content: attr(data-label);
       position: absolute;
-      left: 1.5rem;
+      left: 50%;
       top: 0;
-      transform: translateY(-50%);
+      transform: translate(-50%, -50%);
       background: var(--c-bg);
-      color: var(--c-text-muted);
+      color: var(--c-accent);
       font-size: .65rem;
-      font-weight: 600;
+      font-weight: 700;
       letter-spacing: .22em;
       text-transform: uppercase;
-      padding: 0 .9rem;
+      padding: 0 1.2rem;
       font-family: 'Inter', sans-serif;
       font-variant-numeric: tabular-nums;
     }
     @media (min-width: 768px) {
-      .section-divider::after { left: 3rem; }
+      .section-divider::after {
+        left: 50%;
+      }
     }
 
     /* ─── Responsive ─────────────────────────────────────────────── */
@@ -1325,7 +1327,7 @@
   <!-- ═══════════════════════════════════════════════
        CONTACT
   ═══════════════════════════════════════════════════ -->
-  <section id="contact" class="py-24 bg-white">
+  <section id="contact" class="py-24 contact-dark">
     <div class="container mx-auto px-6">
       <div class="max-w-3xl mx-auto text-center">
 
